@@ -1,4 +1,4 @@
-## CRUD con Python 🐍 MySQL 💾 y un Dashboard Asombroso 🚀
+## CRUD 
 
 ##### Aprende a desarrollar un sistema CRUD utilizando Python 🐍 y MySQL 💾 mientras creas un impresionante panel de control. Este curso te guiará a través de la creación de aplicaciones interactivas y eficientes, permitiéndote gestionar datos con facilidad Williams Trellesd.d
 
@@ -37,11 +37,3 @@
     Ejecutas el archivo `pip install -r requirements.txt` para instalar todos paquetes o   dependencias del proyecto.
     Ingresa desde un navegador a http://127.0.0.1:5600/
 
-### Expresiones de Gratitud 🎁
-
-    Comenta a otros sobre este proyecto 📢
-    Invita una cerveza 🍺 o un café ☕
-    Paypal iamdeveloper86@gmail.com
-    Da las gracias públicamente 🤓.
-
-## No olvides SUSCRIBIRTE 👍
