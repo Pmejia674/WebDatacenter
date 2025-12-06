@@ -1,50 +1,41 @@
 <!DOCTYPE html>
-<html
-  lang="es"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../assets/"
-  data-template="vertical-menu-template-free">
+<html lang="es" data-bs-theme="light">
   <head>
     {% include 'public/includes/head.html' %}
-    <!---->
     {% block customCSS %} {% endblock %}
   </head>
   <body>
     {% include 'public/includes/pre_loader.html' %}
-    <!---->
-    {% include 'public/includes/navbar.html' %}
-    <div class="layout-wrapper layout-content-navbar">
+    
+    <!-- CoreSense365 Layout -->
+    <div class="layout-wrapper">
       <div class="layout-container">
         {% include 'public/includes/menu_sidebar.html'%}
-        <div class="layout-page">
-          <div class="content-wrapper">
-            <div class="container-xxl flex-grow-1 container-p-y">
-              {% include 'public/includes/messages.html' %}
-              <!---->
-              {% block body %}
-
-              {% if dataLogin.rol == 1 %}
-              <div>
-                <h1>BIENVENIDO ADMINISTRADOR</h1>
-              </div>
-              {% endif %}
-              {% if dataLogin.rol == 2 %}
-              <div>
-                <h1>BIENVENIDO USUARIO</h1>
-              </div>
-              {% endif %}
-              <!--fin del bloque-->
-              {% endblock %}
+        
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+          <!-- Header -->
+          {% include 'public/includes/navbar.html' %}
+          
+          <!-- Page Content -->
+          <div class="container-xxl flex-grow-1 container-p-y" style="padding-top: 2rem;">
+            {% include 'public/includes/messages.html' %}
+            
+            {% block body %}
+            {% if dataLogin.rol == 1 %}
+            <div class="card-dark p-4 mb-4">
+              <h1 class="text-gradient">BIENVENIDO ADMINISTRADOR</h1>
             </div>
-
-            <div class="content-backdrop fade"></div>
+            {% endif %}
+            {% if dataLogin.rol == 2 %}
+            <div class="card-dark p-4 mb-4">
+              <h1 class="text-gradient">BIENVENIDO USUARIO</h1>
+            </div>
+            {% endif %}
+            {% endblock %}
           </div>
-        </div>
+        </main>
       </div>
-
-      <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 
     {% include 'public/includes/js.html' %}

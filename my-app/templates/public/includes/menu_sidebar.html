@@ -1,98 +1,99 @@
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <div class="app-brand demo">
-    <a href="{{ url_for('inicio') }}" class="app-brand-link">
-      <span class="app-brand-logo demo">
-        <img
-          src="{{ url_for('static', filename ='assets/img/logo.png') }}"
-          alt="Logo"
-        />
-      </span>
-    </a>
+<!-- Mobile Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <a
-      href="javascript:void(0);"
-      class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
-    >
-      <i class="bx bx-chevron-left bx-sm align-middle"></i>
-    </a>
+<!-- CoreSense365 Sidebar -->
+<aside class="sidebar-coresense" id="sidebarCoresense">
+  <!-- Logo & Header -->
+  <div class="sidebar-header">
+    <div class="d-flex align-items-center gap-3">
+      <div class="position-relative">
+        <div class="sidebar-logo">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <span class="status-dot"></span>
+      </div>
+      <div class="sidebar-brand">
+        <h1 class="sidebar-title">CoreSense365</h1>
+        <p class="sidebar-subtitle">Data Center Monitor</p>
+      </div>
+    </div>
+    <!-- Mobile Close Button -->
+    <button class="btn-close-mobile d-lg-none" id="closeSidebar">
+      <i class="bi bi-x-lg"></i>
+    </button>
   </div>
 
-  <div class="menu-inner-shadow"></div>
-  <ul class="menu-inner py-5">
-    <li
-      class="menu-item {% if request.path == '/interfaz-clave' %} active {% endif %}"
-    >
-      <a href="/interfaz-clave" class="menu-link">
-        <i class="menu-icon bi bi-person-fill-lock"></i>
-        <div data-i18n="Tables">Generar Clave</div>
-      </a>
-    </li>
-    <li
-      class="menu-item {% if request.path == '/reporte-accesos' %} active{%endif%}"
-    >
-      <a href="/reporte-accesos" class="menu-link">
-        <i class="menu-icon bi bi-file-lock-fill"></i>
-        <div data-i18n="Tables">Reporte Accesos</div>
-      </a>
-    </li>
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <!-- Main Section -->
+    <div class="nav-section">
+      <span class="nav-section-title">Principal</span>
+    </div>
+    
+    <a href="{{ url_for('inicio') }}" class="nav-item {% if request.path == '/' or request.path == '/inicio' %}active{% endif %}">
+      <i class="bi bi-speedometer2"></i>
+      <span class="nav-text">Dashboard</span>
+    </a>
+    
+    <a href="/interfaz-clave" class="nav-item {% if request.path == '/interfaz-clave' %}active{% endif %}">
+      <i class="bi bi-key-fill"></i>
+      <span class="nav-text">Generar Clave</span>
+    </a>
+    
+    <a href="/reporte-accesos" class="nav-item {% if request.path == '/reporte-accesos' %}active{% endif %}">
+      <i class="bi bi-file-lock-fill"></i>
+      <span class="nav-text">Reporte Accesos</span>
+      <span class="badge-alert">3</span>
+    </a>
+
     {% if dataLogin.rol == 1 %}
-    <li
-      class="menu-item {% if request.path == '/lista-de-areas' %} active{% endif %}"
-    >
-      <a href="/lista-de-areas" class="menu-link">
-        <i class="menu-icon bi bi-person-lines-fill"></i>
-        <div data-i18n="Boxicons">Lista de Áreas</div>
-      </a>
-    </li>
-    {%endif%} {% if dataLogin.rol == 1 %}
-    <li
-      class="menu-item {% if request.path == '/lista-de-usuarios' %} active {% endif %}"
-    >
-      <a href="/lista-de-usuarios" class="menu-link">
-        <i class="menu-icon bi bi-person-lines-fill"></i>
-        <div data-i18n="Tables">Lista de Usuarios</div>
-      </a>
-    </li>
-    {%endif%}
-    <li
-      class="menu-item {% if request.path == '/mi-perfil/{{dataLogin.id}}'%} active {% endif %}"
-    >
-      <a href="/mi-perfil/{{dataLogin.id}}" class="menu-link">
-        <i class="menu-icon bi bi-person-fill-gear"></i>
-        <div data-i18n="Tables">Mi Perfil</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="{{ url_for('cerraSesion') }}" class="menu-link">
-        <i class="menu-icon tf-icons bx bi-box-arrow-right"></i>
-        <div data-i18n="Tables">Salir</div>
-      </a>
-    </li>
+    <!-- Admin Section -->
+    <div class="nav-section">
+      <span class="nav-section-title">Administración</span>
+    </div>
+    
+    <a href="/lista-de-areas" class="nav-item {% if request.path == '/lista-de-areas' %}active{% endif %}">
+      <i class="bi bi-building"></i>
+      <span class="nav-text">Lista de Áreas</span>
+    </a>
+    
+    <a href="/lista-de-usuarios" class="nav-item {% if request.path == '/lista-de-usuarios' %}active{% endif %}">
+      <i class="bi bi-people-fill"></i>
+      <span class="nav-text">Lista de Usuarios</span>
+    </a>
+    
+    <a href="/lista-de-graficas" class="nav-item {% if request.path == '/lista-de-graficas' %}active{% endif %}">
+      <i class="bi bi-bar-chart-line-fill"></i>
+      <span class="nav-text">Gráficas</span>
+    </a>
+    {% endif %}
 
+    <!-- User Section -->
+    <div class="nav-section">
+      <span class="nav-section-title">Usuario</span>
+    </div>
+    
+    <a href="/mi-perfil/{{dataLogin.id}}" class="nav-item {% if '/mi-perfil/' in request.path %}active{% endif %}">
+      <i class="bi bi-person-circle"></i>
+      <span class="nav-text">Mi Perfil</span>
+    </a>
+    
+    <a href="{{ url_for('cerraSesion') }}" class="nav-item">
+      <i class="bi bi-box-arrow-right"></i>
+      <span class="nav-text">Cerrar Sesión</span>
+    </a>
+  </nav>
 
-{% if dataLogin.rol == 1 %}
-  <li class="menu-item {% if request.path == '/lista-de-graficas' %} active {% endif %}">
-    <a href="/lista-de-graficas" class="menu-link">
-      <i class="bi bi-bar-chart-line me-3"></i>  
-      <div data-i18n="Tables">Graficas</div>
-    </a>
-  </li>
-{% endif %}
-{% if dataLogin.rol == 1 %}
-  <li class="menu-item {% if request.path == '/lista-de-graficas' %} active {% endif %}">
-    <a href="/lista-de-graficas" class="menu-link">
-      <i class="bi bi-bar-chart-line me-3"></i>  
-      <div data-i18n="Tables">Niños</div>
-    </a>
-  </li>
-{% endif %}
-{% if dataLogin.rol == 1 %}
-  <li class="menu-item {% if request.path == '/lista-de-graficas' %} active {% endif %}">
-    <a href="/lista-de-graficas" class="menu-link">
-      <i class="bi bi-bar-chart-line me-3"></i>  
-      <div data-i18n="Tables">Graficas2</div>
-    </a>
-  </li>
-{% endif %}
-  </ul>
+  <!-- Collapse Toggle (Desktop) -->
+  <div class="sidebar-footer d-none d-lg-block">
+    <button class="btn-collapse" id="toggleCollapse">
+      <i class="bi bi-chevron-left"></i>
+      <span class="nav-text">Colapsar</span>
+    </button>
+  </div>
 </aside>
+
+<!-- Mobile Menu Button -->
+<button class="btn-menu d-lg-none" id="openSidebar">
+  <i class="bi bi-list"></i>
+</button>

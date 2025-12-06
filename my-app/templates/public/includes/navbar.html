@@ -1,9 +1,112 @@
-<div
-  class="layout-menu-toggle navbar-nav align-items-xl-center me-xl-0 d-xl-none btnMovil">
-  <a
-    class="nav-item nav-link px-0 me-xl-4"
-    href="javascript:void(0)"
-    style="margin-right: 15px">
-    <i class="bx bx-menu"></i>
-  </a>
-</div>
+<!-- CoreSense365 Header -->
+<header class="header-coresense" id="headerCoresense">
+  <div class="header-inner">
+    <!-- Left Section: Mobile Menu + Title -->
+    <div class="header-left">
+      <!-- Mobile Menu Toggle -->
+      <button class="btn-mobile-menu" id="openSidebarHeader">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <!-- Title & Subtitle -->
+      <div class="header-title-section">
+        <h1 class="header-title">{% block pageTitle %}Dashboard{% endblock %}</h1>
+        <p class="header-subtitle">{% block pageSubtitle %}Sistema de Control de Acceso{% endblock %}</p>
+      </div>
+    </div>
+
+    <!-- Right Section: Actions -->
+    <div class="header-actions">
+      <!-- Theme Toggle -->
+      <button class="header-btn" id="themeToggle" aria-label="Cambiar tema">
+        <i class="bi bi-sun-fill" id="themeIcon"></i>
+      </button>
+
+      <!-- Notifications -->
+      <button class="header-btn" aria-label="Notificaciones">
+        <i class="bi bi-bell"></i>
+        <span class="notification-badge"></span>
+      </button>
+
+      <!-- Separator -->
+      <div class="header-separator d-none d-sm-block"></div>
+
+      <!-- User Profile -->
+      <button class="header-user-btn" aria-label="Perfil de usuario">
+        <div class="header-user-avatar">
+          <i class="bi bi-person"></i>
+        </div>
+        <div class="header-user-info">
+          <p class="header-user-name">{{ dataLogin.nombre if dataLogin else 'Usuario' }}</p>
+          <p class="header-user-role">
+            {% if dataLogin.rol == 1 %}
+              Administrador
+            {% else %}
+              Usuario
+            {% endif %}
+          </p>
+        </div>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+// Scroll effect for header & Theme Toggle
+(function() {
+  const header = document.getElementById('headerCoresense');
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const html = document.documentElement;
+  
+  // Initialize theme (default: light)
+  let currentTheme = localStorage.getItem('theme') || 'light';
+  html.setAttribute('data-bs-theme', currentTheme);
+  updateThemeIcon();
+  
+  function updateThemeIcon() {
+    if (currentTheme === 'dark') {
+      themeIcon.className = 'bi bi-moon-stars-fill';
+    } else {
+      themeIcon.className = 'bi bi-sun-fill';
+    }
+  }
+  
+  // Theme toggle
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-bs-theme', currentTheme);
+      localStorage.setItem('theme', currentTheme);
+      updateThemeIcon();
+    });
+  }
+  
+  // Scroll effect
+  if (header) {
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (currentScroll > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  }
+
+  // Connect mobile menu button to sidebar
+  const openBtn = document.getElementById('openSidebarHeader');
+  if (openBtn) {
+    openBtn.addEventListener('click', function() {
+      const sidebar = document.getElementById('sidebarCoresense');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (sidebar && overlay) {
+        sidebar.classList.add('mobile-open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  }
+})();
+</script>
