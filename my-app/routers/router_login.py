@@ -19,7 +19,7 @@ PATH_URL_LOGIN = "/public/login"
 @app.route('/', methods=['GET'])
 def inicio():
     if 'conectado' in session:
-        return render_template('public/base_cpanel.html', dataLogin=dataLoginSesion())
+        return render_template('public/dashboard/inicio.html', dataLogin=dataLoginSesion())
     else:
         return render_template(f'{PATH_URL_LOGIN}/base_login.html')
 

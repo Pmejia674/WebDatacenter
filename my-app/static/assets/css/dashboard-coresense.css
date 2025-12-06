@@ -1,0 +1,619 @@
+/* ========================================
+   CoreSense365 Dashboard Styles
+   Modern cards, charts and animations
+======================================== */
+
+/* ========================================
+   Quick Stats Cards
+======================================== */
+.quick-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid hsl(214, 20%, 91%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(210, 80%, 55%), hsl(210, 60%, 60%));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: hsl(210, 80%, 55%);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
+  transform: translateY(-2px);
+}
+
+.stat-card:hover::before {
+  transform: scaleX(1);
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.stat-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .stat-card-icon {
+  transform: scale(1.1);
+}
+
+.stat-card-icon.success {
+  background: linear-gradient(135deg, hsl(142, 70%, 45%) 0%, hsl(142, 70%, 35%) 100%);
+  color: white;
+}
+
+.stat-card-icon.warning {
+  background: linear-gradient(135deg, hsl(38, 92%, 50%) 0%, hsl(38, 92%, 40%) 100%);
+  color: white;
+}
+
+.stat-card-icon.danger {
+  background: linear-gradient(135deg, hsl(0, 72%, 51%) 0%, hsl(0, 72%, 41%) 100%);
+  color: white;
+}
+
+.stat-card-icon.primary {
+  background: linear-gradient(135deg, hsl(210, 80%, 55%) 0%, hsl(210, 60%, 45%) 100%);
+  color: white;
+}
+
+.stat-card-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.stat-card-badge.success {
+  background: hsl(142, 70%, 95%);
+  color: hsl(142, 70%, 35%);
+}
+
+.stat-card-badge.warning {
+  background: hsl(38, 92%, 95%);
+  color: hsl(38, 92%, 40%);
+}
+
+.stat-card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: hsl(215, 25%, 15%);
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+
+.stat-card-label {
+  font-size: 0.875rem;
+  color: hsl(215, 15%, 50%);
+  font-weight: 500;
+}
+
+/* ========================================
+   Environmental Tiles
+======================================== */
+.environmental-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.env-tile {
+  background: white;
+  border: 1px solid hsl(214, 20%, 91%);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.env-tile:hover {
+  border-color: hsl(210, 80%, 55%);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.1);
+}
+
+.env-tile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.env-tile-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.env-tile-icon.temperature {
+  background: linear-gradient(135deg, hsl(0, 72%, 95%) 0%, hsl(0, 72%, 90%) 100%);
+  color: hsl(0, 72%, 51%);
+}
+
+.env-tile-icon.humidity {
+  background: linear-gradient(135deg, hsl(210, 80%, 95%) 0%, hsl(210, 80%, 90%) 100%);
+  color: hsl(210, 80%, 55%);
+}
+
+.env-tile-icon.airflow {
+  background: linear-gradient(135deg, hsl(142, 70%, 95%) 0%, hsl(142, 70%, 90%) 100%);
+  color: hsl(142, 70%, 45%);
+}
+
+.env-tile-icon.pressure {
+  background: linear-gradient(135deg, hsl(270, 60%, 95%) 0%, hsl(270, 60%, 90%) 100%);
+  color: hsl(270, 60%, 45%);
+}
+
+.env-tile-title {
+  font-size: 0.75rem;
+  color: hsl(215, 15%, 50%);
+  font-weight: 500;
+  margin: 0;
+}
+
+.env-tile-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: hsl(215, 25%, 15%);
+  margin-bottom: 0.5rem;
+}
+
+.env-tile-progress {
+  height: 6px;
+  background: hsl(214, 20%, 91%);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.env-tile-progress-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease, background 0.3s ease;
+}
+
+.env-tile-progress-bar.optimal {
+  background: linear-gradient(90deg, hsl(142, 70%, 45%) 0%, hsl(142, 70%, 55%) 100%);
+}
+
+.env-tile-progress-bar.warning {
+  background: linear-gradient(90deg, hsl(38, 92%, 50%) 0%, hsl(38, 92%, 60%) 100%);
+}
+
+.env-tile-progress-bar.danger {
+  background: linear-gradient(90deg, hsl(0, 72%, 51%) 0%, hsl(0, 72%, 61%) 100%);
+}
+
+/* ========================================
+   Chart Cards
+======================================== */
+.chart-card {
+  background: white;
+  border: 1px solid hsl(214, 20%, 91%);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.chart-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: hsl(215, 25%, 15%);
+  margin: 0;
+}
+
+.chart-card-subtitle {
+  font-size: 0.8125rem;
+  color: hsl(215, 15%, 50%);
+  margin: 0.25rem 0 0 0;
+}
+
+/* Chart Tabs */
+.chart-tab {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(215, 15%, 50%);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chart-tab:hover {
+  color: hsl(215, 25%, 15%);
+  background: rgba(66, 133, 244, 0.1);
+}
+
+.chart-tab.active {
+  background: white;
+  color: hsl(215, 25%, 15%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Equipment Cards
+======================================== */
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.equipment-card {
+  background: white;
+  border: 1px solid hsl(214, 20%, 91%);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.equipment-card:hover {
+  border-color: hsl(210, 80%, 55%);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.1);
+  transform: translateY(-2px);
+}
+
+.equipment-card-image {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: hsl(214, 20%, 95%);
+}
+
+.equipment-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.equipment-card:hover .equipment-card-image img {
+  transform: scale(1.05);
+}
+
+.equipment-status-dot {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+.equipment-status-dot.working {
+  background: hsl(142, 70%, 45%);
+}
+
+.equipment-status-dot.warning {
+  background: hsl(38, 92%, 50%);
+}
+
+.equipment-card-body {
+  padding: 1rem;
+}
+
+.equipment-card-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: hsl(215, 25%, 15%);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.equipment-card-model {
+  font-size: 0.8125rem;
+  color: hsl(215, 15%, 50%);
+  margin-bottom: 0.75rem;
+}
+
+.equipment-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: hsl(215, 15%, 50%);
+}
+
+.equipment-card-info > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.equipment-card-info i {
+  font-size: 0.875rem;
+  color: hsl(210, 80%, 55%);
+}
+
+/* ========================================
+   Section Titles
+======================================== */
+.section-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(215, 25%, 15%);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ========================================
+   Animations
+======================================== */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animations */
+.animate-fade-in:nth-child(1) { animation-delay: 0s; }
+.animate-fade-in:nth-child(2) { animation-delay: 0.1s; }
+.animate-fade-in:nth-child(3) { animation-delay: 0.2s; }
+.animate-fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+/* ========================================
+   Responsive
+======================================== */
+@media (max-width: 768px) {
+  .quick-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .environmental-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .quick-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .environmental-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   Status Card
+======================================== */
+.status-card {
+  background: white;
+  border: 1px solid hsl(214, 20%, 91%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.status-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.status-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.status-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: hsl(215, 25%, 15%);
+  margin: 0;
+}
+
+.status-card-subtitle {
+  font-size: 0.8125rem;
+  color: hsl(215, 15%, 50%);
+  margin: 0.25rem 0 0 0;
+}
+
+.status-dot-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-dot-pulse.success {
+  background: hsl(142, 70%, 45%);
+}
+
+.status-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-label.success {
+  color: hsl(142, 70%, 35%);
+}
+
+/* Alert Levels */
+.alert-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.alert-level-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.alert-level-item:hover {
+  transform: scale(1.02);
+}
+
+.alert-level-item.high {
+  background: hsla(0, 72%, 51%, 0.1);
+  color: hsl(0, 72%, 41%);
+}
+
+.alert-level-item.medium {
+  background: hsla(38, 92%, 50%, 0.1);
+  color: hsl(38, 92%, 40%);
+}
+
+.alert-level-item.low {
+  background: hsla(142, 70%, 45%, 0.1);
+  color: hsl(142, 70%, 35%);
+}
+
+.alert-level-item.offline {
+  background: hsl(214, 20%, 95%);
+  color: hsl(215, 15%, 50%);
+}
+
+.alert-level-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.alert-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 0.5rem;
+  background: currentColor;
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Subsystems */
+.subsystems-section {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid hsl(214, 20%, 91%);
+}
+
+.subsystems-title {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: hsl(215, 15%, 50%);
+  margin-bottom: 0.75rem;
+}
+
+.subsystems-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.subsystem-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: hsl(214, 20%, 97%);
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: hsl(215, 25%, 15%);
+}
+
+.subsystem-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.subsystem-dot.online {
+  background: hsl(142, 70%, 45%);
+}
+
+.subsystem-dot.warning {
+  background: hsl(38, 92%, 50%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.subsystem-dot.offline {
+  background: hsl(0, 72%, 51%);
+}

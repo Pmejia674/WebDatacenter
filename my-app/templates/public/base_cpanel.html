@@ -22,16 +22,7 @@
             {% include 'public/includes/messages.html' %}
             
             {% block body %}
-            {% if dataLogin.rol == 1 %}
-            <div class="card-dark p-4 mb-4">
-              <h1 class="text-gradient">BIENVENIDO ADMINISTRADOR</h1>
-            </div>
-            {% endif %}
-            {% if dataLogin.rol == 2 %}
-            <div class="card-dark p-4 mb-4">
-              <h1 class="text-gradient">BIENVENIDO USUARIO</h1>
-            </div>
-            {% endif %}
+            <!-- Dashboard content will be injected here -->
             {% endblock %}
           </div>
         </main>

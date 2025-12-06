@@ -1,0 +1,513 @@
+{% extends 'public/base_cpanel.html' %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/dashboard-coresense.css') }}">
+{% endblock %}
+
+{% block body %}
+<!-- Dashboard Content -->
+  
+  <!-- Quick Stats -->
+  <section class="animate-fade-in">
+    <div class="quick-stats-grid">
+      <!-- Total Power -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-icon primary">
+            <i class="bi bi-lightning-charge-fill"></i>
+          </div>
+          <span class="stat-card-badge success">Normal</span>
+        </div>
+        <div class="stat-card-value">248.5 kW</div>
+        <div class="stat-card-label">Total Power</div>
+      </div>
+
+      <!-- Active Alerts -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-icon warning">
+            <i class="bi bi-bell-fill"></i>
+          </div>
+          <span class="stat-card-badge warning">3 Active</span>
+        </div>
+        <div class="stat-card-value">11</div>
+        <div class="stat-card-label">Active Alerts</div>
+      </div>
+
+      <!-- Equipment Status -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-icon success">
+            <i class="bi bi-server"></i>
+          </div>
+          <span class="stat-card-badge success">Operational</span>
+        </div>
+        <div class="stat-card-value">47/48</div>
+        <div class="stat-card-label">Equipment Online</div>
+      </div>
+
+      <!-- Access Events -->
+      <div class="stat-card">
+        <div class="stat-card-header">
+          <div class="stat-card-icon primary">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <span class="stat-card-badge success">Secure</span>
+        </div>
+        <div class="stat-card-value">124</div>
+        <div class="stat-card-label">Access Events Today</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Grid -->
+  <div class="row g-3 g-lg-4">
+    <!-- Left Column: Charts -->
+    <div class="col-12 col-xl-8">
+      <!-- Power Consumption Chart -->
+      <section class="animate-fade-in" style="animation-delay: 0.1s;">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <h3 class="chart-card-title">Power Consumption</h3>
+              <p class="chart-card-subtitle">Real-time monitoring • Last updated: Just now</p>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2">
+              <i class="bi bi-download"></i>
+              <span class="d-none d-sm-inline">Export</span>
+            </button>
+          </div>
+          
+          <!-- Chart Tabs -->
+          <div class="d-flex gap-1 mb-4 p-1 bg-light rounded-3" style="width: fit-content;">
+            <button class="chart-tab active" data-tab="realtime">Realtime</button>
+            <button class="chart-tab" data-tab="hourly">Hourly</button>
+            <button class="chart-tab" data-tab="weekly">Weekly</button>
+          </div>
+          
+          <!-- Chart Canvas -->
+          <div style="position: relative; height: 280px;">
+            <canvas id="powerChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Environmental Monitoring -->
+      <section class="animate-fade-in" style="animation-delay: 0.2s;">
+        <h2 class="section-title">
+          <i class="bi bi-thermometer-half"></i>
+          Environmental Monitoring
+        </h2>
+    <div class="environmental-grid">
+      <!-- Temperature -->
+      <div class="env-tile">
+        <div class="env-tile-header">
+          <div class="env-tile-icon temperature">
+            <i class="bi bi-thermometer-half"></i>
+          </div>
+          <div>
+            <p class="env-tile-title">External Air</p>
+          </div>
+        </div>
+        <div class="env-tile-value">18.5°C</div>
+        <div class="env-tile-progress">
+          <div class="env-tile-progress-bar optimal" style="width: 65%;"></div>
+        </div>
+      </div>
+
+      <!-- Humidity -->
+      <div class="env-tile">
+        <div class="env-tile-header">
+          <div class="env-tile-icon humidity">
+            <i class="bi bi-droplet-fill"></i>
+          </div>
+          <div>
+            <p class="env-tile-title">Data Hall Humidity</p>
+          </div>
+        </div>
+        <div class="env-tile-value">48.2%</div>
+        <div class="env-tile-progress">
+          <div class="env-tile-progress-bar optimal" style="width: 48%;"></div>
+        </div>
+      </div>
+
+      <!-- Airflow -->
+      <div class="env-tile">
+        <div class="env-tile-header">
+          <div class="env-tile-icon airflow">
+            <i class="bi bi-wind"></i>
+          </div>
+          <div>
+            <p class="env-tile-title">Supply Airflow</p>
+          </div>
+        </div>
+        <div class="env-tile-value">2,840 CFM</div>
+        <div class="env-tile-progress">
+          <div class="env-tile-progress-bar optimal" style="width: 72%;"></div>
+        </div>
+      </div>
+
+      <!-- Pressure -->
+      <div class="env-tile">
+        <div class="env-tile-header">
+          <div class="env-tile-icon pressure">
+            <i class="bi bi-speedometer2"></i>
+          </div>
+          <div>
+            <p class="env-tile-title">Differential Pressure</p>
+          </div>
+        </div>
+        <div class="env-tile-value">0.05 inWC</div>
+        <div class="env-tile-progress">
+          <div class="env-tile-progress-bar optimal" style="width: 60%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      <!-- Critical Equipment -->
+      <section class="animate-fade-in" style="animation-delay: 0.3s;">
+    <h2 class="section-title">
+      <i class="bi bi-gear-fill"></i>
+      Critical Equipment
+    </h2>
+    <div class="equipment-grid">
+      <!-- Equipment 1 -->
+      <div class="equipment-card">
+        <div class="equipment-card-image">
+          <img src="{{ url_for('static', filename='fotos/cooler.jpeg') }}" alt="Air Cooled Water Chiller">
+          <span class="equipment-status-dot working"></span>
+        </div>
+        <div class="equipment-card-body">
+          <h3 class="equipment-card-name">Air Cooled Water Chiller 1A</h3>
+          <p class="equipment-card-model">Carrier 30XA</p>
+          <div class="equipment-card-info">
+            <div><i class="bi bi-tag"></i> Reference: CHWC-01A</div>
+            <div><i class="bi bi-building"></i> Mechanical Room 1</div>
+            <div><i class="bi bi-link-45deg"></i> Cooling Loop A</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment 2 -->
+      <div class="equipment-card">
+        <div class="equipment-card-image">
+          <img src="{{ url_for('static', filename='fotos/generador.png') }}" alt="UPS System">
+          <span class="equipment-status-dot working"></span>
+        </div>
+        <div class="equipment-card-body">
+          <h3 class="equipment-card-name">UPS System 2B</h3>
+          <p class="equipment-card-model">Eaton 9395P</p>
+          <div class="equipment-card-info">
+            <div><i class="bi bi-tag"></i> Reference: UPS-02B</div>
+            <div><i class="bi bi-building"></i> Power Room 2</div>
+            <div><i class="bi bi-link-45deg"></i> Power Bus B</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment 3 -->
+      <div class="equipment-card">
+        <div class="equipment-card-image">
+          <img src="{{ url_for('static', filename='fotos/crac1.jpeg') }}" alt="CRAC Unit">
+          <span class="equipment-status-dot warning"></span>
+        </div>
+        <div class="equipment-card-body">
+          <h3 class="equipment-card-name">CRAC Unit 3C</h3>
+          <p class="equipment-card-model">Liebert DS</p>
+          <div class="equipment-card-info">
+            <div><i class="bi bi-tag"></i> Reference: CRAC-03C</div>
+            <div><i class="bi bi-building"></i> Data Hall 3</div>
+            <div><i class="bi bi-link-45deg"></i> Cooling Zone C</div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </section>
+    </div>
+
+    <!-- Right Column: Status & Alerts -->
+    <div class="col-12 col-xl-4">
+      <!-- General Status Card -->
+      <section class="animate-fade-in" style="animation-delay: 0.15s;">
+        <div class="status-card">
+          <div class="status-card-header">
+            <div>
+              <h3 class="status-card-title">General Status</h3>
+              <p class="status-card-subtitle">San Francisco DC 1</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <div class="status-dot-pulse success"></div>
+              <span class="status-label success">Operational</span>
+            </div>
+          </div>
+
+          <!-- Alert Levels -->
+          <div class="alert-levels mb-4">
+            <div class="alert-level-item high">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span class="alert-level-label">High Priority</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="alert-badge">3</span>
+                <i class="bi bi-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="alert-level-item medium">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span class="alert-level-label">Medium Priority</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="alert-badge">5</span>
+                <i class="bi bi-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="alert-level-item low">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-check-circle-fill"></i>
+                <span class="alert-level-label">Low Priority</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="alert-badge">8</span>
+                <i class="bi bi-chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="alert-level-item offline">
+              <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-wifi-off"></i>
+                <span class="alert-level-label">Offline</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <span class="alert-badge">2</span>
+                <i class="bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subsystems -->
+          <div class="subsystems-section">
+            <h4 class="subsystems-title">SUBSYSTEMS</h4>
+            <div class="subsystems-grid">
+              <div class="subsystem-item">
+                <div class="subsystem-dot online"></div>
+                <span>Generators</span>
+              </div>
+              <div class="subsystem-item">
+                <div class="subsystem-dot online"></div>
+                <span>Switchboard</span>
+              </div>
+              <div class="subsystem-item">
+                <div class="subsystem-dot warning"></div>
+                <span>Backup Power</span>
+              </div>
+              <div class="subsystem-item">
+                <div class="subsystem-dot online"></div>
+                <span>UPS Systems</span>
+              </div>
+              <div class="subsystem-item">
+                <div class="subsystem-dot online"></div>
+                <span>PDUs</span>
+              </div>
+              <div class="subsystem-item">
+                <div class="subsystem-dot online"></div>
+                <span>HVAC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+</div>
+
+<!-- Chart.js Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('powerChart');
+  if (!ctx) return;
+
+  // Data sets
+  const dataRealtTime = {
+    labels: ['00:00', '00:05', '00:10', '00:15', '00:20', '00:25', '00:30', '00:35', '00:40', '00:45', '00:50', '00:55'],
+    datasets: [
+      {
+        label: 'PS 1A',
+        data: [42.3, 43.1, 44.2, 43.8, 45.1, 44.6, 46.2, 45.8, 47.1, 46.5, 48.2, 47.8],
+        borderColor: 'hsl(210, 80%, 55%)',
+        backgroundColor: 'hsla(210, 80%, 55%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 2A',
+        data: [38.1, 37.8, 39.2, 38.5, 40.1, 39.7, 41.3, 40.8, 42.1, 41.5, 43.2, 42.8],
+        borderColor: 'hsl(142, 70%, 45%)',
+        backgroundColor: 'hsla(142, 70%, 45%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 3B',
+        data: [45.2, 44.9, 46.1, 45.7, 47.3, 46.8, 48.1, 47.6, 49.2, 48.5, 50.1, 49.7],
+        borderColor: 'hsl(38, 92%, 50%)',
+        backgroundColor: 'hsla(38, 92%, 50%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      }
+    ]
+  };
+
+  const dataHourly = {
+    labels: ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
+    datasets: [
+      {
+        label: 'PS 1A',
+        data: [41.2, 52.4, 58.1, 62.3, 64.8, 61.2, 55.6, 48.3, 44.1],
+        borderColor: 'hsl(210, 80%, 55%)',
+        backgroundColor: 'hsla(210, 80%, 55%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 2A',
+        data: [36.8, 47.2, 52.8, 56.1, 58.5, 55.3, 50.2, 43.8, 39.5],
+        borderColor: 'hsl(142, 70%, 45%)',
+        backgroundColor: 'hsla(142, 70%, 45%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 3B',
+        data: [43.5, 55.1, 61.3, 65.2, 67.9, 64.1, 58.4, 51.2, 46.8],
+        borderColor: 'hsl(38, 92%, 50%)',
+        backgroundColor: 'hsla(38, 92%, 50%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      }
+    ]
+  };
+
+  const dataWeekly = {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    datasets: [
+      {
+        label: 'PS 1A',
+        data: [52.1, 54.3, 56.8, 55.2, 58.1, 48.5, 45.2],
+        borderColor: 'hsl(210, 80%, 55%)',
+        backgroundColor: 'hsla(210, 80%, 55%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 2A',
+        data: [47.3, 49.1, 51.2, 50.1, 52.8, 43.9, 40.8],
+        borderColor: 'hsl(142, 70%, 45%)',
+        backgroundColor: 'hsla(142, 70%, 45%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      },
+      {
+        label: 'PS 3B',
+        data: [54.8, 56.9, 59.4, 57.8, 61.2, 51.1, 47.9],
+        borderColor: 'hsl(38, 92%, 50%)',
+        backgroundColor: 'hsla(38, 92%, 50%, 0.1)',
+        tension: 0.4,
+        borderWidth: 2
+      }
+    ]
+  };
+
+  // Chart configuration
+  let currentData = dataRealtTime;
+  
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: currentData,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: {
+            usePointStyle: true,
+            padding: 15,
+            font: { size: 12 }
+          }
+        },
+        tooltip: {
+          backgroundColor: 'white',
+          titleColor: 'hsl(215, 25%, 15%)',
+          bodyColor: 'hsl(215, 15%, 50%)',
+          borderColor: 'hsl(214, 20%, 91%)',
+          borderWidth: 1,
+          padding: 12,
+          boxPadding: 6,
+          usePointStyle: true,
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' kW';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            font: { size: 11 },
+            color: 'hsl(215, 15%, 50%)'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: 'hsl(214, 20%, 91%)',
+            drawBorder: false
+          },
+          ticks: {
+            font: { size: 11 },
+            color: 'hsl(215, 15%, 50%)',
+            callback: function(value) {
+              return value + ' kW';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Tab switching
+  const tabs = document.querySelectorAll('.chart-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      const tabType = this.getAttribute('data-tab');
+      if (tabType === 'realtime') {
+        chart.data = dataRealtTime;
+      } else if (tabType === 'hourly') {
+        chart.data = dataHourly;
+      } else if (tabType === 'weekly') {
+        chart.data = dataWeekly;
+      }
+      chart.update();
+    });
+  });
+});
+</script>
+{% endblock %}
