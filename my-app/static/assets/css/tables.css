@@ -1,0 +1,146 @@
+/* Estilos para tablas modernas */
+
+.modern-table-wrapper {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  margin: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+}
+
+.modern-table {
+  width: 100%;
+  margin: 0;
+}
+
+.modern-table thead {
+  background: var(--color-bg-gray);
+}
+
+.modern-table thead th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: none;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.modern-table tbody tr {
+  border-bottom: 1px solid var(--color-border-light);
+  transition: var(--transition-fast);
+}
+
+.modern-table tbody tr:hover {
+  background: var(--color-bg-gray);
+}
+
+.modern-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.modern-table tbody td {
+  padding: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  vertical-align: middle;
+}
+
+/* Controles DataTables personalizados */
+.datatables-controls {
+  padding: 0 var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.datatables-search {
+  position: relative;
+  min-width: 250px;
+}
+
+.datatables-search input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) 2.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-normal);
+}
+
+.datatables-search input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.datatables-search i {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
+}
+
+.datatables-length select {
+  padding: var(--spacing-sm) 2rem var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  background: var(--color-bg-white);
+  cursor: pointer;
+}
+
+/* Estilos DataTables */
+.dataTables_wrapper .dataTables_info {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  padding: var(--spacing-xs) var(--spacing-md);
+  margin: 0 var(--spacing-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-white);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--color-bg-gray);
+  border-color: var(--color-border-dark);
+  color: var(--color-text-primary);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+  display: none;
+}

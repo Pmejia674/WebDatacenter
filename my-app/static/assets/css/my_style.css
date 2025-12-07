@@ -176,6 +176,29 @@ tbody tr:hover {
   width: 17.25rem !important;
 }
 
+/* Reducir márgenes laterales del contenedor principal */
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm,
+.container {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+
+@media (min-width: 992px) {
+  .container-xxl,
+  .container-xl,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+  }
+}
+
 @media (min-width: 1400px) {
   .container-xxl,
   .container-xl,
@@ -183,7 +206,9 @@ tbody tr:hover {
   .container-md,
   .container-sm,
   .container {
-    max-width: 95% !important;
+    max-width: 100% !important;
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
   }
 }
 

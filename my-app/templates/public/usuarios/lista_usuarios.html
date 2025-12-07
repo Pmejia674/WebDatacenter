@@ -1,193 +1,6 @@
 {% extends 'public/base_cpanel.html' %}
 {% block title %}Lista de Usuarios{% endblock %}
 
-{% block customCSS %}
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
-
-<style>
-  .modern-card {
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-  }
-  
-  .card-header-modern {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .card-title-modern {
-    font-size: 1.125rem;
-    font-weight: 500;
-    color: #111827;
-    margin: 0;
-  }
-  
-  .btn-primary-modern {
-    background: #3b82f6;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  
-  .btn-primary-modern:hover {
-    background: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-  }
-  
-  .modern-table-wrapper {
-    border-radius: 8px;
-    border: 1px solid #e5e7eb;
-    overflow: hidden;
-    margin: 1.5rem;
-  }
-  
-  .modern-table {
-    width: 100%;
-    margin: 0;
-  }
-  
-  .modern-table thead {
-    background: #f9fafb;
-  }
-  
-  .modern-table thead th {
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #374151;
-    text-transform: none;
-    border-bottom: 1px solid #e5e7eb;
-    white-space: nowrap;
-  }
-  
-  .modern-table tbody tr {
-    border-bottom: 1px solid #f3f4f6;
-    transition: background-color 0.15s;
-  }
-  
-  .modern-table tbody tr:hover {
-    background: #f9fafb;
-  }
-  
-  .modern-table tbody tr:last-child {
-    border-bottom: none;
-  }
-  
-  .modern-table tbody td {
-    padding: 1rem;
-    font-size: 0.875rem;
-    color: #374151;
-    vertical-align: middle;
-  }
-  
-  .badge-modern {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border-radius: 9999px;
-    border: 1px solid;
-  }
-  
-  .badge-blue {
-    background: #dbeafe;
-    color: #1e40af;
-    border-color: #93c5fd;
-  }
-  
-  .badge-purple {
-    background: #e0e7ff;
-    color: #4338ca;
-    border-color: #a5b4fc;
-  }
-  
-  .badge-gray {
-    background: #f3f4f6;
-    color: #4b5563;
-    border-color: #d1d5db;
-  }
-  
-  .badge-green {
-    background: #d1fae5;
-    color: #065f46;
-    border-color: #6ee7b7;
-  }
-  
-  .btn-action {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.875rem;
-    border-radius: 6px;
-    border: none;
-    font-weight: 500;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-  }
-  
-  .btn-edit {
-    background: #3b82f6;
-    color: white;
-  }
-  
-  .btn-edit:hover {
-    background: #2563eb;
-    color: white;
-    transform: translateY(-1px);
-  }
-  
-  .btn-delete {
-    background: #ef4444;
-    color: white;
-  }
-  
-  .btn-delete:hover {
-    background: #dc2626;
-    color: white;
-    transform: translateY(-1px);
-  }
-  
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: #6b7280;
-  }
-  
-  .empty-state-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-  }
-  
-  .empty-state-text {
-    font-size: 1.125rem;
-    font-weight: 500;
-    color: #374151;
-  }
-</style>
-{% endblock %}
-
 {% block body %}
 {% if (resp_usuariosBD) %}
 <div class="modern-card">
@@ -199,8 +12,23 @@
     </a>
   </div>
   
+  <div class="datatables-controls">
+    <div class="datatables-length">
+      <select id="lengthSelect" class="form-select-sm">
+        <option value="10">10 registros</option>
+        <option value="25">25 registros</option>
+        <option value="50">50 registros</option>
+        <option value="-1">Todos</option>
+      </select>
+    </div>
+    <div class="datatables-search">
+      <i class="bi bi-search"></i>
+      <input type="text" id="searchInput" placeholder="Buscar usuarios..." />
+    </div>
+  </div>
+  
   <div class="modern-table-wrapper table-responsive">
-    <table class="modern-table table-hover js-datatable" id="tablaUsuarios" data-has-actions="true" data-options='{"responsive": false}'>
+    <table class="modern-table table-hover js-datatable" id="tablaUsuarios" data-has-actions="true" data-options='{"responsive": false, "dom": "rt"}'>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -250,6 +78,11 @@
       </tbody>
     </table>
   </div>
+  
+  <div class="datatables-controls">
+    <div id="tableInfo" class="dataTables_info"></div>
+    <div id="tablePagination" class="dataTables_paginate"></div>
+  </div>
 </div>
 {% else %}
 <div class="modern-card">
@@ -258,7 +91,7 @@
       <i class="bi bi-people"></i>
     </div>
     <p class="empty-state-text">No hay usuarios registrados</p>
-    <p style="color: #6b7280; margin-top: 0.5rem;">Comienza agregando tu primer usuario</p>
+    <p style="color: var(--color-text-muted); margin-top: 0.5rem;">Comienza agregando tu primer usuario</p>
     <a href="./register-user" class="btn-primary-modern" style="margin-top: 1.5rem;">
       <i class="bi bi-plus-lg"></i>
       Agregar Usuario
@@ -272,11 +105,58 @@
 <script>
   function eliminarUsuario(id) {
     if (confirm("¿Estás seguro que deseas eliminar este usuario? Esta acción no se puede deshacer.")) {
-      let url = `/borrar-usuario/${id}`;
-      if (url) {
-        window.location.href = url;
-      }
+      window.location.href = `/borrar-usuario/${id}`;
     }
   }
+  
+  $(document).ready(function() {
+    setTimeout(function() {
+      var table = $('#tablaUsuarios').DataTable();
+      
+      $('#searchInput').on('keyup', function() {
+        table.search(this.value).draw();
+      });
+      
+      $('#lengthSelect').on('change', function() {
+        table.page.len(this.value).draw();
+      });
+      
+      table.on('draw', function() {
+        var info = table.page.info();
+        $('#tableInfo').html('Mostrando ' + (info.start + 1) + ' a ' + info.end + ' de ' + info.recordsTotal + ' usuarios');
+        
+        var html = '';
+        var currentPage = info.page;
+        var pages = info.pages;
+        
+        html += '<button class="paginate_button ' + (currentPage === 0 ? 'disabled' : '') + '" data-page="prev">Anterior</button>';
+        
+        for (var i = 0; i < pages; i++) {
+          if (i === 0 || i === pages - 1 || (i >= currentPage - 1 && i <= currentPage + 1)) {
+            html += '<button class="paginate_button ' + (i === currentPage ? 'current' : '') + '" data-page="' + i + '">' + (i + 1) + '</button>';
+          } else if (i === currentPage - 2 || i === currentPage + 2) {
+            html += '<span class="ellipsis">...</span>';
+          }
+        }
+        
+        html += '<button class="paginate_button ' + (currentPage === pages - 1 ? 'disabled' : '') + '" data-page="next">Siguiente</button>';
+        
+        $('#tablePagination').html(html);
+      });
+      
+      $('#tablePagination').on('click', '.paginate_button:not(.disabled)', function() {
+        var page = $(this).data('page');
+        if (page === 'prev') {
+          table.page('previous').draw('page');
+        } else if (page === 'next') {
+          table.page('next').draw('page');
+        } else {
+          table.page(page).draw('page');
+        }
+      });
+      
+      table.draw();
+    }, 100);
+  });
 </script>
 {% endblock %}
