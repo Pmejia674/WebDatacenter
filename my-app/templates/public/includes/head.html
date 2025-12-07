@@ -1,59 +1,36 @@
 <meta charset="utf-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-<title>{% block Dugotex %}{% endblock %}</title>
-<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0" />
+<title>{% block title %}DataCenter Manager - Cloud28{% endblock %}</title>
+<meta name="description" content="Sistema de gestión de data center con monitoreo en tiempo real, control de acceso y análisis de consumo energético." />
+<meta name="theme-color" content="#3b82f6" />
 <link
   rel="icon"
   type="image/x-icon"
   href="{{ url_for('static', filename ='assets/img/favicon.ico') }}" />
 
+<!-- Preconnect para fonts CDN -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap"
-  rel="stylesheet" />
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/vendor/fonts/boxicons.css') }}" />
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/vendor/css/core.css') }}"
-  class="template-customizer-core-css') }}" />
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/vendor/css/theme-default.css') }}"
-  class="template-customizer-theme-css" />
+<link rel="preconnect" href="https://cdn.datatables.net" />
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/css/my_style.css') }}" />
+<!-- CSS crítico - carga inmediata -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/core.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/css/theme-default.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/my_style.css') }}" />
 
-<!-- CoreSense365 Sidebar CSS -->
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/css/sidebar-coresense.css') }}" />
+<!-- CSS específicos -->
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/sidebar-coresense.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/header-coresense.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-<!-- CoreSense365 Header CSS -->
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/css/header-coresense.css') }}" />
-
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename ='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-<script src="{{ url_for('static', filename ='assets/vendor/js/helpers.js') }}"></script>
-<script src="{{ url_for('static', filename ='assets/js/config.js') }}"></script>
-
-<!-- Variables globales CSS -->
+<!-- Variables y componentes globales -->
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/variables.css') }}" />
-<!-- Componentes reutilizables -->
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/components.css') }}" />
-<!-- Estilos de tablas -->
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/tables.css') }}" />
-<!-- DataTables CSS (Bootstrap 5 theme) -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+
+<!-- JS crítico inline -->
+<script>window.templateConfig={rtl:false,theme:"light"};</script>
