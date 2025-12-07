@@ -86,6 +86,7 @@ body {
   justify-content: center;
 }
 
+
 /* ========================================
    Sidebar Header (Logo Section)
 ======================================== */
@@ -473,32 +474,6 @@ body {
   }
 }
 
-/* ========================================
-   Animations
-======================================== */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.nav-item {
-  animation: slideIn 0.3s ease forwards;
-}
-
-.nav-item:nth-child(1) { animation-delay: 0.05s; }
-.nav-item:nth-child(2) { animation-delay: 0.1s; }
-.nav-item:nth-child(3) { animation-delay: 0.15s; }
-.nav-item:nth-child(4) { animation-delay: 0.2s; }
-.nav-item:nth-child(5) { animation-delay: 0.25s; }
-.nav-item:nth-child(6) { animation-delay: 0.3s; }
-.nav-item:nth-child(7) { animation-delay: 0.35s; }
-.nav-item:nth-child(8) { animation-delay: 0.4s; }
 
 /* ========================================
    Utility Classes
