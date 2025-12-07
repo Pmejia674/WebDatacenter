@@ -264,7 +264,6 @@ body {
   min-height: 100vh;
   padding: 0;
   background-color: var(--cs-bg-primary);
-  transition: margin-left var(--sidebar-ease), width var(--sidebar-ease);
 }
 
 .sidebar-coresense.collapsed ~ .main-content {
