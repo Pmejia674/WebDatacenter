@@ -48,7 +48,10 @@
 
 /* Controles DataTables personalizados */
 .datatables-controls {
-  padding: 0 var(--spacing-xl);
+  padding-top: 20px;              /* ← el padding superior que quieres */
+  padding-left: var(--spacing-xl);
+  padding-right: var(--spacing-xl);
+  
   margin-bottom: var(--spacing-lg);
   display: flex;
   justify-content: space-between;
@@ -56,6 +59,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-lg);
 }
+
 
 .datatables-search {
   position: relative;

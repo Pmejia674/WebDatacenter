@@ -5,7 +5,7 @@
 {% if (resp_usuariosBD) %}
 <div class="modern-card">
   <div class="card-header-modern">
-    <h3 class="card-title-modern">Usuarios y Credenciales</h3>
+    <h3 class="card-title-modern">Lista de Usuarios</h3>
     <a href="./register-user" class="btn-primary-modern">
       <i class="bi bi-plus-lg"></i>
       Nuevo Usuario
@@ -64,13 +64,11 @@
             {%endfor%}
           </td>
           <td style="text-align: right;">
-            <a href="/mi-perfil/{{usuario.id_usuario}}" class="btn-action btn-edit" title="Editar usuario">
+            <a href="/mi-perfil/{{usuario.id_usuario}}" class="btn-action btn-edit" title="Editar">
               <i class="bi bi-pencil"></i>
-              Editar
             </a>
-            <a onclick="eliminarUsuario('{{ usuario.id_usuario }}');" class="btn-action btn-delete" style="cursor: pointer;" title="Eliminar usuario">
+            <a onclick="eliminarUsuario('{{ usuario.id_usuario }}');" class="btn-action btn-delete" style="cursor: pointer;" title="Eliminar">
               <i class="bi bi-trash3"></i>
-              Eliminar
             </a>
           </td>
         </tr>
