@@ -48,3 +48,9 @@
   href="{{ url_for('static', filename ='assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 <script src="{{ url_for('static', filename ='assets/vendor/js/helpers.js') }}"></script>
 <script src="{{ url_for('static', filename ='assets/js/config.js') }}"></script>
+
+<!-- DataTables CSS (Bootstrap 5 theme + responsive) -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" />
+<!-- Proyecto: estilos mínimos para DataTables -->
+<link rel="stylesheet" href="{{ url_for('static', filename ='assets/css/datatables.css') }}" />

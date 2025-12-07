@@ -1,97 +1,277 @@
 {% extends 'public/base_cpanel.html' %}
-<!--Cambiando el title-->
-{% block title %}Crud - Python 🐍 | Lista de Usuarios{% endblock %}
-<!---->
-{% block body %} {% if (resp_usuariosBD) %}
+{% block title %}Lista de Usuarios{% endblock %}
 
-<div class="card content_consignaciones" style="border-radius: 0px !important">
-  <section id="respuestaFiltroMes">
-    <h2 class="text-center mt-5 mb-5">
-      Lista de Usuarios
-      <hr />
-    </h2>
+{% block customCSS %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
 
-    <p class="btn btn-success" style="margin-left: 10px;">
-      <a href="./register-user">
-        <span style="color: white;">Nuevo Usuario</span>
-      </a>
-    </p>
+<style>
+  .modern-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+  
+  .card-header-modern {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .card-title-modern {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #111827;
+    margin: 0;
+  }
+  
+  .btn-primary-modern {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  .btn-primary-modern:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+  }
+  
+  .modern-table-wrapper {
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    margin: 1.5rem;
+  }
+  
+  .modern-table {
+    width: 100%;
+    margin: 0;
+  }
+  
+  .modern-table thead {
+    background: #f9fafb;
+  }
+  
+  .modern-table thead th {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    text-transform: none;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+  }
+  
+  .modern-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.15s;
+  }
+  
+  .modern-table tbody tr:hover {
+    background: #f9fafb;
+  }
+  
+  .modern-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  .modern-table tbody td {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    vertical-align: middle;
+  }
+  
+  .badge-modern {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    border: 1px solid;
+  }
+  
+  .badge-blue {
+    background: #dbeafe;
+    color: #1e40af;
+    border-color: #93c5fd;
+  }
+  
+  .badge-purple {
+    background: #e0e7ff;
+    color: #4338ca;
+    border-color: #a5b4fc;
+  }
+  
+  .badge-gray {
+    background: #f3f4f6;
+    color: #4b5563;
+    border-color: #d1d5db;
+  }
+  
+  .badge-green {
+    background: #d1fae5;
+    color: #065f46;
+    border-color: #6ee7b7;
+  }
+  
+  .btn-action {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .btn-edit {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .btn-edit:hover {
+    background: #2563eb;
+    color: white;
+    transform: translateY(-1px);
+  }
+  
+  .btn-delete {
+    background: #ef4444;
+    color: white;
+  }
+  
+  .btn-delete:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-1px);
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+  }
+  
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  
+  .empty-state-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #374151;
+  }
+</style>
+{% endblock %}
 
-    <div class="table-responsive text-nowrap">
-      <table class="table table-hover">
-        <thead>
-          <tr style="background-color: #ddd">
-            <th>Cédula</th>
-            <th>Nombre</th>
-            <th>Área</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for usuario in resp_usuariosBD %}
-          <tr>
-            <td>{{ usuario.cedula}}</td>
-            <td>{{ usuario.nombre_usuario}} {{usuario.apellido_usuario}}</td> 
-            <td>
-              {%for area in areas%}
-              {%if area.id_area == usuario.id_area%}
-              {{area.nombre_area}}
-              {%endif%}
-              {%endfor%}
-            </td>
-            <td>
-              {% for rol in roles%}
-              {% if rol.id_rol == usuario.id_rol%}
+{% block body %}
+{% if (resp_usuariosBD) %}
+<div class="modern-card">
+  <div class="card-header-modern">
+    <h3 class="card-title-modern">Usuarios y Credenciales</h3>
+    <a href="./register-user" class="btn-primary-modern">
+      <i class="bi bi-plus-lg"></i>
+      Nuevo Usuario
+    </a>
+  </div>
+  
+  <div class="modern-table-wrapper table-responsive">
+    <table class="modern-table table-hover js-datatable" id="tablaUsuarios" data-has-actions="true" data-options='{"responsive": false}'>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Cédula</th>
+          <th>Área</th>
+          <th>Rol</th>
+          <th style="text-align: right;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in resp_usuariosBD %}
+        <tr>
+          <td>
+            <span style="font-weight: 500;">{{ usuario.nombre_usuario}} {{usuario.apellido_usuario}}</span>
+          </td>
+          <td>
+            <span style="font-family: monospace; font-size: 0.875rem;">{{ usuario.cedula}}</span>
+          </td>
+          <td>
+            {%for area in areas%}
+            {%if area.id_area == usuario.id_area%}
+            <span class="badge-modern badge-blue">{{area.nombre_area}}</span>
+            {%endif%}
+            {%endfor%}
+          </td>
+          <td>
+            {% for rol in roles%}
+            {% if rol.id_rol == usuario.id_rol%}
+            <span class="badge-modern {% if rol.nombre_rol == 'Administrador' %}badge-purple{% else %}badge-gray{% endif %}">
               {{ rol.nombre_rol}}
-              {%endif%}
-              {%endfor%}
-            </td>
-            <td>
-              <a
-                  href="/mi-perfil/{{usuario.id_usuario}}"
-                  class="btn btn-success btn-sm"
-                  tooltip="Actualizar Registro">
-                  <i class="bi bi-arrow-clockwise"></i>
-                  Actualizar
-                </a>
-                <a
-                  style="color: white;"
-                  onclick="eliminarUsuario('{{ usuario.id_usuario }}');"
-                  class="btn btn-danger btn-sm"
-                  data-bs-toggle="tooltip"
-                  data-bs-offset="0,4"
-                  data-bs-placement="top"
-                  data-bs-html="true"
-                  title="<span>Eliminar a {{ usuario.nombre_usuario }}</span>">
-                  <i class="bi bi-trash3"></i>
-                  Eliminar
-                </a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </section>
+            </span>
+            {%endif%}
+            {%endfor%}
+          </td>
+          <td style="text-align: right;">
+            <a href="/mi-perfil/{{usuario.id_usuario}}" class="btn-action btn-edit" title="Editar usuario">
+              <i class="bi bi-pencil"></i>
+              Editar
+            </a>
+            <a onclick="eliminarUsuario('{{ usuario.id_usuario }}');" class="btn-action btn-delete" style="cursor: pointer;" title="Eliminar usuario">
+              <i class="bi bi-trash3"></i>
+              Eliminar
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% else %}
-<div class="container mt-3 mb-3" style="width: 100% !important">
-  <div class="row justify-content-md-center mb-2">
-    <div class="col-12">
-      <h2 class="text-center">No hay usuarios 😭</h2>
+<div class="modern-card">
+  <div class="empty-state">
+    <div class="empty-state-icon">
+      <i class="bi bi-people"></i>
     </div>
+    <p class="empty-state-text">No hay usuarios registrados</p>
+    <p style="color: #6b7280; margin-top: 0.5rem;">Comienza agregando tu primer usuario</p>
+    <a href="./register-user" class="btn-primary-modern" style="margin-top: 1.5rem;">
+      <i class="bi bi-plus-lg"></i>
+      Agregar Usuario
+    </a>
   </div>
 </div>
 {% endif %}
-<!--Fin del Block-->
 {% endblock %}
 
-<!--Script Custom-->
 {% block customJS %}
 <script>
   function eliminarUsuario(id) {
-    if (confirm("¿Estas seguro que deseas eliminar el Usuario?")) {
+    if (confirm("¿Estás seguro que deseas eliminar este usuario? Esta acción no se puede deshacer.")) {
       let url = `/borrar-usuario/${id}`;
       if (url) {
         window.location.href = url;
