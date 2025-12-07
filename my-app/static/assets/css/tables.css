@@ -148,3 +148,43 @@
 .dataTables_wrapper .dataTables_filter label {
   display: none;
 }
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+  .modern-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modern-table {
+    min-width: 600px;
+  }
+
+  .datatables-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .datatables-search {
+    min-width: 100%;
+    order: 2;
+  }
+
+  .datatables-length {
+    order: 0;
+  }
+
+  .modern-table-wrapper + .datatables-controls {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dataTables_wrapper .dataTables_info {
+    text-align: center;
+  }
+
+  .dataTables_wrapper .dataTables_paginate {
+    text-align: center;
+  }
+}
