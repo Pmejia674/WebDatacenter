@@ -1,78 +1,38 @@
-/* ========================================
-   CoreSense365 Sidebar Styles
-   Modern Dark Theme for Flask Bootstrap
-======================================== */
+/* CoreSense365 Sidebar - Refactorizado */
 
 :root {
-  /* CoreSense365 Main Content Colors - Light Mode */
   --cs-bg-primary: hsl(40, 20%, 98%);
-  --cs-bg-secondary: hsl(0, 0%, 100%);
-  --cs-bg-hover: hsl(210, 30%, 95%);
-  --cs-border: hsl(214, 20%, 91%);
   --cs-text-primary: hsl(215, 25%, 15%);
-  --cs-text-secondary: hsl(215, 15%, 50%);
-  --cs-accent: hsl(210, 55%, 25%);
-  --cs-accent-hover: hsl(210, 55%, 20%);
   --cs-success: hsl(142, 70%, 45%);
   --cs-danger: hsl(0, 72%, 51%);
-  --cs-warning: hsl(38, 92%, 50%);
-  
-  /* Sidebar - SIEMPRE Deep Navy (no cambia con tema) */
-  --cs-sidebar-bg: hsl(215, 50%, 18%);
-  --cs-sidebar-text: hsl(210, 20%, 90%);
-  --cs-sidebar-accent: hsl(210, 60%, 60%);
-  --cs-sidebar-border: hsl(215, 40%, 25%);
-  --cs-sidebar-hover: hsl(215, 45%, 25%);
-  --cs-sidebar-title: hsl(0, 0%, 100%);
-  
-  /* Sidebar Dimensions */
-  --sidebar-width: 260px;
-  --sidebar-collapsed: 72px;
-  --sidebar-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ========================================
-   Body & Layout Reset
-======================================== */
 body {
-  background-color: hsl(40, 20%, 98%);
-  color: hsl(215, 25%, 15%);
+  background-color: var(--cs-bg-primary);
+  color: var(--cs-text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow-x: hidden;
 }
 
-.layout-wrapper {
-  display: flex;
-  min-height: 100vh;
-}
+.layout-wrapper { display: flex; min-height: 100vh; }
+.layout-container { display: flex; width: 100%; }
 
-.layout-container {
-  display: flex;
-  width: 100%;
-}
-
-/* ========================================
-   Sidebar Main Container
-======================================== */
 .sidebar-coresense {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, var(--cs-sidebar-bg) 0%, hsl(215, 55%, 14%) 100%);
-  border-right: 1px solid var(--cs-sidebar-border);
-  transition: all var(--sidebar-transition);
+  background: var(--sidebar-bg-gradient);
+  border-right: 1px solid var(--sidebar-border);
   z-index: 1040;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: transform var(--sidebar-ease), box-shadow var(--sidebar-ease);
 }
 
-/* Collapsed State */
-.sidebar-coresense.collapsed {
-  width: var(--sidebar-collapsed);
-}
+.sidebar-coresense.collapsed { width: var(--sidebar-collapsed); }
 
 .sidebar-coresense.collapsed .nav-text,
 .sidebar-coresense.collapsed .sidebar-brand,
@@ -82,28 +42,21 @@ body {
   visibility: hidden;
 }
 
-.sidebar-coresense.collapsed .sidebar-header {
-  justify-content: center;
-}
+.sidebar-coresense.collapsed .sidebar-header { justify-content: center; }
 
-
-/* ========================================
-   Sidebar Header (Logo Section)
-======================================== */
 .sidebar-header {
   padding: 1.25rem 1rem;
-  border-bottom: 1px solid var(--cs-sidebar-border);
+  border-bottom: 1px solid var(--sidebar-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  transition: all var(--sidebar-transition);
 }
 
 .sidebar-logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, hsl(210, 60%, 60%) 0%, hsl(210, 80%, 55%) 100%);
+  background: linear-gradient(135deg, var(--sidebar-accent) 0%, hsl(210, 80%, 55%) 100%);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -112,14 +65,10 @@ body {
   color: white;
   box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
   position: relative;
-  transition: transform 0.3s ease;
 }
 
-.sidebar-logo:hover {
-  transform: scale(1.05);
-}
+.sidebar-logo:hover { transform: scale(1.05); transition: transform 0.2s; }
 
-/* Status Indicator */
 .status-dot {
   position: absolute;
   bottom: -1px;
@@ -127,7 +76,7 @@ body {
   width: 12px;
   height: 12px;
   background: var(--cs-success);
-  border: 2px solid var(--cs-sidebar-bg);
+  border: 2px solid var(--sidebar-bg);
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -137,81 +86,51 @@ body {
   50% { opacity: 0.6; }
 }
 
-.sidebar-brand {
-  transition: opacity var(--sidebar-transition), visibility var(--sidebar-transition);
-}
+.sidebar-brand { transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease); }
 
 .sidebar-title {
   font-size: 1.125rem;
   font-weight: 600;
   margin: 0;
-  color: var(--cs-sidebar-title);
+  color: white;
   letter-spacing: -0.01em;
-  line-height: 1.2;
 }
 
 .sidebar-subtitle {
   font-size: 0.7rem;
-  color: hsl(210, 20%, 70%);
+  color: var(--sidebar-text-muted);
   margin: 0;
   font-weight: 400;
-  line-height: 1.2;
 }
 
-/* Mobile Close Button */
 .btn-close-mobile {
   background: transparent;
   border: none;
-  color: hsl(210, 20%, 75%);
+  color: var(--sidebar-text-muted);
   font-size: 1.25rem;
   padding: 0.5rem;
   cursor: pointer;
-  transition: color 0.2s;
 }
 
-.btn-close-mobile:hover {
-  color: var(--cs-sidebar-title);
-}
+.btn-close-mobile:hover { color: white; }
 
-/* ========================================
-   Navigation Menu
-======================================== */
 .sidebar-nav {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 
-/* Custom Scrollbar */
-.sidebar-nav::-webkit-scrollbar {
-  width: 4px;
-}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: var(--sidebar-border); border-radius: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb:hover { background: var(--sidebar-hover); }
 
-.sidebar-nav::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sidebar-nav::-webkit-scrollbar-thumb {
-  background: var(--cs-sidebar-border);
-  border-radius: 4px;
-}
-
-.sidebar-nav::-webkit-scrollbar-thumb:hover {
-  background: var(--cs-sidebar-hover);
-}
-
-/* Section Titles */
-.nav-section {
-  margin: 1rem 0 0.75rem 0;
-}
-
-.nav-section:first-child {
-  margin-top: 0;
-}
+.nav-section { margin: 1rem 0 0.75rem 0; }
+.nav-section:first-child { margin-top: 0; }
 
 .nav-section-title {
   font-size: 0.625rem;
@@ -221,11 +140,10 @@ body {
   color: hsl(210, 20%, 60%);
   padding: 0 0.5rem;
   margin-bottom: 0.5rem;
-  transition: opacity var(--sidebar-transition), visibility var(--sidebar-transition);
   display: block;
+  transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease);
 }
 
-/* Navigation Items */
 .nav-item {
   display: flex;
   align-items: center;
@@ -233,13 +151,12 @@ body {
   padding: 0.625rem 0.75rem;
   margin: 0;
   border-radius: 10px;
-  color: var(--cs-sidebar-text);
+  color: var(--sidebar-text);
   text-decoration: none;
-  transition: all 0.2s ease;
   position: relative;
-  overflow: hidden;
   cursor: pointer;
   min-height: 44px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .nav-item::before {
@@ -249,33 +166,28 @@ body {
   top: 0;
   height: 100%;
   width: 3px;
-  background: var(--cs-sidebar-accent);
+  background: var(--sidebar-accent);
   transform: scaleY(0);
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 .nav-item:hover {
-  background-color: var(--cs-sidebar-hover);
-  color: var(--cs-sidebar-title);
-  transform: translateX(2px);
+  background-color: var(--sidebar-hover);
+  color: white;
 }
 
-.nav-item:hover::before {
-  transform: scaleY(1);
-}
+.nav-item:hover::before { transform: scaleY(1); }
 
-/* Active State */
+.nav-item:active { transform: scale(0.98); }
+
 .nav-item.active {
   background: linear-gradient(90deg, rgba(66, 133, 244, 0.2) 0%, rgba(66, 133, 244, 0.05) 100%);
-  color: var(--cs-sidebar-accent);
+  color: var(--sidebar-accent);
   font-weight: 600;
 }
 
-.nav-item.active::before {
-  transform: scaleY(1);
-}
+.nav-item.active::before { transform: scaleY(1); }
 
-/* Icons */
 .nav-item i {
   font-size: 1.25rem;
   width: 20px;
@@ -284,23 +196,16 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.2s ease;
 }
 
-.nav-item:hover i {
-  transform: scale(1.1);
-}
-
-/* Nav Text */
 .nav-text {
   font-size: 0.875rem;
   font-weight: 500;
   white-space: nowrap;
   flex: 1;
-  transition: opacity var(--sidebar-transition), visibility var(--sidebar-transition);
+  transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease);
 }
 
-/* Badge Alerts */
 .badge-alert {
   background: var(--cs-danger);
   color: white;
@@ -313,22 +218,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  animation: pulse-subtle 2s ease-in-out infinite;
-  transition: opacity var(--sidebar-transition), visibility var(--sidebar-transition);
+  transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease);
 }
 
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-/* ========================================
-   Sidebar Footer
-======================================== */
 .sidebar-footer {
   padding: 0.75rem;
-  border-top: 1px solid var(--cs-sidebar-border);
+  border-top: 1px solid var(--sidebar-border);
 }
 
 .btn-collapse {
@@ -340,22 +235,21 @@ body {
   background: transparent;
   border: none;
   border-radius: 10px;
-  color: var(--cs-sidebar-text);
+  color: var(--sidebar-text);
   cursor: pointer;
-  transition: all 0.2s ease;
   font-size: 0.875rem;
   font-weight: 500;
   min-height: 44px;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .btn-collapse:hover {
-  background-color: var(--cs-sidebar-hover);
-  border-color: var(--cs-sidebar-accent);
-  color: var(--cs-sidebar-title);
+  background-color: var(--sidebar-hover);
+  color: white;
 }
 
 .btn-collapse i {
-  transition: transform var(--sidebar-transition);
+  transition: transform var(--sidebar-ease);
   margin-right: 0.5rem;
 }
 
@@ -364,16 +258,13 @@ body {
   margin-right: 0;
 }
 
-/* ========================================
-   Main Content Area
-======================================== */
 .main-content {
   margin-left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
   min-height: 100vh;
-  transition: all var(--sidebar-transition);
   padding: 0;
-  background-color: hsl(40, 20%, 98%);
+  background-color: var(--cs-bg-primary);
+  transition: margin-left var(--sidebar-ease), width var(--sidebar-ease);
 }
 
 .sidebar-coresense.collapsed ~ .main-content {
@@ -381,9 +272,6 @@ body {
   width: calc(100% - var(--sidebar-collapsed));
 }
 
-/* ========================================
-   Mobile Menu Button
-======================================== */
 .btn-menu {
   position: fixed;
   top: 1rem;
@@ -400,7 +288,7 @@ body {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .btn-menu:hover {
@@ -410,13 +298,8 @@ body {
   transform: scale(1.05);
 }
 
-.btn-menu i {
-  font-size: 1.5rem;
-}
+.btn-menu i { font-size: 1.5rem; }
 
-/* ========================================
-   Mobile Overlay
-======================================== */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -427,7 +310,7 @@ body {
   backdrop-filter: blur(4px);
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   z-index: 1030;
 }
 
@@ -436,56 +319,22 @@ body {
   visibility: visible;
 }
 
-/* ========================================
-   Responsive Design
-======================================== */
 @media (max-width: 991.98px) {
-  .sidebar-coresense {
-    transform: translateX(-100%);
-  }
-  
+  .sidebar-coresense { transform: translateX(-100%); }
   .sidebar-coresense.mobile-open {
     transform: translateX(0);
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
   }
-  
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 1rem;
-  }
-  
-  .btn-menu {
-    display: flex;
-  }
-  
-  .sidebar-footer {
-    display: none;
-  }
+  .main-content { margin-left: 0; width: 100%; padding: 1rem; }
+  .btn-menu { display: flex; }
+  .sidebar-footer { display: none; }
 }
 
 @media (max-width: 575.98px) {
-  .sidebar-coresense {
-    width: 280px;
-  }
-  
-  .main-content {
-    padding: 0.75rem;
-  }
+  .sidebar-coresense { width: 280px; }
+  .main-content { padding: 0.75rem; }
 }
 
-
-/* ========================================
-   Utility Classes
-======================================== */
-.text-gradient {
-  background: linear-gradient(135deg, hsl(210, 55%, 25%) 0%, hsl(210, 80%, 55%) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Card Styles */
 .card-dark {
   background-color: white;
   border: 1px solid hsl(214, 20%, 91%);

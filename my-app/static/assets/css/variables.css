@@ -71,4 +71,16 @@
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
+  
+  /* Sidebar */
+  --sidebar-bg: hsl(215, 50%, 18%);
+  --sidebar-bg-gradient: linear-gradient(180deg, hsl(215, 50%, 18%) 0%, hsl(215, 55%, 14%) 100%);
+  --sidebar-text: hsl(210, 20%, 90%);
+  --sidebar-text-muted: hsl(210, 20%, 70%);
+  --sidebar-accent: hsl(210, 60%, 60%);
+  --sidebar-hover: hsl(215, 45%, 25%);
+  --sidebar-border: hsl(215, 40%, 25%);
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 72px;
+  --sidebar-ease: 0.15s ease;
 }
