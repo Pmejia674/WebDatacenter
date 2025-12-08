@@ -6,15 +6,14 @@
   <!-- Logo & Header -->
   <div class="sidebar-header">
     <div class="d-flex align-items-center gap-3">
-      <div class="position-relative">
-        <div class="sidebar-logo">
-          <i class="bi bi-shield-check"></i>
-        </div>
-        <span class="status-dot"></span>
+      <!-- Logo Icon - Siempre visible -->
+      <div class="sidebar-logo">
+        <img src="{{ url_for('static', filename='fotos/iconlogo.png') }}" alt="Logo Icon" style="width: 40px; height: 40px; object-fit: contain;">
       </div>
+      
+      <!-- Logo Text - Solo visible cuando el menú está expandido -->
       <div class="sidebar-brand">
-        <h1 class="sidebar-title">CoreSense365</h1>
-        <p class="sidebar-subtitle">Data Center Monitor</p>
+        <img src="{{ url_for('static', filename='fotos/ddd.png') }}" alt="Logo Text" style="height: 35px; width: auto; object-fit: contain; max-width: 180px;">
       </div>
     </div>
     <!-- Mobile Close Button -->

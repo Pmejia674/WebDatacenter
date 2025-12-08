@@ -40,9 +40,15 @@ body {
 .sidebar-coresense.collapsed .badge-alert {
   opacity: 0;
   visibility: hidden;
+  width: 0;
 }
 
 .sidebar-coresense.collapsed .sidebar-header { justify-content: center; }
+
+.sidebar-coresense.collapsed .sidebar-logo {
+  opacity: 1;
+  visibility: visible;
+}
 
 .sidebar-header {
   padding: 1.25rem 1rem;
@@ -56,18 +62,21 @@ body {
 .sidebar-logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--sidebar-accent) 0%, hsl(210, 80%, 55%) 100%);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
-  color: white;
-  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
-  position: relative;
+  flex-shrink: 0;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.sidebar-logo:hover { transform: scale(1.05); transition: transform 0.2s; }
+.sidebar-logo img {
+  transition: all 0.2s ease;
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-logo:hover img { transform: scale(1.05); }
 
 .status-dot {
   position: absolute;
@@ -86,7 +95,15 @@ body {
   50% { opacity: 0.6; }
 }
 
-.sidebar-brand { transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease); }
+.sidebar-brand { 
+  transition: opacity var(--sidebar-ease), visibility var(--sidebar-ease), width var(--sidebar-ease);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-brand img {
+  transition: all var(--sidebar-ease);
+}
 
 .sidebar-title {
   font-size: 1.125rem;
