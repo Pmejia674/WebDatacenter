@@ -1,8 +1,16 @@
 <!-- Mobile Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- CoreSense365 Sidebar -->
+<!-- Script inline para prevenir FOUC -->
+<script>
+(function() {
+  var collapsed = localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth >= 992;
+  document.write('<aside class="sidebar-coresense' + (collapsed ? ' collapsed' : '') + '" id="sidebarCoresense">');
+})();
+</script>
+<noscript>
 <aside class="sidebar-coresense" id="sidebarCoresense">
+</noscript>
   <!-- Logo & Header -->
   <div class="sidebar-header">
     <div class="d-flex align-items-center gap-3">
@@ -90,6 +98,7 @@
       <span class="nav-text">Colapsar</span>
     </button>
   </div>
-</aside>
+<script>document.write('</aside>');</script>
+<noscript></aside></noscript>
 
 
