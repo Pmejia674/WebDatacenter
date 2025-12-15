@@ -43,7 +43,16 @@ body {
   width: 0;
 }
 
-.sidebar-coresense.collapsed .sidebar-header { justify-content: center; }
+.sidebar-coresense.collapsed .sidebar-header { 
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.sidebar-coresense.collapsed .sidebar-header > div:first-child {
+  gap: 0 !important;
+  justify-content: center;
+}
 
 .sidebar-coresense.collapsed .sidebar-logo {
   opacity: 1;

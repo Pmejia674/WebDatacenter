@@ -224,9 +224,14 @@ tbody tr:hover {
 .mayuscula {
   text-transform: uppercase !important;
 }
+
+
 .btn-primary {
-  background-color: #09c046 !important;
+  background-color: #3b82f6 !important;
   border: none !important;
+  /* Sombra suave con tu azul #2563eb */
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important;
+  
 }
 .btn-close {
   width: auto !important;
@@ -263,3 +268,31 @@ tbody tr:hover {
 .acceso {
   line-height: 18px;
 }
+
+.form-control:focus {
+  border-color: #66afe9 !important;
+  outline: 0 !important;
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.02),   /* Sombra interna MUY suave */
+    0 0 4px rgba(102, 175, 233, 0.25) !important; /* Glow externo más suave */
+}
+
+.input-group:focus-within .form-control,
+.input-group:focus-within .input-group-text {
+  border-color: #66afe9 !important;
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.02),
+    0 0 4px rgba(102, 175, 233, 0.25) !important;
+}
+
+/* Focus azul suave para todos los inputs */
+.form-control:focus,
+.form-select:focus {
+  border-color: #66afe9 !important;
+  outline: 0 !important;
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.02),
+    0 0 4px rgba(102, 175, 233, 0.25) !important;
+}
+
+

@@ -1,116 +1,272 @@
 {% extends 'public/base_cpanel.html' %}
-<!---->
 {% block title %}Crud con Python 🐍 | crear cuenta{% endblock %}
-<!---->
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/rfid-scanner.css') }}">
+{% endblock %}
 {% block body %}
 
 <div class="container-xxl">
   <div class="authentication-wrapper authentication-basic container-p-y">
     <div class="authentication-inner">
-      <div class="card">
+      <div class="card form-container">
         <div class="card-body">
-          <div class="app-brand justify-content-center">
-            <div class="col-md-12">
-              <h3 class="text-center mt-5 mb-3">REGISTRAR USUARIO</h3>
-              <hr />
-            </div>
+          <div class="text-center mb-4">
+            <h2 class="section-title">REGISTRAR USUARIO</h2>
+            <hr />
           </div>
 
-          <form
-            class="mb-3"
-            action="{{ url_for('cpanelRegisterUserBD') }}"
-            method="POST">
-            <div class="mb-3">
-              <label for="cedula" class="form-label">
-                Cedula
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                name="cedula"
-                required
-                autofocus />
-            </div>
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="name_surname" class="form-label">
-                  Nombre
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="name"
-                  required
-                  autofocus />
-              </div>
-              <div class="mb-3 col-md-6">
-                <label for="name_surname" class="form-label">
-                  Apellido
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="surname"
-                  required
-                  autofocus />
-              </div>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
 
-            </div>
-            
+          <form class="mb-3" id="registerForm" action="{{ url_for('cpanelRegisterUserBD') }}" method="POST">
             <div class="row">
-              <div class="mt-3 col-md-6">
-                <label for="area" class="form-label">Area</label>
-                <select class="form-select" name="selectArea" {%if dataLogin.rol == 2 %} disabled {%endif%}>
-                  {% for area in areas%}
-                  <option value="{{area.id_area}}">{{area.nombre_area}}</option>
-                  {%endfor%}
+              <div class="col-12 mb-3">
+                <label for="cedula" class="form-label">CÉDULA</label>
+                <input type="text" class="form-control" name="cedula" placeholder="Ingrese número de cédula" required autofocus />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="name" class="form-label">NOMBRE</label>
+                <input type="text" class="form-control" name="name" placeholder="Nombre del usuario" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="surname" class="form-label">APELLIDO</label>
+                <input type="text" class="form-control" name="surname" placeholder="Apellido del usuario" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="area" class="form-label">ÁREA</label>
+                <select class="form-select" name="selectArea" {% if dataLogin.rol == 2 %} disabled {% endif %}>
+                  {% for area in areas %}
+                    <option value="{{ area.id_area }}">{{ area.nombre_area }}</option>
+                  {% endfor %}
                 </select>
               </div>
-              <div class="mt-3 col-md-6" >
-                <label for="rol" class="form-label">Rol</label>
-                <select class="form-select" name="selectRol" {%if dataLogin.rol == 2 %} disabled {%endif%}>
-                  {% for rol in roles%}
-                  <option value="{{rol.id_rol}}">{{rol.nombre_rol}}</option>
-                  {%endfor%}
+              <div class="col-md-6 mb-3">
+                <label for="rol" class="form-label">ROL</label>
+                <select class="form-select" name="selectRol" {% if dataLogin.rol == 2 %} disabled {% endif %}>
+                  {% for rol in roles %}
+                    <option value="{{ rol.id_rol }}">{{ rol.nombre_rol }}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>
 
-            
-            <div class="mb-3 form-password-toggle mt-3">
-              <label class="form-label" for="pass_user">Clave</label>
-              <div class="input-group input-group-merge">
-                <input
-                  type="password"
-                  class="form-control"
-                  name="pass_user"
-                  id="pass_user"
-                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                  aria-describedby="password"
-                  required />
-                <span class="input-group-text cursor-pointer">
-                  <i class="bx bx-hide"></i>
-                </span>
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label for="pass_user" class="form-label">CLAVE</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" name="pass_user" id="pass_user" placeholder="Contraseña del usuario" required />
+                  <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                </div>
+                <div id="passwordHelp" class="form-text text-danger d-none"></div>
               </div>
             </div>
-            <button class="btn btn-primary w-100">
-              Crear cuenta
-              <i class="bi bi-arrow-right-circle"></i>
-            </button>
+
+            <!-- RFID Section -->
+            <div class="rfid-section">
+              <div class="rfid-header">
+                <div>
+                  <h3 class="section-title mb-1">Tarjeta RFID</h3>
+                  <p class="section-subtitle mb-0">Asociar tarjeta de acceso al usuario</p>
+                </div>
+                <div class="rfid-status" id="rfidStatus">
+                  <i class="bi bi-wifi-off status-disconnected"></i>
+                  <span class="status-disconnected">Lector Desconectado</span>
+                </div>
+              </div>
+
+              <div class="rfid-scanner">
+                <div class="scanner-card ready" id="scannerCard">
+                  <div class="scanner-icon" id="scannerIcon">
+                    <i class="bi bi-credit-card"></i>
+                  </div>
+                  <div class="scanner-title" id="scannerTitle">Listo para escanear</div>
+                  <div class="scanner-subtitle" id="scannerSubtitle">Haga clic en el botón para iniciar el escaneo</div>
+                  <div id="rfidCode" class="rfid-code d-none"></div>
+                  <button type="button" class="btn btn-outline-secondary mt-2 d-none" id="rescanBtn">Escanear otra tarjeta</button>
+                </div>
+
+                <div class="rfid-info">
+                  <h4 class="section-title mb-3">Información de la Tarjeta</h4>
+                  <div class="info-row">
+                    <span class="info-label">Estado:</span>
+                    <span class="info-value" id="cardStatus">Sin asociar</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Código RFID:</span>
+                    <span class="info-value" id="cardCode">No detectado</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Lector:</span>
+                    <span class="info-value status-disconnected" id="readerStatus">Desconectado</span>
+                  </div>
+                  <div class="success-message d-none" id="successMessage">
+                    <i class="bi bi-check-circle"></i>
+                    <span><strong>Tarjeta lista:</strong> La tarjeta RFID se asociará automáticamente al usuario cuando se cree la cuenta.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-scan" id="scanBtn">
+                  <i class="bi bi-upc-scan me-2"></i>
+                  Escanear Tarjeta RFID
+                </button>
+              </div>
+            </div>
+
+            <input type="hidden" name="codigo_rfid" id="codigo_rfid_real" />
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+              <a href="{{ url_for('usuarios') }}" class="back-link">
+                <i class="bi bi-arrow-left"></i>
+                Volver
+              </a>
+              <button type="submit" class="btn btn-primary">
+                Crear cuenta
+                <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
           </form>
-
-          <div class="text-center">
-            <a
-              href="{{ url_for('usuarios') }}"
-              class="d-flex align-items-center justify-content-center">
-              <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-              volver
-            </a>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+let isScanning = false;
+let rfidDetected = false;
+let detectedCode = '';
+
+const scanBtn = document.getElementById('scanBtn');
+const scannerCard = document.getElementById('scannerCard');
+const scannerIcon = document.getElementById('scannerIcon');
+const scannerTitle = document.getElementById('scannerTitle');
+const scannerSubtitle = document.getElementById('scannerSubtitle');
+const rfidCode = document.getElementById('rfidCode');
+const rescanBtn = document.getElementById('rescanBtn');
+const cardStatus = document.getElementById('cardStatus');
+const cardCode = document.getElementById('cardCode');
+const readerStatus = document.getElementById('readerStatus');
+const rfidStatus = document.getElementById('rfidStatus');
+const successMessage = document.getElementById('successMessage');
+const togglePassword = document.getElementById('togglePassword');
+const passwordInput = document.getElementById('pass_user');
+
+togglePassword.addEventListener('click', function () {
+  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+  passwordInput.setAttribute('type', type);
+  this.innerHTML = type === 'password'
+    ? '<i class="bi bi-eye"></i>'
+    : '<i class="bi bi-eye-slash"></i>';
+});
+
+function simulateReaderConnection() {
+  setTimeout(() => {
+    rfidStatus.innerHTML = '<i class="bi bi-wifi status-connected"></i><span class="status-connected">Lector Conectado</span>';
+    readerStatus.textContent = 'Conectado';
+    readerStatus.className = 'info-value success';
+  }, 1000);
+}
+
+function startRFIDScan() {
+  if (isScanning) return;
+  isScanning = true;
+  scanBtn.disabled = true;
+  scanBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Escaneando...';
+  scanBtn.classList.add('scanning');
+
+  scannerCard.className = 'scanner-card scanning';
+  scannerIcon.className = 'scanner-icon scanning';
+  scannerIcon.innerHTML = '<i class="bi bi-credit-card"></i>';
+  scannerTitle.textContent = 'Escaneando tarjeta...';
+  scannerSubtitle.textContent = 'Acerque la tarjeta RFID al lector';
+  scannerSubtitle.className = 'scanner-subtitle scanning-subtitle';
+
+  setTimeout(() => {
+    const simulatedCode = 'RFID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    detectedCode = simulatedCode;
+    rfidDetected = true;
+
+    scannerCard.className = 'scanner-card detected';
+    scannerIcon.className = 'scanner-icon detected';
+    scannerIcon.innerHTML = '<i class="bi bi-check-circle"></i>';
+    scannerTitle.textContent = 'Tarjeta detectada';
+    scannerSubtitle.textContent = 'RFID asociado correctamente';
+    scannerSubtitle.className = 'scanner-subtitle detected-subtitle';
+
+    rfidCode.textContent = simulatedCode;
+    rfidCode.classList.remove('d-none');
+    rescanBtn.classList.remove('d-none');
+
+    cardStatus.textContent = 'Asociada';
+    cardStatus.className = 'info-value success';
+    cardCode.textContent = simulatedCode;
+    document.getElementById('codigo_rfid_real').value = simulatedCode;
+
+    successMessage.classList.remove('d-none');
+
+    scanBtn.disabled = false;
+    scanBtn.innerHTML = '<i class="bi bi-upc-scan me-2"></i>Escanear Tarjeta RFID';
+    scanBtn.classList.remove('scanning');
+    isScanning = false;
+  }, 3000);
+}
+
+function resetScanner() {
+  rfidDetected = false;
+  detectedCode = '';
+  document.getElementById('codigo_rfid_real').value = '';
+
+  scannerCard.className = 'scanner-card ready';
+  scannerIcon.className = 'scanner-icon';
+  scannerIcon.innerHTML = '<i class="bi bi-credit-card"></i>';
+  scannerTitle.textContent = 'Listo para escanear';
+  scannerSubtitle.textContent = 'Haga clic en el botón para iniciar el escaneo';
+  scannerSubtitle.className = 'scanner-subtitle';
+
+  rfidCode.classList.add('d-none');
+  rescanBtn.classList.add('d-none');
+  cardStatus.textContent = 'Sin asociar';
+  cardStatus.className = 'info-value';
+  cardCode.textContent = 'No detectado';
+  successMessage.classList.add('d-none');
+}
+
+scanBtn.addEventListener('click', startRFIDScan);
+rescanBtn.addEventListener('click', resetScanner);
+
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+  const password = passwordInput.value;
+  const help = document.getElementById('passwordHelp');
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  if (!regex.test(password)) {
+    help.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.';
+    help.classList.remove('d-none');
+    e.preventDefault();
+  } else {
+    help.classList.add('d-none');
+  }
+});
+
+document.addEventListener('DOMContentLoaded', simulateReaderConnection);
+</script>
 
 {% endblock %}

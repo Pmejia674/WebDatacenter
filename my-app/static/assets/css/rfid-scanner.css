@@ -1,0 +1,343 @@
+/* RFID Scanner Styles */
+
+.form-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* RFID Section */
+.rfid-section {
+  background: var(--color-bg-gray);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.rfid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.rfid-status {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.status-disconnected {
+  color: var(--color-text-muted);
+}
+
+.status-connected {
+  color: var(--color-success);
+}
+
+/* RFID Scanner Grid */
+.rfid-scanner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .rfid-scanner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scanner Card */
+.scanner-card {
+  background: var(--color-bg-white);
+  border: 3px dashed var(--color-border-dark);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing-2xl) + var(--spacing-sm)) var(--spacing-lg);
+  text-align: center;
+  transition: var(--transition-slow);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.scanner-card.ready {
+  border-color: var(--color-border-dark);
+  background: var(--color-bg-white);
+}
+
+.scanner-card.scanning {
+  border-color: var(--color-info);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(59,130,246,0.08) 100%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.scanner-card.detected {
+  border-color: var(--color-success);
+  background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0.08) 100%);
+  border-style: solid;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Scanner Icon */
+.scanner-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-text-muted);
+  transition: var(--transition-slow);
+}
+
+.scanner-icon.scanning {
+  color: var(--color-info);
+  animation: rotate 2s linear infinite;
+}
+
+.scanner-icon.detected {
+  color: var(--color-success);
+  animation: checkmark 0.5s ease-out;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scanner Text */
+.scanner-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.scanner-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-lg);
+}
+
+.scanner-subtitle.scanning-subtitle {
+  color: var(--color-info);
+  font-weight: var(--font-weight-medium);
+}
+
+.scanner-subtitle.detected-subtitle {
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+}
+
+/* RFID Code Display */
+.rfid-code {
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+  background: var(--color-bg-white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-lg);
+  border: 2px solid var(--color-success);
+  letter-spacing: 1px;
+}
+
+/* RFID Info Panel */
+.rfid-info {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.info-value {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.info-value.success {
+  color: var(--color-success);
+}
+
+/* Success Message */
+.success-message {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0.08) 100%);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.success-message i {
+  color: var(--color-success);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* Scan Button */
+.btn-scan {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: var(--color-bg-white);
+  border: none;
+  padding: var(--spacing-md) calc(var(--spacing-lg) + var(--spacing-sm));
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  transition: var(--transition-slow);
+  box-shadow: var(--shadow-primary);
+}
+
+.btn-scan:hover {
+  background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  color: var(--color-bg-white);
+}
+
+.btn-scan:active {
+  transform: translateY(0);
+}
+
+.btn-scan:disabled {
+  background: var(--color-text-light);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-scan.scanning {
+  background: var(--color-info);
+  box-shadow: var(--shadow-md);
+}
+
+/* Back Link */
+.back-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--color-text-primary);
+  gap: var(--spacing-md);
+}
+
+.back-link i {
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover i {
+  transform: translateX(-4px);
+}
+
+/* Form Labels */
+.form-label {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+/* Button Primary Override */
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  padding: 0.625rem 1.5rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  /* Sombra azul suave */
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35) !important;
+
+  color: #fff !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+  transform: translateY(-2px);
+
+  /* Sombra más intensa al hacer hover */
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45) !important;
+
+  color: #fff !important;
+}
+
+.btn-primary:active {
+  transform: translateY(0) !important;
+}
