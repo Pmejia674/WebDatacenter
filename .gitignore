@@ -69,6 +69,14 @@ my-app/fotos_empleados/
 # Archivos sensibles (credenciales, configuración)
 config.ini
 secrets.json
+credentials.json
+*.credentials
+*.pem
+*.key
 
-# No subir la configuración de conexión a BD
-my-app/conexion/conexionBD.py
+# No subir ningún archivo de conexión a BD
+my-app/conexion/
+**/conexion*.py
+**/database*.py
+**/db_config*.py
+**/config_db*.py
