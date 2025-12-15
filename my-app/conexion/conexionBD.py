@@ -28,3 +28,5 @@ def connectionBD():
 
     except mysql.connector.Error as error:
         print(f"No se pudo conectar: {error}")
+fsdfsdfdsfsdfsdfdsf+
+s
