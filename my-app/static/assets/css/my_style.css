@@ -5,6 +5,7 @@ body {
 .gj-datepicker-bootstrap [role="right-icon"] button {
   border: none !important;
 }
+
 .bi-check-all {
   font-size: 20px;
 }
@@ -47,13 +48,16 @@ body {
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
+
 @-webkit-keyframes borderScale {
   0% {
     border: 5px solid white;
   }
+
   50% {
     border: 25px solid #08b324;
   }
+
   100% {
     border: 5px solid white;
   }
@@ -63,13 +67,16 @@ body {
   0% {
     border: 5px solid white;
   }
+
   50% {
     border: 25px solid #08b324;
   }
+
   100% {
     border: 5px solid white;
   }
 }
+
 /*Fin del loader*/
 
 .bi-arrow-left-circle:hover {
@@ -100,8 +107,8 @@ body {
 
 .menu-vertical,
 .menu-vertical .menu-block,
-.menu-vertical .menu-inner > .menu-item,
-.menu-vertical .menu-inner > .menu-header {
+.menu-vertical .menu-inner>.menu-item,
+.menu-vertical .menu-inner>.menu-header {
   width: 20.25rem !important;
 }
 
@@ -117,12 +124,13 @@ tbody tr {
 tbody tr:hover {
   cursor: pointer;
 }
+
 .checkedTodos:hover {
   cursor: pointer;
 }
 
-.form-check-input[disabled] ~ .form-check-label,
-.form-check-input:disabled ~ .form-check-label {
+.form-check-input[disabled]~.form-check-label,
+.form-check-input:disabled~.form-check-label {
   opacity: initial !important;
 }
 
@@ -131,6 +139,7 @@ tbody tr:hover {
   border-color: #08b324;
   box-shadow: 0 2px 4px 0 rgba(10, 207, 10, 0.4);
 }
+
 .pagination {
   justify-content: center;
 }
@@ -162,17 +171,19 @@ tbody tr:hover {
 .input_vacio {
   border-color: #dc3545 !important;
 }
+
 .input_lleno {
   border-color: #198754 !important;
 }
 
-.menu-vertical .menu-inner > .menu-item .menu-link {
+.menu-vertical .menu-inner>.menu-item .menu-link {
   margin: 0 !important;
 }
+
 .menu-vertical,
 .menu-vertical .menu-block,
-.menu-vertical .menu-inner > .menu-item,
-.menu-vertical .menu-inner > .menu-header {
+.menu-vertical .menu-inner>.menu-item,
+.menu-vertical .menu-inner>.menu-header {
   width: 17.25rem !important;
 }
 
@@ -188,6 +199,7 @@ tbody tr:hover {
 }
 
 @media (min-width: 992px) {
+
   .container-xxl,
   .container-xl,
   .container-lg,
@@ -200,6 +212,7 @@ tbody tr:hover {
 }
 
 @media (min-width: 1400px) {
+
   .container-xxl,
   .container-xl,
   .container-lg,
@@ -212,13 +225,47 @@ tbody tr:hover {
   }
 }
 
-.menu-vertical .menu-item.active:not(.open) > .menu-link {
+.menu-vertical .menu-item.active:not(.open)>.menu-link {
   font-size: 14px !important;
 }
 
-.alert-success {
-  background-color: #48c808 !important;
-  color: #fff !important;
+.alert-success,
+.alert-danger {
+  background-color: #eff6ff !important;
+  color: #1e40af !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: 12px !important;
+  padding: 1rem 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+.alert-success::before,
+.alert-danger::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  background-color: #dbeafe;
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233b82f6'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.alert-danger::before {
+  background-color: #fee2e2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ef4444'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+}
+
+.alert-danger {
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+  border-color: #fecaca !important;
 }
 
 .mayuscula {
@@ -231,12 +278,14 @@ tbody tr:hover {
   border: none !important;
   /* Sombra suave con tu azul #2563eb */
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important;
-  
+
 }
+
 .btn-close {
   width: auto !important;
   height: auto !important;
 }
+
 .bi-x {
   color: #222 !important;
 }
@@ -251,6 +300,7 @@ tbody tr:hover {
   font-size: 15px;
   color: #222;
 }
+
 .bi-star-fill {
   padding: 0px 10px 0px 0px;
 }
@@ -273,8 +323,10 @@ tbody tr:hover {
   border-color: #66afe9 !important;
   outline: 0 !important;
   box-shadow:
-    inset 0 1px 1px rgba(0, 0, 0, 0.02),   /* Sombra interna MUY suave */
-    0 0 4px rgba(102, 175, 233, 0.25) !important; /* Glow externo más suave */
+    inset 0 1px 1px rgba(0, 0, 0, 0.02),
+    /* Sombra interna MUY suave */
+    0 0 4px rgba(102, 175, 233, 0.25) !important;
+  /* Glow externo más suave */
 }
 
 .input-group:focus-within .form-control,
@@ -294,5 +346,3 @@ tbody tr:hover {
     inset 0 1px 1px rgba(0, 0, 0, 0.02),
     0 0 4px rgba(102, 175, 233, 0.25) !important;
 }
-
-
