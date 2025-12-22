@@ -1,63 +1,73 @@
-<div class="container-xxl">
-  <div class="authentication-wrapper authentication-basic container-p-y">
-    <div class="authentication-inner">
-      <div class="card">
-        <div class="card-body">
-          <div class="app-brand justify-content-center">
-            <span class="app-brand-logo">
-              <img
-                class="logo"
-                style="display: flex"
-                src="{{ url_for('static', filename ='./assets/img/logo.png') }}"
-                alt="Logo" />
-            </span>
-          </div>
+<div class="login-page" id="loginPage">
+    <div class="mouse-glow" id="mouseGlow"></div>
 
-          <form
-            id="formAuthentication"
-            class="mb-3"
-            action="{{ url_for('loginCliente') }}"
-            method="POST">
-            <div class="mb-3">
-              <label for="cedula" class="form-label">Cédula</label>
-              <input
-                type="text"
-                class="form-control"
-                name="cedula"
-                placeholder="Escribe tu cédula"
-                autofocus
-                required />
-            </div>
-            <div class="mb-3 form-password-toggle">
-              <div class="d-flex justify-content-between">
-                <label class="form-label" for="password">Clave</label>
-        
-              </div>
-              <div class="input-group input-group-merge">
-                <input
-                  type="password"
-                  class="form-control"
-                  name="pass_user"
-                  id="pass_user"
-                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                  aria-describedby="password"
-                  required />
-                <span class="input-group-text cursor-pointer">
-                  <i class="bx bx-hide"></i>
-                </span>
-              </div>
-            </div>
-            <div class="mb-3">
-              <button class="btn btn-primary w-100" type="submit">
-                Entrar ahora
-                <i class="bi bi-arrow-right-circle"></i>
-              </button>
-            </div>
-          </form>
-
-        
-        </div>
-      </div>
+    <div class="brand-corner">
+        <img src="{{ url_for('static', filename='fotos/logoinfra.png') }}" alt="Logo" class="brand-logo-img">
     </div>
-  </div>
+
+    <div class="hero-text-container">
+        <h1 class="hero-title-1">Monitoreo Inteligente</h1>
+        <h1 class="hero-title-2">Respuesta Inmediata</h1>
+    </div>
+
+    <div class="login-card">
+        <div class="card-header">
+            <div class="card-title">Bienvenido</div>
+            <div class="card-subtitle">Ingresa tus credenciales para continuar</div>
+        </div>
+
+        {% include 'public/includes/messages.html' %}
+
+        <form id="formAuthentication" action="{{ url_for('loginCliente') }}" method="POST">
+            <div class="form-group">
+                <label for="cedula" class="form-label">Cédula</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-person input-icon"></i>
+                    <input type="text" class="form-control" id="cedula" name="cedula" placeholder="Ingresa tu cédula"
+                        required autofocus>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pass_user" class="form-label">Contraseña</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-lock input-icon"></i>
+                    <input type="password" class="form-control" id="pass_user" name="pass_user"
+                        placeholder="Ingresa tu contraseña" required>
+                    <button type="button" class="password-toggle" id="togglePasswordBtn">
+                        <i class="bi bi-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-neon">Iniciar</button>
+        </form>
+    </div>
+
+    <div class="login-footer-text">©2025 InfraNova CA. Todos los derechos reservados.</div>
 </div>
+
+<script>
+    const toggleBtn = document.getElementById('togglePasswordBtn');
+    const passInput = document.getElementById('pass_user');
+    const icon = toggleBtn.querySelector('i');
+
+    toggleBtn.addEventListener('click', () => {
+        const isPassword = passInput.type === 'password';
+        passInput.type = isPassword ? 'text' : 'password';
+        icon.className = isPassword ? 'bi bi-eye' : 'bi bi-eye-slash';
+    });
+
+    const loginPage = document.getElementById('loginPage');
+    const mouseGlow = document.getElementById('mouseGlow');
+
+    loginPage.addEventListener('mousemove', (e) => {
+        mouseGlow.style.left = e.clientX + 'px';
+        mouseGlow.style.top = e.clientY + 'px';
+        mouseGlow.style.opacity = '1';
+    });
+
+    loginPage.addEventListener('mouseleave', () => {
+        mouseGlow.style.opacity = '0';
+    });
+</script>
