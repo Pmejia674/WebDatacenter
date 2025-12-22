@@ -3,7 +3,8 @@ html {
     height: 100%;
     margin: 0;
     font-family: 'Inter', 'Public Sans', sans-serif;
-    overflow-x: hidden;
+    overflow: hidden;
+    /* Prevent scrollbars */
     background-color: #f8fafc;
 }
 
@@ -20,8 +21,7 @@ html {
         radial-gradient(ellipse at 80% 100%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
         linear-gradient(180deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
     color: #1e293b;
-    z-index: 0;
-    overflow: hidden;
+    z-index: 1;
 }
 
 .login-page::before {
@@ -164,6 +164,7 @@ html {
 .card-subtitle {
     color: #64748b;
     font-size: 0.85rem;
+    min-height: 2.5em;
 }
 
 .form-group {
