@@ -3,102 +3,103 @@
 
 <!-- Script inline para prevenir FOUC -->
 <script>
-(function() {
-  var collapsed = localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth >= 992;
-  document.write('<aside class="sidebar-coresense' + (collapsed ? ' collapsed' : '') + '" id="sidebarCoresense">');
-})();
+  (function () {
+    var collapsed = localStorage.getItem('sidebarCollapsed') === 'true' && window.innerWidth >= 992;
+    document.write('<aside class="sidebar-coresense' + (collapsed ? ' collapsed' : '') + '" id="sidebarCoresense">');
+  })();
 </script>
 <noscript>
-<aside class="sidebar-coresense" id="sidebarCoresense">
+  <aside class="sidebar-coresense" id="sidebarCoresense">
 </noscript>
-  <!-- Logo & Header -->
-  <div class="sidebar-header">
-    <div class="d-flex align-items-center gap-3">
-      <!-- Logo Icon - Siempre visible -->
-      <div class="sidebar-logo">
-        <img src="{{ url_for('static', filename='fotos/iconlogo.png') }}" alt="Logo Icon" style="width: 40px; height: 40px; object-fit: contain;">
-      </div>
-      
-      <!-- Logo Text - Solo visible cuando el menú está expandido -->
-      <div class="sidebar-brand">
-        <img src="{{ url_for('static', filename='fotos/ddd.png') }}" alt="Logo Text" style="height: 35px; width: auto; object-fit: contain; max-width: 180px;">
-      </div>
+<!-- Logo & Header -->
+<div class="sidebar-header">
+  <div class="d-flex align-items-center gap-3">
+    <!-- Logo Icon - Siempre visible -->
+    <div class="sidebar-logo">
+      <img src="{{ url_for('static', filename='fotos/iconlogo.png') }}" alt="Logo Icon"
+        style="width: 40px; height: 40px; object-fit: contain;">
     </div>
-    <!-- Mobile Close Button -->
-    <button class="btn-close-mobile d-lg-none" id="closeSidebar">
-      <i class="bi bi-x-lg"></i>
-    </button>
+
+    <!-- Logo Text - Solo visible cuando el menú está expandido -->
+    <div class="sidebar-brand">
+      <img src="{{ url_for('static', filename='fotos/ddd.png') }}" alt="Logo Text"
+        style="height: 35px; width: auto; object-fit: contain; max-width: 180px;">
+    </div>
+  </div>
+  <!-- Mobile Close Button -->
+  <button class="btn-close-mobile d-lg-none" id="closeSidebar">
+    <i class="bi bi-x-lg"></i>
+  </button>
+</div>
+
+<!-- Navigation -->
+<nav class="sidebar-nav">
+  <!-- Main Section -->
+  <div class="nav-section">
+    <span class="nav-section-title">Principal</span>
   </div>
 
-  <!-- Navigation -->
-  <nav class="sidebar-nav">
-    <!-- Main Section -->
-    <div class="nav-section">
-      <span class="nav-section-title">Principal</span>
-    </div>
-    
-    <a href="{{ url_for('inicio') }}" class="nav-item {% if request.path == '/' or request.path == '/inicio' %}active{% endif %}">
-      <i class="bi bi-speedometer2"></i>
-      <span class="nav-text">Dashboard</span>
-    </a>
-    
-    <a href="/interfaz-clave" class="nav-item {% if request.path == '/interfaz-clave' %}active{% endif %}">
-      <i class="bi bi-key-fill"></i>
-      <span class="nav-text">Generar Clave</span>
-    </a>
-    
-    <a href="/reporte-accesos" class="nav-item {% if request.path == '/reporte-accesos' %}active{% endif %}">
-      <i class="bi bi-file-lock-fill"></i>
-      <span class="nav-text">Reporte Accesos</span>
-      <span class="badge-alert">3</span>
-    </a>
+  <a href="{{ url_for('inicio') }}"
+    class="nav-item {% if request.path == '/' or request.path == '/inicio' %}active{% endif %}">
+    <i class="bi bi-speedometer2"></i>
+    <span class="nav-text">Dashboard</span>
+  </a>
 
-    {% if dataLogin.rol == 1 %}
-    <!-- Admin Section -->
-    <div class="nav-section">
-      <span class="nav-section-title">Administración</span>
-    </div>
-    
-    <a href="/lista-de-areas" class="nav-item {% if request.path == '/lista-de-areas' %}active{% endif %}">
-      <i class="bi bi-building"></i>
-      <span class="nav-text">Lista de Áreas</span>
-    </a>
-    
-    <a href="/lista-de-usuarios" class="nav-item {% if request.path == '/lista-de-usuarios' %}active{% endif %}">
-      <i class="bi bi-people-fill"></i>
-      <span class="nav-text">Lista de Usuarios</span>
-    </a>
-    
-    <a href="/lista-de-graficas" class="nav-item {% if request.path == '/lista-de-graficas' %}active{% endif %}">
-      <i class="bi bi-bar-chart-line-fill"></i>
-      <span class="nav-text">Gráficas</span>
-    </a>
-    {% endif %}
+  <a href="/interfaz-clave" class="nav-item {% if request.path == '/interfaz-clave' %}active{% endif %}">
+    <i class="bi bi-key-fill"></i>
+    <span class="nav-text">Generar Clave</span>
+  </a>
 
-    <!-- User Section -->
-    <div class="nav-section">
-      <span class="nav-section-title">Usuario</span>
-    </div>
-    
-    <a href="/mi-perfil/{{dataLogin.id}}" class="nav-item {% if '/mi-perfil/' in request.path %}active{% endif %}">
-      <i class="bi bi-person-circle"></i>
-      <span class="nav-text">Mi Perfil</span>
-    </a>
-    
-    <a href="{{ url_for('cerraSesion') }}" class="nav-item">
-      <i class="bi bi-box-arrow-right"></i>
-      <span class="nav-text">Cerrar Sesión</span>
-    </a>
-  </nav>
+  <a href="/reporte-accesos" class="nav-item {% if request.path == '/reporte-accesos' %}active{% endif %}">
+    <i class="bi bi-file-lock-fill"></i>
+    <span class="nav-text">Reporte Accesos</span>
+    <span class="badge-alert">3</span>
+  </a>
 
-  <!-- Collapse Toggle (Desktop) -->
-  <div class="sidebar-footer d-none d-lg-block">
-    <button class="btn-collapse" id="toggleCollapse">
-      <i class="bi bi-chevron-left"></i>
-      <span class="nav-text">Colapsar</span>
-    </button>
+  {% if dataLogin.rol == 1 %}
+  <!-- Admin Section -->
+  <div class="nav-section">
+    <span class="nav-section-title">Administración</span>
   </div>
+
+  <a href="/lista-de-areas" class="nav-item {% if request.path == '/lista-de-areas' %}active{% endif %}">
+    <i class="bi bi-building"></i>
+    <span class="nav-text">Lista de Áreas</span>
+  </a>
+
+  <a href="/lista-de-usuarios" class="nav-item {% if request.path == '/lista-de-usuarios' %}active{% endif %}">
+    <i class="bi bi-people-fill"></i>
+    <span class="nav-text">Lista de Usuarios</span>
+  </a>
+
+  <a href="/lista-de-graficas" class="nav-item {% if request.path == '/lista-de-graficas' %}active{% endif %}">
+    <i class="bi bi-bar-chart-line-fill"></i>
+    <span class="nav-text">Gráficas</span>
+  </a>
+  {% endif %}
+
+  <!-- User Section -->
+  <div class="nav-section">
+    <span class="nav-section-title">Usuario</span>
+  </div>
+
+  <a href="/mi-perfil/{{dataLogin.id}}" class="nav-item {% if '/mi-perfil/' in request.path %}active{% endif %}">
+    <i class="bi bi-person-circle"></i>
+    <span class="nav-text">Mi Perfil</span>
+  </a>
+
+  <a href="{{ url_for('cerraSesion') }}" class="nav-item">
+    <i class="bi bi-box-arrow-right"></i>
+    <span class="nav-text">Cerrar Sesión</span>
+  </a>
+</nav>
+
+<!-- Collapse Toggle (Desktop) -->
+<div class="sidebar-footer d-none d-lg-block">
+  <button class="btn-collapse" id="toggleCollapse">
+    <i class="bi bi-chevron-left"></i>
+    <span class="nav-text">Colapsar</span>
+  </button>
+</div>
 <script>document.write('</aside>');</script>
 <noscript></aside></noscript>
-
-
