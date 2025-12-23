@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="es" class="light-style customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
   data-template="vertical-menu-template-free">
+<script>
+  // Apply theme immediately to prevent flash
+  (function () {
+    var theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  })();
+</script>
 
 <head>
   <meta charset="utf-8" />

@@ -30,7 +30,8 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, hsl(210, 80%, 55%), hsl(210, 60%, 60%));
+  background: #3b82f6;
+  /* Azul sólido */
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -68,24 +69,28 @@
   transform: scale(1.1);
 }
 
+.stat-card-icon.success,
+.stat-card-icon.warning,
+.stat-card-icon.danger,
+.stat-card-icon.primary {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* Solo cambiar color de texto para estados específicos si es necesario, pero mantener fondo uniforme */
 .stat-card-icon.success {
-  background: linear-gradient(135deg, hsl(142, 70%, 45%) 0%, hsl(142, 70%, 35%) 100%);
-  color: white;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
 }
 
 .stat-card-icon.warning {
-  background: linear-gradient(135deg, hsl(38, 92%, 50%) 0%, hsl(38, 92%, 40%) 100%);
-  color: white;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
 }
 
 .stat-card-icon.danger {
-  background: linear-gradient(135deg, hsl(0, 72%, 51%) 0%, hsl(0, 72%, 41%) 100%);
-  color: white;
-}
-
-.stat-card-icon.primary {
-  background: linear-gradient(135deg, hsl(210, 80%, 55%) 0%, hsl(210, 60%, 45%) 100%);
-  color: white;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .stat-card-badge {
@@ -159,24 +164,13 @@
   font-size: 1.25rem;
 }
 
-.env-tile-icon.temperature {
-  background: linear-gradient(135deg, hsl(0, 72%, 95%) 0%, hsl(0, 72%, 90%) 100%);
-  color: hsl(0, 72%, 51%);
-}
-
-.env-tile-icon.humidity {
-  background: linear-gradient(135deg, hsl(210, 80%, 95%) 0%, hsl(210, 80%, 90%) 100%);
-  color: hsl(210, 80%, 55%);
-}
-
-.env-tile-icon.airflow {
-  background: linear-gradient(135deg, hsl(142, 70%, 95%) 0%, hsl(142, 70%, 90%) 100%);
-  color: hsl(142, 70%, 45%);
-}
-
+.env-tile-icon.temperature,
+.env-tile-icon.humidity,
+.env-tile-icon.airflow,
 .env-tile-icon.pressure {
-  background: linear-gradient(135deg, hsl(270, 60%, 95%) 0%, hsl(270, 60%, 90%) 100%);
-  color: hsl(270, 60%, 45%);
+  background: #f8fafc;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
 }
 
 .env-tile-title {
@@ -275,8 +269,9 @@
 
 .chart-tab.active {
   background: white;
-  color: hsl(215, 25%, 15%);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #3b82f6;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* ========================================
@@ -371,7 +366,7 @@
   color: hsl(215, 15%, 50%);
 }
 
-.equipment-card-info > div {
+.equipment-card-info>div {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -408,6 +403,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -415,10 +411,21 @@
 }
 
 /* Staggered animations */
-.animate-fade-in:nth-child(1) { animation-delay: 0s; }
-.animate-fade-in:nth-child(2) { animation-delay: 0.1s; }
-.animate-fade-in:nth-child(3) { animation-delay: 0.2s; }
-.animate-fade-in:nth-child(4) { animation-delay: 0.3s; }
+.animate-fade-in:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.animate-fade-in:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.animate-fade-in:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in:nth-child(4) {
+  animation-delay: 0.3s;
+}
 
 /* ========================================
    Responsive
@@ -427,11 +434,11 @@
   .quick-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .environmental-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .equipment-grid {
     grid-template-columns: 1fr;
   }
@@ -441,7 +448,7 @@
   .quick-stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .environmental-grid {
     grid-template-columns: 1fr;
   }
@@ -616,4 +623,143 @@
 
 .subsystem-dot.offline {
   background: hsl(0, 72%, 51%);
+}
+
+/* ========================================
+   DASHBOARD DARK MODE
+======================================== */
+[data-bs-theme="dark"] .stat-card,
+[data-bs-theme="dark"] .env-tile,
+[data-bs-theme="dark"] .chart-card,
+[data-bs-theme="dark"] .equipment-card,
+[data-bs-theme="dark"] .status-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .stat-card:hover,
+[data-bs-theme="dark"] .env-tile:hover,
+[data-bs-theme="dark"] .chart-card:hover,
+[data-bs-theme="dark"] .equipment-card:hover,
+[data-bs-theme="dark"] .status-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+[data-bs-theme="dark"] .stat-card-value,
+[data-bs-theme="dark"] .env-tile-value,
+[data-bs-theme="dark"] .chart-card-title,
+[data-bs-theme="dark"] .equipment-card-name,
+[data-bs-theme="dark"] .status-card-title,
+[data-bs-theme="dark"] .section-title {
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .stat-card-label,
+[data-bs-theme="dark"] .env-tile-title,
+[data-bs-theme="dark"] .chart-card-subtitle,
+[data-bs-theme="dark"] .equipment-card-model,
+[data-bs-theme="dark"] .equipment-card-info,
+[data-bs-theme="dark"] .status-card-subtitle {
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .stat-card-icon.primary {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+[data-bs-theme="dark"] .stat-card-icon.success {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+[data-bs-theme="dark"] .stat-card-icon.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+[data-bs-theme="dark"] .stat-card-icon.danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+[data-bs-theme="dark"] .stat-card-badge.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+[data-bs-theme="dark"] .stat-card-badge.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+
+[data-bs-theme="dark"] .env-tile-icon {
+  background: #0f172a;
+  border-color: #334155;
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .env-tile-progress {
+  background: #334155;
+}
+
+[data-bs-theme="dark"] .chart-tab {
+  color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .chart-tab:hover {
+  color: #f1f5f9;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+[data-bs-theme="dark"] .chart-tab.active {
+  background: #334155;
+  color: #60a5fa;
+  border-color: #475569;
+}
+
+[data-bs-theme="dark"] .equipment-card-image {
+  background: #0f172a;
+}
+
+[data-bs-theme="dark"] .equipment-card-info i {
+  color: #60a5fa;
+}
+
+[data-bs-theme="dark"] .alert-level-item.high {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+[data-bs-theme="dark"] .alert-level-item.medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+[data-bs-theme="dark"] .alert-level-item.low {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+[data-bs-theme="dark"] .alert-level-item.offline {
+  background: #334155;
+  color: #64748b;
+}
+
+[data-bs-theme="dark"] .subsystems-section {
+  border-top-color: #334155;
+}
+
+[data-bs-theme="dark"] .subsystems-title {
+  color: #64748b;
+}
+
+[data-bs-theme="dark"] .subsystem-item {
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .status-label.success {
+  color: #4ade80;
 }

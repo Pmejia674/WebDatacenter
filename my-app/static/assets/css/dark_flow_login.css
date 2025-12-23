@@ -288,3 +288,147 @@ html {
     text-align: center;
     width: 100%;
 }
+
+/* ========================================
+   LOGIN DARK MODE - Futuristic Style
+======================================== */
+[data-bs-theme="dark"] body,
+[data-bs-theme="dark"] html {
+    background-color: #0f172a;
+}
+
+[data-bs-theme="dark"] .login-page {
+    background:
+        radial-gradient(ellipse at 20% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        linear-gradient(180deg, #020617 0%, #0f172a 50%, #1e1b4b 100%);
+    color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .login-page::before {
+    background:
+        radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+}
+
+[data-bs-theme="dark"] .mouse-glow {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(139, 92, 246, 0.08) 40%, transparent 70%);
+}
+
+[data-bs-theme="dark"] .hero-title-1 {
+    color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .hero-title-2 {
+    color: #60a5fa;
+    text-shadow: 0 2px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Dark Card with Glassmorphism */
+[data-bs-theme="dark"] .login-card {
+    background-color: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.4),
+        0 2px 4px -1px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(59, 130, 246, 0.15),
+        0 0 40px rgba(59, 130, 246, 0.08);
+}
+
+[data-bs-theme="dark"] .login-card::before,
+[data-bs-theme="dark"] .login-card::after {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+[data-bs-theme="dark"] .login-card:hover::before,
+[data-bs-theme="dark"] .login-card:hover::after {
+    border-color: rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+
+[data-bs-theme="dark"] .card-title {
+    color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .card-subtitle {
+    color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .form-label {
+    color: #cbd5e1;
+}
+
+/* Dark Inputs */
+[data-bs-theme="dark"] .form-control {
+    background-color: rgba(15, 23, 42, 0.8);
+    border: 1px solid #334155;
+    color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: #64748b;
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+    background-color: rgba(15, 23, 42, 0.95);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+[data-bs-theme="dark"] .input-icon {
+    color: #64748b;
+}
+
+[data-bs-theme="dark"] .form-control:focus+.input-icon,
+[data-bs-theme="dark"] .form-control:focus~.input-icon {
+    color: #60a5fa;
+}
+
+[data-bs-theme="dark"] .password-toggle {
+    color: #64748b;
+}
+
+[data-bs-theme="dark"] .password-toggle:hover {
+    color: #60a5fa;
+}
+
+/* Dark Button with Glow */
+[data-bs-theme="dark"] .btn-neon {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+[data-bs-theme="dark"] .btn-neon:hover {
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5), 0 0 30px rgba(99, 102, 241, 0.25);
+}
+
+/* Footer */
+[data-bs-theme="dark"] .login-footer-text {
+    color: #64748b;
+}
+
+/* Alerts for Dark Mode */
+[data-bs-theme="dark"] .alert {
+    background-color: rgba(15, 23, 42, 0.9);
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .alert-danger {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+}
+
+[data-bs-theme="dark"] .alert-success {
+    background-color: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.3);
+    color: #86efac;
+}
+
+[data-bs-theme="dark"] .alert-warning {
+    background-color: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #fcd34d;
+}

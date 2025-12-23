@@ -3,7 +3,7 @@
    Handles collapse, mobile menu, and interactions
 ======================================== */
 
-(function() {
+(function () {
   'use strict';
 
   // DOM Elements
@@ -25,19 +25,15 @@
   // Desktop Collapse Toggle
   // ========================================
   if (toggleCollapse) {
-    toggleCollapse.addEventListener('click', function() {
+    toggleCollapse.addEventListener('click', function () {
       sidebar.classList.toggle('collapsed');
-      
+
       // Save state to localStorage
       const isCollapsed = sidebar.classList.contains('collapsed');
       localStorage.setItem('sidebarCollapsed', isCollapsed);
-      
-      // Update icon
-      const icon = this.querySelector('i');
-      if (icon) {
-        icon.classList.toggle('bi-chevron-left');
-        icon.classList.toggle('bi-chevron-right');
-      }
+
+      // Toggle body class for header icon rotation
+      document.body.classList.toggle('sidebar-collapsed', isCollapsed);
     });
   }
 
@@ -83,7 +79,7 @@
   // Close mobile menu on nav item click
   // ========================================
   navItems.forEach(item => {
-    item.addEventListener('click', function() {
+    item.addEventListener('click', function () {
       if (window.innerWidth < 992) {
         closeMobileMenu();
       }
@@ -97,15 +93,7 @@
     const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
     if (isCollapsed && window.innerWidth >= 992) {
       sidebar.classList.add('collapsed');
-      
-      // Update icon
-      if (toggleCollapse) {
-        const icon = toggleCollapse.querySelector('i');
-        if (icon) {
-          icon.classList.remove('bi-chevron-left');
-          icon.classList.add('bi-chevron-right');
-        }
-      }
+      document.body.classList.add('sidebar-collapsed');
     }
   }
 
@@ -113,9 +101,9 @@
   // Handle window resize
   // ========================================
   let resizeTimer;
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
+    resizeTimer = setTimeout(function () {
       if (window.innerWidth >= 992) {
         closeMobileMenu();
         restoreSidebarState();
@@ -130,13 +118,13 @@
   // ========================================
   function setActiveNavItem() {
     const currentPath = window.location.pathname;
-    
+
     navItems.forEach(item => {
       const href = item.getAttribute('href');
-      
+
       // Remove active class from all items
       item.classList.remove('active');
-      
+
       // Add active class to matching item
       if (href === currentPath) {
         item.classList.add('active');
@@ -170,7 +158,7 @@
     const tooltipTriggerList = [].slice.call(
       document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );
-    
+
     if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
       tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -246,12 +234,12 @@
   // ========================================
   // Keyboard Navigation
   // ========================================
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function (e) {
     // Close sidebar on ESC key (mobile)
     if (e.key === 'Escape' && window.innerWidth < 992) {
       closeMobileMenu();
     }
-    
+
     // Toggle sidebar on Ctrl + B
     if (e.ctrlKey && e.key === 'b' && window.innerWidth >= 992) {
       e.preventDefault();
@@ -269,7 +257,7 @@
     setActiveNavItem();
     initTooltips();
     animateBadges();
-    
+
     console.log('CoreSense365 Sidebar initialized ✓');
   }
 
@@ -284,20 +272,20 @@
   // Public API (optional)
   // ========================================
   window.CoreSenseSidebar = {
-    collapse: function() {
+    collapse: function () {
       sidebar.classList.add('collapsed');
       localStorage.setItem('sidebarCollapsed', 'true');
     },
-    expand: function() {
+    expand: function () {
       sidebar.classList.remove('collapsed');
       localStorage.setItem('sidebarCollapsed', 'false');
     },
-    toggle: function() {
+    toggle: function () {
       if (toggleCollapse) {
         toggleCollapse.click();
       }
     },
-    openMobile: function() {
+    openMobile: function () {
       if (openSidebar && window.innerWidth < 992) {
         openSidebar.click();
       }

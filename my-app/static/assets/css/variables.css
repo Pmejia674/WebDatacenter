@@ -4,30 +4,30 @@
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
   --color-primary-light: rgba(59, 130, 246, 0.1);
-  
+
   /* Colores de texto */
   --color-text-primary: #111827;
   --color-text-secondary: #374151;
   --color-text-muted: #6b7280;
   --color-text-light: #9ca3af;
-  
+
   /* Colores de fondo */
   --color-bg-white: #fff;
   --color-bg-gray: #f9fafb;
   --color-bg-gray-light: #f3f4f6;
-  
+
   /* Bordes */
   --color-border: #e5e7eb;
   --color-border-light: #f3f4f6;
   --color-border-dark: #d1d5db;
-  
+
   /* Estados */
   --color-success: #10b981;
   --color-danger: #ef4444;
   --color-danger-hover: #dc2626;
   --color-warning: #f59e0b;
   --color-info: #3b82f6;
-  
+
   /* Badges */
   --badge-blue-bg: #dbeafe;
   --badge-blue-text: #1e40af;
@@ -38,7 +38,7 @@
   --badge-gray-bg: #f3f4f6;
   --badge-gray-text: #4b5563;
   --badge-gray-border: #d1d5db;
-  
+
   /* Espaciado */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -46,23 +46,23 @@
   --spacing-lg: 1rem;
   --spacing-xl: 1.5rem;
   --spacing-2xl: 2rem;
-  
+
   /* Bordes redondeados */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 9999px;
-  
+
   /* Sombras */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-primary: 0 4px 6px rgba(59, 130, 246, 0.2);
-  
+
   /* Transiciones */
   --transition-fast: all 0.15s ease;
   --transition-normal: all 0.2s ease;
   --transition-slow: all 0.3s ease;
-  
+
   /* Fuentes */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -71,16 +71,230 @@
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  
-  /* Sidebar */
-  --sidebar-bg: hsl(215, 50%, 18%);
-  --sidebar-bg-gradient: linear-gradient(180deg, hsl(215, 50%, 18%) 0%, hsl(215, 55%, 14%) 100%);
-  --sidebar-text: hsl(210, 20%, 90%);
-  --sidebar-text-muted: hsl(210, 20%, 70%);
-  --sidebar-accent: hsl(210, 60%, 60%);
-  --sidebar-hover: hsl(215, 45%, 25%);
-  --sidebar-border: hsl(215, 40%, 25%);
+
+  /* Sidebar - Diseño Moderno con Contraste Sutil */
+  --sidebar-bg: #f8fafc;
+  /* Slate-50: Diferente al blanco del contenido */
+  --sidebar-bg-gradient: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  --sidebar-text: #475569;
+  /* Slate-600 */
+  --sidebar-text-muted: #94a3b8;
+  /* Slate-400 */
+  --sidebar-accent: #3b82f6;
+  /* El azul vibrante del login */
+  /* Slate-200 para hover */
+  --sidebar-border: #cbd5e1;
+  /* Borde más visible */
   --sidebar-width: 260px;
   --sidebar-collapsed: 72px;
   --sidebar-ease: 0.15s ease;
+}
+
+/* Utilidades Personalizadas (Estilo Bootstrap 5.3) */
+.bg-blue-subtle {
+  background-color: #eff6ff !important;
+  /* blue-50 */
+}
+
+.text-primary-emphasis {
+  color: #1e40af !important;
+  /* blue-800 */
+}
+
+.border-primary-subtle {
+  border-color: #bfdbfe !important;
+  /* blue-200 */
+}
+
+.bg-light {
+  background-color: #f8fafc !important;
+  /* slate-50 */
+}
+
+/* Table Styles Override */
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ========================================
+   DARK MODE VARIABLES
+======================================== */
+[data-bs-theme="dark"] {
+  /* Colores primarios - mantener azul */
+  --color-primary: #60a5fa;
+  --color-primary-hover: #3b82f6;
+  --color-primary-light: rgba(96, 165, 250, 0.15);
+
+  /* Colores de texto */
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-light: #64748b;
+
+  /* Colores de fondo */
+  --color-bg-white: #0f172a;
+  --color-bg-gray: #1e293b;
+  --color-bg-gray-light: #334155;
+
+  /* Bordes */
+  --color-border: #334155;
+  --color-border-light: #1e293b;
+  --color-border-dark: #475569;
+
+  /* Estados */
+  --color-success: #34d399;
+  --color-danger: #f87171;
+  --color-danger-hover: #ef4444;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
+
+  /* Badges */
+  --badge-blue-bg: rgba(59, 130, 246, 0.2);
+  --badge-blue-text: #93c5fd;
+  --badge-blue-border: #3b82f6;
+  --badge-purple-bg: rgba(99, 102, 241, 0.2);
+  --badge-purple-text: #a5b4fc;
+  --badge-purple-border: #6366f1;
+  --badge-gray-bg: #334155;
+  --badge-gray-text: #cbd5e1;
+  --badge-gray-border: #475569;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-primary: 0 4px 6px rgba(59, 130, 246, 0.3);
+
+  /* Sidebar Dark */
+  --sidebar-bg: #0f172a;
+  --sidebar-bg-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  --sidebar-text: #cbd5e1;
+  --sidebar-text-muted: #64748b;
+  --sidebar-accent: #3b82f6;
+  --sidebar-border: #334155;
+  --sidebar-hover: rgba(59, 130, 246, 0.1);
+}
+
+/* ========================================
+   DARK MODE GLOBAL STYLES
+======================================== */
+[data-bs-theme="dark"] body {
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .card-dark {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .table {
+  --bs-table-bg: #1e293b;
+  --bs-table-color: #f1f5f9;
+  --bs-table-border-color: #334155;
+  --bs-table-hover-bg: #334155;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+}
+
+[data-bs-theme="dark"] .table th {
+  color: #94a3b8;
+  background-color: #0f172a;
+}
+
+[data-bs-theme="dark"] .table td {
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .bg-light {
+  background-color: #1e293b !important;
+}
+
+[data-bs-theme="dark"] .bg-white {
+  background-color: #1e293b !important;
+}
+
+[data-bs-theme="dark"] .text-dark {
+  color: #f1f5f9 !important;
+}
+
+[data-bs-theme="dark"] .text-muted {
+  color: #94a3b8 !important;
+}
+
+[data-bs-theme="dark"] .border {
+  border-color: #334155 !important;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+  background-color: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background-color: #0f172a;
+  border-color: #3b82f6;
+  color: #f1f5f9;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+  color: #64748b;
+}
+
+[data-bs-theme="dark"] .btn-outline-primary {
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+
+[data-bs-theme="dark"] .btn-outline-primary:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+[data-bs-theme="dark"] .dropdown-menu {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .dropdown-item {
+  color: #f1f5f9;
+}
+
+[data-bs-theme="dark"] .dropdown-item:hover {
+  background-color: #334155;
+}
+
+[data-bs-theme="dark"] .modal-content {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .modal-header {
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .modal-footer {
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] hr {
+  border-color: #334155;
 }

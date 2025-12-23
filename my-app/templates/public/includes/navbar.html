@@ -1,112 +1,268 @@
 <!-- CoreSense365 Header -->
 <header class="header-coresense" id="headerCoresense">
   <div class="header-inner">
-    <!-- Left Section: Mobile Menu + Title -->
+    <!-- Left Section: Menu Controls -->
     <div class="header-left">
       <!-- Mobile Menu Toggle -->
       <button class="btn-mobile-menu" id="openSidebarHeader">
-        <i class="bi bi-list"></i>
+        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
       </button>
 
-      <!-- Title & Subtitle -->
-      <div class="header-title-section">
-        <h1 class="header-title">{% block pageTitle %}Dashboard{% endblock %}</h1>
-        <p class="header-subtitle">{% block pageSubtitle %}Sistema de Control de Acceso{% endblock %}</p>
-      </div>
+      <!-- Desktop Sidebar Collapse Toggle -->
+      <button class="btn-collapse-header d-none d-lg-flex" id="toggleCollapse" aria-label="Colapsar/Expandir Menú"
+        title="Colapsar/Expandir Menú">
+        <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
     </div>
 
     <!-- Right Section: Actions -->
     <div class="header-actions">
       <!-- Theme Toggle -->
       <button class="header-btn" id="themeToggle" aria-label="Cambiar tema">
-        <i class="bi bi-sun-fill" id="themeIcon"></i>
+        <svg class="header-icon theme-icon-sun" id="themeIconSun" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+        <svg class="header-icon theme-icon-moon" id="themeIconMoon" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="display: none;">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
       </button>
 
-      <!-- Notifications -->
-      <button class="header-btn" aria-label="Notificaciones">
-        <i class="bi bi-bell"></i>
-        <span class="notification-badge"></span>
-      </button>
+      <!-- Notifications Dropdown -->
+      <div class="header-dropdown">
+        <button class="header-btn" id="notificationToggle" aria-label="Notificaciones">
+          <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+          </svg>
+          <span class="notification-badge">3</span>
+        </button>
+        <div class="header-dropdown-menu" id="notificationMenu">
+          <div class="dropdown-header">
+            <h6>Notificaciones</h6>
+            <span class="badge-new">3 nuevas</span>
+          </div>
+          <div class="dropdown-body">
+            <a href="#" class="dropdown-item-notification">
+              <div class="notification-icon bg-primary-subtle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                </svg>
+              </div>
+              <div class="notification-content">
+                <p class="notification-title">Nueva clave generada</p>
+                <span class="notification-time">Hace 5 min</span>
+              </div>
+            </a>
+            <a href="#" class="dropdown-item-notification">
+              <div class="notification-icon bg-success-subtle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="notification-content">
+                <p class="notification-title">Acceso autorizado</p>
+                <span class="notification-time">Hace 15 min</span>
+              </div>
+            </a>
+            <a href="#" class="dropdown-item-notification">
+              <div class="notification-icon bg-warning-subtle">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <div class="notification-content">
+                <p class="notification-title">Alerta de seguridad</p>
+                <span class="notification-time">Hace 1 hora</span>
+              </div>
+            </a>
+          </div>
+          <div class="dropdown-footer">
+            <a href="/reporte-accesos">Ver todas las notificaciones</a>
+          </div>
+        </div>
+      </div>
 
       <!-- Separator -->
       <div class="header-separator d-none d-sm-block"></div>
 
-      <!-- User Profile -->
-      <button class="header-user-btn" aria-label="Perfil de usuario">
-        <div class="header-user-avatar">
-          <i class="bi bi-person"></i>
-        </div>
-        <div class="header-user-info">
-          <p class="header-user-name">{{ dataLogin.nombre if dataLogin else 'Usuario' }}</p>
-          <p class="header-user-role">
-            {% if dataLogin.rol == 1 %}
+      <!-- User Profile Dropdown -->
+      <div class="header-dropdown">
+        <button class="header-user-btn" id="userToggle" aria-label="Perfil de usuario">
+          <div class="header-user-avatar">
+            <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+          </div>
+          <div class="header-user-info">
+            <p class="header-user-name">{{ dataLogin.nombre if dataLogin else 'Usuario' }}</p>
+            <p class="header-user-role">
+              {% if dataLogin.rol == 1 %}
               Administrador
-            {% else %}
+              {% else %}
               Usuario
-            {% endif %}
-          </p>
+              {% endif %}
+            </p>
+          </div>
+          <svg class="header-icon chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+        <div class="header-dropdown-menu user-menu" id="userMenu">
+          <div class="dropdown-user-header">
+            <div class="user-avatar-large">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+            </div>
+            <div class="user-info-large">
+              <h6>{{ dataLogin.nombre if dataLogin else 'Usuario' }}</h6>
+              <span>{% if dataLogin.rol == 1 %}Administrador{% else %}Usuario{% endif %}</span>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a href="/mi-perfil/{{dataLogin.id}}" class="dropdown-item-user">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Mi Perfil</span>
+          </a>
+          <a href="/interfaz-clave" class="dropdown-item-user">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+            </svg>
+            <span>Generar Clave</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{{ url_for('cerraSesion') }}" class="dropdown-item-user text-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+            </svg>
+            <span>Cerrar Sesión</span>
+          </a>
         </div>
-      </button>
+      </div>
     </div>
   </div>
 </header>
 
 <script>
-// Scroll effect for header & Theme Toggle
-(function() {
-  const header = document.getElementById('headerCoresense');
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const html = document.documentElement;
-  
-  // Initialize theme (default: light)
-  let currentTheme = localStorage.getItem('theme') || 'light';
-  html.setAttribute('data-bs-theme', currentTheme);
-  updateThemeIcon();
-  
-  function updateThemeIcon() {
-    if (currentTheme === 'dark') {
-      themeIcon.className = 'bi bi-moon-stars-fill';
-    } else {
-      themeIcon.className = 'bi bi-sun-fill';
-    }
-  }
-  
-  // Theme toggle
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function() {
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      html.setAttribute('data-bs-theme', currentTheme);
-      localStorage.setItem('theme', currentTheme);
-      updateThemeIcon();
-    });
-  }
-  
-  // Scroll effect
-  if (header) {
-    window.addEventListener('scroll', function() {
-      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-      
-      if (currentScroll > 10) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-  }
+  // Header functionality
+  (function () {
+    const header = document.getElementById('headerCoresense');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIconSun = document.getElementById('themeIconSun');
+    const themeIconMoon = document.getElementById('themeIconMoon');
+    const html = document.documentElement;
 
-  // Connect mobile menu button to sidebar
-  const openBtn = document.getElementById('openSidebarHeader');
-  if (openBtn) {
-    openBtn.addEventListener('click', function() {
-      const sidebar = document.getElementById('sidebarCoresense');
-      const overlay = document.getElementById('sidebarOverlay');
-      if (sidebar && overlay) {
-        sidebar.classList.add('mobile-open');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+    // Initialize theme
+    let currentTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-bs-theme', currentTheme);
+    updateThemeIcon();
+
+    function updateThemeIcon() {
+      if (currentTheme === 'dark') {
+        themeIconSun.style.display = 'none';
+        themeIconMoon.style.display = 'block';
+      } else {
+        themeIconSun.style.display = 'block';
+        themeIconMoon.style.display = 'none';
       }
+    }
+
+    // Theme toggle
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-bs-theme', currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        updateThemeIcon();
+      });
+    }
+
+    // Scroll effect - transparent to shadow
+    if (header) {
+      window.addEventListener('scroll', function () {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        if (currentScroll > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }
+
+    // Dropdown toggles
+    const notificationToggle = document.getElementById('notificationToggle');
+    const notificationMenu = document.getElementById('notificationMenu');
+    const userToggle = document.getElementById('userToggle');
+    const userMenu = document.getElementById('userMenu');
+
+    function closeAllDropdowns() {
+      notificationMenu?.classList.remove('show');
+      userMenu?.classList.remove('show');
+    }
+
+    if (notificationToggle && notificationMenu) {
+      notificationToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        userMenu?.classList.remove('show');
+        notificationMenu.classList.toggle('show');
+      });
+    }
+
+    if (userToggle && userMenu) {
+      userToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        notificationMenu?.classList.remove('show');
+        userMenu.classList.toggle('show');
+      });
+    }
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', function () {
+      closeAllDropdowns();
     });
-  }
-})();
+
+    // Connect mobile menu button to sidebar
+    const openBtn = document.getElementById('openSidebarHeader');
+    if (openBtn) {
+      openBtn.addEventListener('click', function () {
+        const sidebar = document.getElementById('sidebarCoresense');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar && overlay) {
+          sidebar.classList.add('mobile-open');
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    }
+  })();
 </script>
