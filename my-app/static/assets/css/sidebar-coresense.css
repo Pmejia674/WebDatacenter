@@ -160,11 +160,7 @@ body {
 }
 
 .btn-close-mobile:hover {
-<<<<<<< HEAD
   color: #3b82f6;
-=======
-  color: white;
->>>>>>> 4ea12581d51bab8964acbc7a56c1fb774d5254dd
 }
 
 .sidebar-nav {
@@ -269,12 +265,8 @@ body {
 }
 
 .nav-item.active::before {
-<<<<<<< HEAD
   display: none;
   /* Estilo cápsula no necesita borde lateral */
-=======
-  transform: scaleY(1);
->>>>>>> 4ea12581d51bab8964acbc7a56c1fb774d5254dd
 }
 
 .nav-item .nav-icon,
@@ -457,7 +449,6 @@ body {
   border: 1px solid hsl(214, 20%, 91%);
   border-radius: 12px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.02);
-<<<<<<< HEAD
 }
 
 /* ========================================
@@ -543,6 +534,4 @@ body {
   background: #3b82f6;
   border-color: #3b82f6;
   color: white;
-=======
->>>>>>> 4ea12581d51bab8964acbc7a56c1fb774d5254dd
 }
