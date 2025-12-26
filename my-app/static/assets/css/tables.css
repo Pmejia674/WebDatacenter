@@ -188,7 +188,7 @@ button.paginate_button.disabled,
     order: 0;
   }
 
-  .modern-table-wrapper + .datatables-controls {
+  .modern-table-wrapper+.datatables-controls {
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -201,4 +201,225 @@ button.paginate_button.disabled,
   .dataTables_wrapper .dataTables_paginate {
     text-align: center;
   }
+}
+
+/* ========================================
+   DARK MODE - Dasher Style Tables
+======================================== */
+[data-bs-theme="dark"] .modern-card {
+  background: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.12);
+}
+
+[data-bs-theme="dark"] .card-title-modern,
+[data-bs-theme="dark"] .card-header-modern h3 {
+  color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .modern-table-wrapper {
+  border-color: rgba(107, 114, 128, 0.25);
+  background: transparent;
+}
+
+[data-bs-theme="dark"] .modern-table thead {
+  background: #28323d;
+}
+
+[data-bs-theme="dark"] .modern-table thead th {
+  color: #d1d5db;
+  border-bottom-color: rgba(107, 114, 128, 0.35);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+[data-bs-theme="dark"] .modern-table tbody tr {
+  border-bottom-color: rgba(255, 255, 255, 0.04);
+}
+
+[data-bs-theme="dark"] .modern-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-bs-theme="dark"] .modern-table tbody td {
+  color: #f3f4f6;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* DataTables controls in dark mode */
+[data-bs-theme="dark"] .datatables-search input {
+  background-color: #141a21;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .datatables-search input::placeholder {
+  color: #9ca3af;
+}
+
+[data-bs-theme="dark"] .datatables-search input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+[data-bs-theme="dark"] .datatables-search i {
+  color: #6b7280;
+}
+
+[data-bs-theme="dark"] .datatables-length select,
+[data-bs-theme="dark"] .form-select-sm {
+  background-color: #141a21;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .datatables-length select:focus,
+[data-bs-theme="dark"] .form-select-sm:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+[data-bs-theme="dark"] .dataTables_info {
+  color: #9ca3af;
+}
+
+/* Pagination buttons dark mode */
+[data-bs-theme="dark"] button.paginate_button,
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button {
+  background: #28323d;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #dee2e6;
+}
+
+[data-bs-theme="dark"] button.paginate_button:hover:not(.disabled),
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.disabled) {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+[data-bs-theme="dark"] button.paginate_button.current,
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+[data-bs-theme="dark"] button.paginate_button.disabled,
+[data-bs-theme="dark"] .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+  background: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #6b7280;
+}
+
+/* Action buttons dark mode - Dasher style */
+[data-bs-theme="dark"] .btn-action {
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
+}
+
+[data-bs-theme="dark"] .btn-action.btn-edit {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+[data-bs-theme="dark"] .btn-action.btn-edit:hover {
+  background: rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+}
+
+[data-bs-theme="dark"] .btn-action.btn-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+[data-bs-theme="dark"] .btn-action.btn-delete:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+/* Badges dark mode - Dasher style */
+[data-bs-theme="dark"] .badge-modern {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-blue {
+  background: rgba(59, 130, 246, 0.25);
+  color: #bfdbfe;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-purple {
+  background: rgba(168, 85, 247, 0.25);
+  color: #ddd6fe;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-gray {
+  background: rgba(107, 114, 128, 0.25);
+  color: #e5e7eb;
+  border: 1px solid rgba(107, 114, 128, 0.4);
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-green {
+  background: rgba(16, 185, 129, 0.25);
+  color: #a7f3d0;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-yellow,
+[data-bs-theme="dark"] .badge-modern.badge-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+[data-bs-theme="dark"] .badge-modern.badge-red,
+[data-bs-theme="dark"] .badge-modern.badge-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Primary button dark mode */
+[data-bs-theme="dark"] .btn-primary-modern {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+[data-bs-theme="dark"] .btn-primary-modern:hover {
+  background: #2563eb;
+}
+
+/* View button - Dasher style */
+[data-bs-theme="dark"] .btn-view {
+  background: transparent;
+  color: #f8f9fa;
+  border: 1px solid rgba(107, 114, 128, 0.4);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.875rem;
+}
+
+[data-bs-theme="dark"] .btn-view:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(107, 114, 128, 0.6);
+}
+
+/* Empty state dark mode */
+[data-bs-theme="dark"] .empty-state-icon {
+  color: #6b7280;
+}
+
+[data-bs-theme="dark"] .empty-state-text {
+  color: #f8f9fa;
 }

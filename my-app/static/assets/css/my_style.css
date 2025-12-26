@@ -121,6 +121,11 @@ tbody tr {
   border-bottom: 1px solid #eee !important;
 }
 
+/* Dark mode - Dasher style table rows with better visibility */
+[data-bs-theme="dark"] tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
 tbody tr:hover {
   cursor: pointer;
 }

@@ -80,3 +80,6 @@ my-app/conexion/
 **/database*.py
 **/db_config*.py
 **/config_db*.py
+
+# Dasher Free package
+dasher-free-1-0-0/

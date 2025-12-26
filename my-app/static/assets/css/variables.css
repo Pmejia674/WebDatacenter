@@ -131,7 +131,7 @@
 }
 
 /* ========================================
-   DARK MODE VARIABLES
+   DARK MODE VARIABLES - Dasher Style
 ======================================== */
 [data-bs-theme="dark"] {
   /* Colores primarios - mantener azul */
@@ -140,20 +140,21 @@
   --color-primary-light: rgba(96, 165, 250, 0.15);
 
   /* Colores de texto */
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #cbd5e1;
-  --color-text-muted: #94a3b8;
-  --color-text-light: #64748b;
+  --color-text-primary: #f8f9fa;
+  --color-text-secondary: #dee2e6;
+  --color-text-muted: #9ca3af;
+  --color-text-light: #6b7280;
 
-  /* Colores de fondo */
-  --color-bg-white: #0f172a;
-  --color-bg-gray: #1e293b;
-  --color-bg-gray-light: #334155;
+  /* Colores de fondo - Dasher Style */
+  --color-bg-body: #141a21;
+  --color-bg-white: #141a21;
+  --color-bg-gray: #1c2530;
+  --color-bg-gray-light: #28323d;
 
   /* Bordes */
-  --color-border: #334155;
-  --color-border-light: #1e293b;
-  --color-border-dark: #475569;
+  --color-border: rgba(107, 114, 128, 0.25);
+  --color-border-light: #1c2530;
+  --color-border-dark: #3d4654;
 
   /* Estados */
   --color-success: #34d399;
@@ -169,94 +170,113 @@
   --badge-purple-bg: rgba(99, 102, 241, 0.2);
   --badge-purple-text: #a5b4fc;
   --badge-purple-border: #6366f1;
-  --badge-gray-bg: #334155;
-  --badge-gray-text: #cbd5e1;
-  --badge-gray-border: #475569;
+  --badge-gray-bg: #28323d;
+  --badge-gray-text: #dee2e6;
+  --badge-gray-border: #3d4654;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  /* Sombras - Dasher Style */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  --shadow-md: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.16);
   --shadow-primary: 0 4px 6px rgba(59, 130, 246, 0.3);
 
-  /* Sidebar Dark */
-  --sidebar-bg: #0f172a;
-  --sidebar-bg-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  --sidebar-text: #cbd5e1;
-  --sidebar-text-muted: #64748b;
+  /* Sidebar Dark - Dasher Style */
+  --sidebar-bg: #141a21;
+  --sidebar-bg-gradient: linear-gradient(180deg, #141a21 0%, #1c2530 100%);
+  --sidebar-text: #dee2e6;
+  --sidebar-text-muted: #6b7280;
   --sidebar-accent: #3b82f6;
-  --sidebar-border: #334155;
+  --sidebar-border: rgba(107, 114, 128, 0.25);
   --sidebar-hover: rgba(59, 130, 246, 0.1);
 }
 
 /* ========================================
-   DARK MODE GLOBAL STYLES
+   DARK MODE GLOBAL STYLES - Dasher Style
 ======================================== */
 [data-bs-theme="dark"] body {
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: #141a21;
+  color: #f8f9fa;
 }
 
 [data-bs-theme="dark"] .card,
 [data-bs-theme="dark"] .card-dark {
-  background-color: #1e293b;
-  border-color: #334155;
-  color: #f1f5f9;
+  background-color: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #f8f9fa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.12);
 }
 
+/* Tables - Dasher Style */
 [data-bs-theme="dark"] .table {
-  --bs-table-bg: #1e293b;
-  --bs-table-color: #f1f5f9;
-  --bs-table-border-color: #334155;
-  --bs-table-hover-bg: #334155;
-  --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+  --bs-table-bg: transparent;
+  --bs-table-color: #f8f9fa;
+  --bs-table-border-color: rgba(107, 114, 128, 0.25);
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
 }
 
 [data-bs-theme="dark"] .table th {
-  color: #94a3b8;
-  background-color: #0f172a;
+  color: #9ca3af;
+  background-color: #28323d;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(107, 114, 128, 0.25);
 }
 
 [data-bs-theme="dark"] .table td {
-  border-color: #334155;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #dee2e6;
+}
+
+[data-bs-theme="dark"] .table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] .table-light,
+[data-bs-theme="dark"] thead.bg-light {
+  background-color: #28323d !important;
 }
 
 [data-bs-theme="dark"] .bg-light {
-  background-color: #1e293b !important;
+  background-color: #1c2530 !important;
 }
 
 [data-bs-theme="dark"] .bg-white {
-  background-color: #1e293b !important;
+  background-color: #1c2530 !important;
 }
 
 [data-bs-theme="dark"] .text-dark {
-  color: #f1f5f9 !important;
+  color: #f8f9fa !important;
 }
 
 [data-bs-theme="dark"] .text-muted {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
+}
+
+[data-bs-theme="dark"] .text-secondary {
+  color: #9ca3af !important;
 }
 
 [data-bs-theme="dark"] .border {
-  border-color: #334155 !important;
+  border-color: rgba(107, 114, 128, 0.25) !important;
 }
 
 [data-bs-theme="dark"] .form-control,
 [data-bs-theme="dark"] .form-select {
-  background-color: #0f172a;
-  border-color: #334155;
-  color: #f1f5f9;
+  background-color: #141a21;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #f8f9fa;
 }
 
 [data-bs-theme="dark"] .form-control:focus,
 [data-bs-theme="dark"] .form-select:focus {
-  background-color: #0f172a;
+  background-color: #141a21;
   border-color: #3b82f6;
-  color: #f1f5f9;
+  color: #f8f9fa;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
 
 [data-bs-theme="dark"] .form-control::placeholder {
-  color: #64748b;
+  color: #6b7280;
 }
 
 [data-bs-theme="dark"] .btn-outline-primary {
@@ -269,32 +289,78 @@
   color: white;
 }
 
+[data-bs-theme="dark"] .btn-outline-secondary {
+  color: #9ca3af;
+  border-color: rgba(107, 114, 128, 0.5);
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+  background-color: #28323d;
+  color: #f8f9fa;
+  border-color: #3d4654;
+}
+
 [data-bs-theme="dark"] .dropdown-menu {
-  background-color: #1e293b;
-  border-color: #334155;
+  background-color: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.12);
 }
 
 [data-bs-theme="dark"] .dropdown-item {
-  color: #f1f5f9;
+  color: #f8f9fa;
 }
 
 [data-bs-theme="dark"] .dropdown-item:hover {
-  background-color: #334155;
+  background-color: #28323d;
 }
 
 [data-bs-theme="dark"] .modal-content {
-  background-color: #1e293b;
-  border-color: #334155;
+  background-color: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
 }
 
 [data-bs-theme="dark"] .modal-header {
-  border-color: #334155;
+  border-color: rgba(107, 114, 128, 0.25);
 }
 
 [data-bs-theme="dark"] .modal-footer {
-  border-color: #334155;
+  border-color: rgba(107, 114, 128, 0.25);
 }
 
 [data-bs-theme="dark"] hr {
-  border-color: #334155;
+  border-color: rgba(107, 114, 128, 0.25);
+}
+
+/* Badges estilo Dasher */
+[data-bs-theme="dark"] .badge.bg-primary,
+[data-bs-theme="dark"] .badge.bg-blue-subtle {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  color: #93c5fd !important;
+}
+
+[data-bs-theme="dark"] .badge.bg-success {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+[data-bs-theme="dark"] .badge.bg-warning {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fcd34d !important;
+}
+
+[data-bs-theme="dark"] .badge.bg-danger {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+[data-bs-theme="dark"] .badge.bg-secondary,
+[data-bs-theme="dark"] .badge.bg-light {
+  background-color: #28323d !important;
+  color: #dee2e6 !important;
+}
+
+/* Navbar glass effect - Dasher Style */
+[data-bs-theme="dark"] .navbar-glass {
+  backdrop-filter: blur(6px);
+  background-color: rgba(20, 26, 33, 0.6) !important;
 }

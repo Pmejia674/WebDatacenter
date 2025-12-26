@@ -626,15 +626,16 @@
 }
 
 /* ========================================
-   DASHBOARD DARK MODE
+   DASHBOARD DARK MODE - Dasher Style
 ======================================== */
 [data-bs-theme="dark"] .stat-card,
 [data-bs-theme="dark"] .env-tile,
 [data-bs-theme="dark"] .chart-card,
 [data-bs-theme="dark"] .equipment-card,
 [data-bs-theme="dark"] .status-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #1c2530;
+  border-color: rgba(107, 114, 128, 0.25);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.12);
 }
 
 [data-bs-theme="dark"] .stat-card:hover,
@@ -643,7 +644,7 @@
 [data-bs-theme="dark"] .equipment-card:hover,
 [data-bs-theme="dark"] .status-card:hover {
   border-color: #3b82f6;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 2px 0 rgba(59, 130, 246, 0.3), 0 12px 24px -4px rgba(0, 0, 0, 0.2);
 }
 
 [data-bs-theme="dark"] .stat-card-value,
@@ -652,7 +653,7 @@
 [data-bs-theme="dark"] .equipment-card-name,
 [data-bs-theme="dark"] .status-card-title,
 [data-bs-theme="dark"] .section-title {
-  color: #f1f5f9;
+  color: #f8f9fa;
 }
 
 [data-bs-theme="dark"] .stat-card-label,
@@ -661,7 +662,7 @@
 [data-bs-theme="dark"] .equipment-card-model,
 [data-bs-theme="dark"] .equipment-card-info,
 [data-bs-theme="dark"] .status-card-subtitle {
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
 [data-bs-theme="dark"] .stat-card-icon.primary {
@@ -695,13 +696,13 @@
 }
 
 [data-bs-theme="dark"] .env-tile-icon {
-  background: #0f172a;
-  border-color: #334155;
-  color: #94a3b8;
+  background: #141a21;
+  border-color: rgba(107, 114, 128, 0.25);
+  color: #9ca3af;
 }
 
 [data-bs-theme="dark"] .env-tile-progress {
-  background: #334155;
+  background: #28323d;
 }
 
 [data-bs-theme="dark"] .chart-tab {
@@ -714,13 +715,13 @@
 }
 
 [data-bs-theme="dark"] .chart-tab.active {
-  background: #334155;
+  background: #28323d;
   color: #60a5fa;
-  border-color: #475569;
+  border-color: rgba(107, 114, 128, 0.4);
 }
 
 [data-bs-theme="dark"] .equipment-card-image {
-  background: #0f172a;
+  background: #141a21;
 }
 
 [data-bs-theme="dark"] .equipment-card-info i {
@@ -743,21 +744,21 @@
 }
 
 [data-bs-theme="dark"] .alert-level-item.offline {
-  background: #334155;
-  color: #64748b;
+  background: #28323d;
+  color: #6b7280;
 }
 
 [data-bs-theme="dark"] .subsystems-section {
-  border-top-color: #334155;
+  border-top-color: rgba(107, 114, 128, 0.25);
 }
 
 [data-bs-theme="dark"] .subsystems-title {
-  color: #64748b;
+  color: #6b7280;
 }
 
 [data-bs-theme="dark"] .subsystem-item {
-  background: #0f172a;
-  color: #f1f5f9;
+  background: #141a21;
+  color: #f8f9fa;
 }
 
 [data-bs-theme="dark"] .status-label.success {
