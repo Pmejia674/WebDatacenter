@@ -1,0 +1,412 @@
+/* =============================================
+   Generar Clave 2FA - Diseño Minimalista
+   InfraNova - Data Center Access Control
+   ============================================= */
+
+/* Layout principal - Ocupa mejor la pantalla */
+.key-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+/* Encabezado de página */
+.key-page-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.key-page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.key-page-title i {
+    color: var(--color-primary);
+}
+
+.key-page-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Grid de dos columnas */
+.key-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 992px) {
+    .key-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+/* Cards de método de acceso */
+.access-card {
+    background: var(--color-bg-white);
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.access-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.access-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border-light);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.access-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.access-card-icon.keypad {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.access-card-icon.remote {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+}
+
+.access-card-info h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.25rem 0;
+}
+
+.access-card-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.access-card-body {
+    padding: 2rem;
+}
+
+/* Display del código de 4 dígitos */
+.code-display-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.code-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+}
+
+.code-digits {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.code-digit {
+    width: 72px;
+    height: 88px;
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.code-digit.empty {
+    color: var(--color-text-light);
+    font-size: 1.5rem;
+}
+
+.code-digit.generated {
+    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    animation: digitPop 0.3s ease;
+}
+
+@keyframes digitPop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Instrucciones del teclado */
+.keypad-instructions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(59, 130, 246, 0.08);
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.keypad-instructions i {
+    color: var(--color-primary);
+}
+
+.keypad-instructions span {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+/* Segundo factor badge */
+.factor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+}
+
+.factor-badge i {
+    font-size: 1rem;
+}
+
+/* Botón generar mejorado */
+.btn-generate {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+}
+
+.btn-generate.primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+
+.btn-generate.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.btn-generate.secondary {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: white;
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+}
+
+.btn-generate.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+/* Autorización remota */
+.remote-auth-section {
+    text-align: center;
+}
+
+.remote-status {
+    padding: 2rem;
+    background: var(--color-bg-gray);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.remote-status-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+}
+
+.remote-status-icon.waiting {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    animation: pulse 2s infinite;
+}
+
+.remote-status-icon.approved {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.remote-status-icon.idle {
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--color-text-muted);
+}
+
+.remote-status-icon.rejected {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+.remote-status h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.remote-status p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Timer de expiración minimalista */
+.expiration-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: 20px;
+    margin-top: 1rem;
+}
+
+.expiration-badge i {
+    color: #f59e0b;
+}
+
+.expiration-badge span {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.expiration-badge .time {
+    font-weight: 600;
+    color: #f59e0b;
+}
+
+/* =============================================
+   DARK MODE
+   ============================================= */
+[data-bs-theme="dark"] .key-page-title {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .access-card {
+    background: #1c2530;
+    border-color: rgba(107, 114, 128, 0.25);
+}
+
+[data-bs-theme="dark"] .access-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .access-card-header {
+    border-color: rgba(107, 114, 128, 0.25);
+}
+
+[data-bs-theme="dark"] .access-card-info h3 {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .code-digit {
+    background: linear-gradient(180deg, #28323d 0%, #1c2530 100%);
+    border-color: rgba(107, 114, 128, 0.3);
+    color: #f8f9fa;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] .code-digit.generated {
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-color: #3b82f6;
+    color: #60a5fa;
+}
+
+[data-bs-theme="dark"] .keypad-instructions {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+[data-bs-theme="dark"] .remote-status {
+    background: #28323d;
+}
+
+[data-bs-theme="dark"] .remote-status h4 {
+    color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .factor-badge {
+    background: rgba(16, 185, 129, 0.15);
+}

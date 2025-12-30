@@ -1,95 +1,340 @@
 {% extends 'public/base_cpanel.html' %}
-<!---->
-{% block title %}Crear Clave{% endblock %} {% block customCSS %}
-<style>
-  /* Tu código CSS personalizado va aquí */
-  .contenedor {
-    border-style: solid;
-    border-color: rgba(128, 128, 128, 0.3);
-    border-width: 1px;
-    border-radius: 5px;
-  }
-  .campo_clave input {
-    float: left;
-    width: 95%;
-  }
-  .campo_clave button {
-    width: 5%;
-  }
-</style>
+
+{% block title %}Generar Código de Acceso{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/generar-clave.css') }}">
 {% endblock %}
-<!---->
+
 {% block body %}
-<div class="container-xxl">
-  <div class="card">
-    <div class="card-body">
-      <div class="app-brand justify-content-center">
-        <span class="app-brand-logo">
-          <img
-            class="logo"
-            style="display: flex"
-            src="{{ url_for('static', filename ='./assets/img/logo.png') }}"
-            alt="Logo"
-          />
-        </span>
+<div class="key-page">
+  <!-- Encabezado -->
+  <header class="key-page-header">
+    <h1 class="key-page-title">
+      <i class="bi bi-shield-lock"></i>
+      Control de Acceso 2FA
+    </h1>
+    <p class="key-page-subtitle">Genera un código temporal para acceder al Data Center</p>
+  </header>
+
+  <!-- Grid de dos métodos -->
+  <div class="key-grid">
+
+    <!-- Método 1: Teclado 4x4 + RFID -->
+    <div class="access-card">
+      <div class="access-card-header">
+        <div class="access-card-icon keypad">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </div>
+        <div class="access-card-info">
+          <h3>Teclado 4x4 + Tarjeta RFID</h3>
+          <p>Código de 4 dígitos + tarjeta física</p>
+        </div>
       </div>
 
-      <form class="mb-3" method="POST">
-        <div class="contenedor mb-3">
-          <label class="form-label"> GENERACION DE CLAVE </label>
-          <div class="campo_clave">
-            <input
-              class="form-control"
-              type="password"
-              name="clave_audi"
-              id="clave_audi"
-              readonly
-            />
-            <button
-              class="btn btn-outline-primary"
-              type="button"
-              id="togglePassword"
-            >
-              <i class="bi bi-eye"></i>
-            </button>
+      <div class="access-card-body">
+        <div class="code-display-wrapper">
+          <div class="code-label">Tu código de acceso</div>
+
+          <div class="code-digits" id="codeDigits">
+            <div class="code-digit empty" id="digit1">—</div>
+            <div class="code-digit empty" id="digit2">—</div>
+            <div class="code-digit empty" id="digit3">—</div>
+            <div class="code-digit empty" id="digit4">—</div>
+          </div>
+
+          <div class="keypad-instructions" id="keypadInstructions" style="display: none;">
+            <i class="bi bi-keyboard"></i>
+            <span>Ingresa este código en el teclado matricial</span>
+          </div>
+
+          <div class="expiration-badge" id="expirationBadge" style="display: none;">
+            <i class="bi bi-clock"></i>
+            <span>Válido por <span class="time" id="expirationTime">5:00</span></span>
           </div>
         </div>
 
-        <div class="mb-3">
-          <button
-            type="button"
-            class="btn btn-secondary w-100"
-            onclick="generacionClave('{{dataLogin.id}}')"
-          >
-            Generar Clave
-            <i class="bi bi-key-fill"></i>
-          </button>
+        <div class="factor-badge" id="factorBadge" style="display: none;">
+          <i class="bi bi-check-circle-fill"></i>
+          <span>Luego presenta tu tarjeta RFID para completar</span>
         </div>
-      </form>
+
+        <button type="button" class="btn-generate primary" id="generateKeypadBtn"
+          onclick="generarCodigoTeclado('{{dataLogin.id}}')">
+          <i class="bi bi-lightning-charge-fill"></i>
+          Generar Código
+        </button>
+      </div>
     </div>
+
+    <!-- Método 2: Código + Autorización Remota -->
+    <div class="access-card">
+      <div class="access-card-header">
+        <div class="access-card-icon remote">
+          <i class="bi bi-broadcast"></i>
+        </div>
+        <div class="access-card-info">
+          <h3>Autorización Remota</h3>
+          <p>Código + aprobación del administrador</p>
+        </div>
+      </div>
+
+      <div class="access-card-body">
+        <div class="remote-auth-section">
+          <div class="remote-status" id="remoteStatus">
+            <div class="remote-status-icon idle" id="remoteIcon">
+              <i class="bi bi-hourglass"></i>
+            </div>
+            <h4 id="remoteTitle">Sin solicitud activa</h4>
+            <p id="remoteMessage">Genera un código para solicitar autorización al administrador</p>
+          </div>
+
+          <div class="code-display-wrapper" id="remoteCodeWrapper" style="display: none;">
+            <div class="code-label">Código enviado al admin</div>
+            <div class="code-digits" id="remoteCodeDigits">
+              <div class="code-digit empty" id="remoteDigit1">—</div>
+              <div class="code-digit empty" id="remoteDigit2">—</div>
+              <div class="code-digit empty" id="remoteDigit3">—</div>
+              <div class="code-digit empty" id="remoteDigit4">—</div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-generate secondary" id="generateRemoteBtn"
+          onclick="solicitarAutorizacion('{{dataLogin.id}}')">
+          <i class="bi bi-send-fill"></i>
+          Solicitar Autorización
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
-{% endblock %} {% block customJS %}
+{% endblock %}
+
+{% block customJS %}
 <script>
-  function generacionClave(id) {
-    fetch("/generar-y-guardar-clave/"+id) // Ruta para generar la clave
-      .then((response) => response.text())
-      .then((data) => {
-        document.getElementById("clave_audi").value = data.trim(); // Actualiza el valor del campo con la clave generada
+  // Variables globales
+  let countdownInterval = null;
+
+  // ===== MÉTODO 1: Teclado 4x4 + RFID =====
+  function generarCodigoTeclado(userId) {
+    const btn = document.getElementById('generateKeypadBtn');
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Generando...';
+    btn.disabled = true;
+
+    // Simular llamada al backend (reemplazar con fetch real)
+    fetch("/generar-y-guardar-clave/" + userId)
+      .then(response => response.text())
+      .then(data => {
+        const codigo = data.trim().substring(0, 4).toUpperCase();
+        mostrarCodigo(codigo);
+        iniciarTemporizador(300); // 5 minutos
+
+        btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Generar Nuevo';
+        btn.disabled = false;
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error:", error);
+        btn.innerHTML = '<i class="bi bi-lightning-charge-fill"></i> Generar Código';
+        btn.disabled = false;
       });
   }
 
-  // MOSTRAR Y OCULTAR CONSTRASEÑA
-  document
-    .getElementById("togglePassword")
-    .addEventListener("click", function () {
-      const claveField = document.getElementById("clave_audi");
-      const type =
-        claveField.getAttribute("type") === "password" ? "text" : "password";
-      claveField.setAttribute("type", type);
-    });
+  function mostrarCodigo(codigo) {
+    const digitos = codigo.split('');
+
+    for (let i = 0; i < 4; i++) {
+      const digitBox = document.getElementById('digit' + (i + 1));
+      digitBox.classList.remove('empty');
+      digitBox.classList.add('generated');
+
+      // Animación escalonada
+      setTimeout(() => {
+        digitBox.textContent = digitos[i] || '0';
+      }, i * 100);
+    }
+
+    // Mostrar instrucciones y badge
+    document.getElementById('keypadInstructions').style.display = 'flex';
+    document.getElementById('factorBadge').style.display = 'inline-flex';
+    document.getElementById('expirationBadge').style.display = 'inline-flex';
+  }
+
+  function iniciarTemporizador(segundos) {
+    if (countdownInterval) clearInterval(countdownInterval);
+
+    let restante = segundos;
+    const timerElement = document.getElementById('expirationTime');
+
+    function actualizar() {
+      const min = Math.floor(restante / 60);
+      const seg = restante % 60;
+      timerElement.textContent = min + ':' + String(seg).padStart(2, '0');
+
+      if (restante <= 0) {
+        clearInterval(countdownInterval);
+        expirarCodigo();
+      }
+      restante--;
+    }
+
+    actualizar();
+    countdownInterval = setInterval(actualizar, 1000);
+  }
+
+  function expirarCodigo() {
+    for (let i = 1; i <= 4; i++) {
+      const digitBox = document.getElementById('digit' + i);
+      digitBox.classList.remove('generated');
+      digitBox.classList.add('empty');
+      digitBox.textContent = '—';
+    }
+    document.getElementById('keypadInstructions').style.display = 'none';
+    document.getElementById('factorBadge').style.display = 'none';
+    document.getElementById('expirationBadge').style.display = 'none';
+  }
+
+  // ===== MÉTODO 2: Autorización Remota =====
+  let currentRequestId = null;
+  let statusPollingInterval = null;
+
+  function solicitarAutorizacion(userId) {
+    const btn = document.getElementById('generateRemoteBtn');
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+    btn.disabled = true;
+
+    // Llamar a la API real
+    fetch("/api/solicitar-acceso", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: userId })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          currentRequestId = data.requestId;
+          mostrarSolicitudEnviada(data.code);
+          iniciarPollingEstado(data.requestId);
+
+          // Mostrar notificación de que se envió
+          if (typeof Toast !== 'undefined') {
+            Toast.info('Solicitud Enviada', 'Esperando aprobación del administrador');
+          }
+        } else {
+          throw new Error(data.error || 'Error al solicitar');
+        }
+
+        btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Solicitar de Nuevo';
+        btn.disabled = false;
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        btn.innerHTML = '<i class="bi bi-send-fill"></i> Solicitar Autorización';
+        btn.disabled = false;
+
+        if (typeof Toast !== 'undefined') {
+          Toast.error('Error', 'No se pudo enviar la solicitud');
+        }
+      });
+  }
+
+  function mostrarSolicitudEnviada(codigo) {
+    // Actualizar estado visual
+    const icon = document.getElementById('remoteIcon');
+    icon.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+    icon.classList.remove('idle', 'approved', 'rejected');
+    icon.classList.add('waiting');
+
+    document.getElementById('remoteTitle').textContent = 'Esperando aprobación...';
+    document.getElementById('remoteMessage').textContent = 'El administrador ha recibido tu solicitud';
+
+    // Mostrar código
+    document.getElementById('remoteCodeWrapper').style.display = 'block';
+    const digitos = codigo.split('');
+
+    for (let i = 0; i < 4; i++) {
+      const digitBox = document.getElementById('remoteDigit' + (i + 1));
+      digitBox.classList.remove('empty');
+      digitBox.classList.add('generated');
+
+      setTimeout(() => {
+        digitBox.textContent = digitos[i] || '0';
+      }, i * 100);
+    }
+  }
+
+  function iniciarPollingEstado(requestId) {
+    // Limpiar polling anterior
+    if (statusPollingInterval) {
+      clearInterval(statusPollingInterval);
+    }
+
+    // Verificar estado cada 2 segundos
+    statusPollingInterval = setInterval(() => {
+      fetch('/api/estado-solicitud/' + requestId)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success && data.processed) {
+            clearInterval(statusPollingInterval);
+
+            if (data.approved) {
+              mostrarAprobacion();
+            } else {
+              mostrarRechazo();
+            }
+          }
+        })
+        .catch(err => console.log('Polling error:', err.message));
+    }, 2000);
+
+    // Timeout después de 5 minutos
+    setTimeout(() => {
+      if (statusPollingInterval) {
+        clearInterval(statusPollingInterval);
+        mostrarExpirado();
+      }
+    }, 300000);
+  }
+
+  function mostrarAprobacion() {
+    const icon = document.getElementById('remoteIcon');
+    icon.innerHTML = '<i class="bi bi-check-lg"></i>';
+    icon.classList.remove('waiting', 'idle', 'rejected');
+    icon.classList.add('approved');
+
+    document.getElementById('remoteTitle').textContent = '¡Autorización Aprobada!';
+    document.getElementById('remoteMessage').textContent = 'Ya puedes ingresar al Data Center';
+
+    // Notificación de éxito
+    if (typeof Toast !== 'undefined') {
+      Toast.success('¡Aprobado!', 'El administrador ha autorizado tu acceso');
+    }
+  }
+
+  function mostrarRechazo() {
+    const icon = document.getElementById('remoteIcon');
+    icon.innerHTML = '<i class="bi bi-x-lg"></i>';
+    icon.classList.remove('waiting', 'idle', 'approved');
+    icon.classList.add('rejected');
+
+    document.getElementById('remoteTitle').textContent = 'Solicitud Rechazada';
+    document.getElementById('remoteMessage').textContent = 'El administrador no autorizó el acceso';
+
+    // Notificación
+    if (typeof Toast !== 'undefined') {
+      Toast.warning('Rechazado', 'Tu solicitud de acceso fue denegada');
+    }
+  }
+
+  function mostrarExpirado() {
+    const icon = document.getElementById('remoteIcon');
+    icon.innerHTML = '<i class="bi bi-clock"></i>';
+    icon.classList.remove('waiting', 'approved', 'rejected');
+    icon.classList.add('idle');
+
+    document.getElementById('remoteTitle').textContent = 'Solicitud Expirada';
+    document.getElementById('remoteMessage').textContent = 'El tiempo de espera ha terminado';
+  }
 </script>
 {% endblock %}

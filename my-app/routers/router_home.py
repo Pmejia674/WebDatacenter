@@ -98,4 +98,217 @@ def updateArea():
             return "Hubo un error al actualizar el área."
 
     return redirect(url_for('lista_areas'))
+
+# ============================================
+# API de Notificaciones - Sistema Toast
+# ============================================
+
+# Almacenamiento temporal de solicitudes de acceso (en producción usar base de datos)
+solicitudes_acceso = []
+
+@app.route('/api/notificaciones', methods=['GET'])
+def api_notificaciones():
+    """Obtener notificaciones pendientes para el usuario actual"""
+    if 'conectado' not in session:
+        return jsonify({'notifications': []}), 401
+    
+    userData = dataLoginSesion()
+    notifications = []
+    
+    # Solo admins reciben solicitudes de acceso
+    if userData.get('rol') == 1:
+        for sol in solicitudes_acceso:
+            if not sol.get('processed'):
+                notifications.append({
+                    'type': 'access-request',
+                    'title': 'Solicitud de Acceso',
+                    'message': f"{sol.get('userName', 'Usuario')} solicita autorización",
+                    'requestId': sol.get('id'),
+                    'userId': sol.get('userId'),
+                    'userName': sol.get('userName'),
+                    'code': sol.get('code')
+                })
+    
+    return jsonify({'notifications': notifications})
+
+@app.route('/api/solicitar-acceso', methods=['POST'])
+def api_solicitar_acceso():
+    """Usuario solicita autorización de acceso al admin"""
+    if 'conectado' not in session:
+        return jsonify({'success': False, 'error': 'No autenticado'}), 401
+    
+    userData = dataLoginSesion()
+    data = request.get_json() or {}
+    
+    import random
+    import string
+    
+    # Generar código de 4 dígitos
+    code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+    
+    # Crear solicitud
+    nueva_solicitud = {
+        'id': len(solicitudes_acceso) + 1,
+        'userId': userData.get('id'),
+        'userName': userData.get('nombre'),
+        'code': code,
+        'processed': False,
+        'approved': None
+    }
+    solicitudes_acceso.append(nueva_solicitud)
+    
+    return jsonify({
+        'success': True, 
+        'code': code,
+        'requestId': nueva_solicitud['id'],
+        'message': 'Solicitud enviada al administrador'
+    })
+
+@app.route('/aprobar-acceso/<int:request_id>', methods=['POST'])
+def aprobar_acceso(request_id):
+    """Admin aprueba una solicitud de acceso"""
+    if 'conectado' not in session:
+        return jsonify({'success': False, 'error': 'No autenticado'}), 401
+    
+    userData = dataLoginSesion()
+    if userData.get('rol') != 1:
+        return jsonify({'success': False, 'error': 'Sin permisos'}), 403
+    
+    for sol in solicitudes_acceso:
+        if sol.get('id') == request_id:
+            sol['processed'] = True
+            sol['approved'] = True
+            return jsonify({
+                'success': True, 
+                'message': 'Acceso aprobado',
+                'userId': sol.get('userId')
+            })
+    
+    return jsonify({'success': False, 'error': 'Solicitud no encontrada'}), 404
+
+@app.route('/rechazar-acceso/<int:request_id>', methods=['POST'])
+def rechazar_acceso(request_id):
+    """Admin rechaza una solicitud de acceso"""
+    if 'conectado' not in session:
+        return jsonify({'success': False, 'error': 'No autenticado'}), 401
+    
+    userData = dataLoginSesion()
+    if userData.get('rol') != 1:
+        return jsonify({'success': False, 'error': 'Sin permisos'}), 403
+    
+    for sol in solicitudes_acceso:
+        if sol.get('id') == request_id:
+            sol['processed'] = True
+            sol['approved'] = False
+            return jsonify({
+                'success': True, 
+                'message': 'Acceso rechazado'
+            })
+    
+    return jsonify({'success': False, 'error': 'Solicitud no encontrada'}), 404
+
+@app.route('/api/estado-solicitud/<int:request_id>', methods=['GET'])
+def api_estado_solicitud(request_id):
+    """Verificar el estado de una solicitud de acceso"""
+    for sol in solicitudes_acceso:
+        if sol.get('id') == request_id:
+            return jsonify({
+                'success': True,
+                'processed': sol.get('processed'),
+                'approved': sol.get('approved')
+            })
+    
+    return jsonify({'success': False, 'error': 'Solicitud no encontrada'}), 404
+
+# ============================================
+# API IoT - ESP32 / Node-RED
+# ============================================
+
+@app.route('/api/log-acceso', methods=['POST'])
+def api_log_acceso():
+    """Registrar evento de acceso desde ESP32"""
+    data = request.get_json() or {}
+    
+    rfid = data.get('rfid', 'desconocido')
+    estado = data.get('estado', 'desconocido')
+    fecha = data.get('fecha')
+    
+    # TODO: Guardar en base de datos
+    print(f"[IOT] Acceso: RFID={rfid}, Estado={estado}, Fecha={fecha}")
+    
+    # Enviar notificación toast a admins conectados
+    if estado == 'concedido':
+        # Agregar a notificaciones para que los admins vean
+        pass
+    
+    return jsonify({
+        'success': True,
+        'message': 'Log registrado'
+    })
+
+@app.route('/api/validar-clave', methods=['POST'])
+def api_validar_clave():
+    """Validar clave ingresada en el teclado matricial"""
+    data = request.get_json() or {}
+    
+    rfid = data.get('rfid', '')
+    clave = data.get('clave', '')
+    
+    print(f"[IOT] Validando clave: RFID={rfid}, Clave={clave}")
+    
+    # Buscar la clave en las claves generadas (en memoria por ahora)
+    # En producción, verificar contra la tabla de auditoría en BD
+    
+    # Por ahora, validar contra las solicitudes de acceso aprobadas
+    for sol in solicitudes_acceso:
+        if sol.get('code') == clave and sol.get('approved') == True:
+            return jsonify({
+                'valido': True,
+                'clave': clave,
+                'mensaje': 'Clave válida'
+            })
+    
+    return jsonify({
+        'valido': False,
+        'clave': clave,
+        'mensaje': 'Clave inválida o expirada'
+    })
+
+@app.route('/api/abrir-puerta', methods=['POST'])
+def api_abrir_puerta():
+    """Enviar comando para abrir puerta (llama a Node-RED)"""
+    if 'conectado' not in session:
+        return jsonify({'success': False, 'error': 'No autenticado'}), 401
+    
+    userData = dataLoginSesion()
+    if userData.get('rol') != 1:
+        return jsonify({'success': False, 'error': 'Sin permisos'}), 403
+    
+    import requests
+    
+    try:
+        # Llamar a Node-RED para que envíe el comando MQTT
+        response = requests.post(
+            'http://192.168.1.17:1880/api/abrir-puerta',
+            json={'origen': 'webapp', 'usuario': userData.get('name')},
+            timeout=5
+        )
+        
+        if response.status_code == 200:
+            return jsonify({
+                'success': True,
+                'message': 'Comando enviado al ESP32'
+            })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Error al comunicar con Node-RED'
+            }), 500
+            
+    except Exception as e:
+        print(f"[IOT] Error al abrir puerta: {e}")
+        return jsonify({
+            'success': False,
+            'error': 'Error de conexión con el controlador'
+        }), 500
     

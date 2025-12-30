@@ -1,0 +1,320 @@
+[
+    {
+        "id": "flow_datacenter",
+        "type": "tab",
+        "label": "InfraNova - Data Center 2FA",
+        "disabled": false,
+        "info": "Sistema de control de acceso 2FA para Data Center"
+    },
+    {
+        "id": "mqtt_broker",
+        "type": "mqtt-broker",
+        "name": "MQTT Broker Local",
+        "broker": "192.168.1.17",
+        "port": "1883",
+        "clientid": "nodered-datacenter",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "datacenter/nodered/status",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "online",
+        "closeTopic": "datacenter/nodered/status",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "offline",
+        "willTopic": "datacenter/nodered/status",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "disconnected"
+    },
+    {
+        "id": "comment_header",
+        "type": "comment",
+        "z": "flow_datacenter",
+        "name": "=== SISTEMA 2FA DATA CENTER - InfraNova ===",
+        "info": "Este flujo maneja:\n1. Validación de claves desde ESP32\n2. Envío de eventos a la webapp Flask\n3. Control remoto de puerta\n4. Logs de acceso",
+        "x": 250,
+        "y": 40
+    },
+    {
+        "id": "mqtt_in_acceso",
+        "type": "mqtt in",
+        "z": "flow_datacenter",
+        "name": "📥 Eventos de Acceso",
+        "topic": "datacenter/acceso",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "parse_acceso",
+                "debug_acceso"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_in_clave",
+        "type": "mqtt in",
+        "z": "flow_datacenter",
+        "name": "📥 Validar Clave",
+        "topic": "datacenter/clave/validar",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "validar_clave"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_in_estado",
+        "type": "mqtt in",
+        "z": "flow_datacenter",
+        "name": "📥 Estado ESP32",
+        "topic": "datacenter/estado",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "mqtt_broker",
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "debug_estado"
+            ]
+        ]
+    },
+    {
+        "id": "parse_acceso",
+        "type": "function",
+        "z": "flow_datacenter",
+        "name": "📋 Procesar Acceso",
+        "func": "// Procesar evento de acceso del ESP32\nlet data = msg.payload;\n\n// Crear log para la webapp\nlet log = {\n    rfid: data.rfid || 'desconocido',\n    estado: data.estado,\n    fecha: new Date().toISOString(),\n    pin_usado: data.pin_usado || false\n};\n\n// Enviar a la API Flask\nmsg.url = 'http://192.168.1.17:5000/api/log-acceso';\nmsg.method = 'POST';\nmsg.headers = { 'Content-Type': 'application/json' };\nmsg.payload = log;\n\nnode.status({fill: data.estado === 'concedido' ? 'green' : 'red', shape: 'dot', text: data.estado});\n\nreturn msg;",
+        "outputs": 1,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "http_log_acceso"
+            ]
+        ]
+    },
+    {
+        "id": "validar_clave",
+        "type": "function",
+        "z": "flow_datacenter",
+        "name": "🔐 Validar Clave en BD",
+        "func": "// Recibir clave del ESP32 y validar contra el servidor\nlet data = msg.payload;\n\n// Llamar a la API Flask para validar\nmsg.url = 'http://192.168.1.17:5000/api/validar-clave';\nmsg.method = 'POST';\nmsg.headers = { 'Content-Type': 'application/json' };\nmsg.payload = {\n    rfid: data.rfid,\n    clave: data.clave\n};\n\n// Guardar datos originales para la respuesta\nmsg.datosOriginales = data;\n\nnode.status({fill: 'yellow', shape: 'ring', text: 'validando...'});\n\nreturn msg;",
+        "outputs": 1,
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "http_validar_clave"
+            ]
+        ]
+    },
+    {
+        "id": "http_log_acceso",
+        "type": "http request",
+        "z": "flow_datacenter",
+        "name": "🌐 POST Log Acceso",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "x": 590,
+        "y": 140,
+        "wires": [
+            [
+                "debug_http_response"
+            ]
+        ]
+    },
+    {
+        "id": "http_validar_clave",
+        "type": "http request",
+        "z": "flow_datacenter",
+        "name": "🌐 POST Validar Clave",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "procesar_respuesta_clave"
+            ]
+        ]
+    },
+    {
+        "id": "procesar_respuesta_clave",
+        "type": "function",
+        "z": "flow_datacenter",
+        "name": "📤 Enviar Respuesta a ESP32",
+        "func": "// Procesar respuesta del servidor y enviar al ESP32\nlet response = msg.payload;\nlet datosOriginales = msg.datosOriginales;\n\n// Crear mensaje para el ESP32\nmsg.payload = {\n    valido: response.valido || false,\n    clave: datosOriginales.clave,\n    mensaje: response.mensaje || ''\n};\n\nlet status = msg.payload.valido ? 'VÁLIDA' : 'INVÁLIDA';\nnode.status({fill: msg.payload.valido ? 'green' : 'red', shape: 'dot', text: status});\n\nreturn msg;",
+        "outputs": 1,
+        "x": 850,
+        "y": 240,
+        "wires": [
+            [
+                "mqtt_out_clave_resp"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_clave_resp",
+        "type": "mqtt out",
+        "z": "flow_datacenter",
+        "name": "📤 Respuesta Clave",
+        "topic": "datacenter/clave/respuesta",
+        "qos": "0",
+        "retain": "false",
+        "broker": "mqtt_broker",
+        "x": 1090,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "comment_control_remoto",
+        "type": "comment",
+        "z": "flow_datacenter",
+        "name": "=== CONTROL REMOTO DE PUERTA ===",
+        "x": 200,
+        "y": 420
+    },
+    {
+        "id": "inject_abrir_puerta",
+        "type": "inject",
+        "z": "flow_datacenter",
+        "name": "🚪 Abrir Puerta Manual",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"comando\":\"abrir\",\"origen\":\"nodered\"}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 480,
+        "wires": [
+            [
+                "mqtt_out_puerta"
+            ]
+        ]
+    },
+    {
+        "id": "http_in_abrir",
+        "type": "http in",
+        "z": "flow_datacenter",
+        "name": "🌐 API Abrir Puerta",
+        "url": "/api/abrir-puerta",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            [
+                "preparar_comando_puerta"
+            ]
+        ]
+    },
+    {
+        "id": "preparar_comando_puerta",
+        "type": "function",
+        "z": "flow_datacenter",
+        "name": "📋 Preparar Comando",
+        "func": "// Preparar comando para abrir puerta\nmsg.payload = {\n    comando: 'abrir',\n    origen: 'webapp',\n    timestamp: new Date().toISOString()\n};\n\nreturn msg;",
+        "outputs": 1,
+        "x": 380,
+        "y": 540,
+        "wires": [
+            [
+                "mqtt_out_puerta",
+                "http_response_ok"
+            ]
+        ]
+    },
+    {
+        "id": "mqtt_out_puerta",
+        "type": "mqtt out",
+        "z": "flow_datacenter",
+        "name": "📤 Comando Puerta",
+        "topic": "datacenter/puerta",
+        "qos": "0",
+        "retain": "false",
+        "broker": "mqtt_broker",
+        "x": 610,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "http_response_ok",
+        "type": "http response",
+        "z": "flow_datacenter",
+        "name": "✓ Response OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 580,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "debug_acceso",
+        "type": "debug",
+        "z": "flow_datacenter",
+        "name": "🔍 Debug Acceso",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 370,
+        "y": 100
+    },
+    {
+        "id": "debug_estado",
+        "type": "debug",
+        "z": "flow_datacenter",
+        "name": "🔍 Debug Estado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "x": 370,
+        "y": 340
+    },
+    {
+        "id": "debug_http_response",
+        "type": "debug",
+        "z": "flow_datacenter",
+        "name": "🔍 Debug HTTP",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "x": 800,
+        "y": 140
+    }
+]
