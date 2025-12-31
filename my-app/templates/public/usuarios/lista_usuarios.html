@@ -1,17 +1,28 @@
 {% extends 'public/base_cpanel.html' %}
 {% block title %}Lista de Usuarios{% endblock %}
 
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/rfid-scanner.css') }}">
+{% endblock %}
+
 {% block body %}
+<!-- Header Section - Mismo estilo que Reportes de Acceso -->
+<div class="card border-0 shadow-sm p-4 mb-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+      <h3 class="mb-1 fw-bold text-dark">Lista de Usuarios</h3>
+      <p class="text-muted mb-0">Gestión y administración de usuarios del sistema</p>
+    </div>
+    <button type="button" class="btn btn-primary d-flex align-items-center gap-2 btn-open-panel" id="openNewUserPanel">
+      <i class="bi bi-plus-lg"></i>
+      <span>Nuevo Usuario</span>
+    </button>
+  </div>
+</div>
+
 {% if (resp_usuariosBD) %}
 <div class="modern-card">
-  <div class="card-header-modern">
-    <h3 class="card-title-modern">Lista de Usuarios</h3>
-    <a href="./register-user" class="btn-primary-modern">
-      <i class="bi bi-plus-lg"></i>
-      Nuevo Usuario
-    </a>
-  </div>
-  
+
   <div class="datatables-controls">
     <div class="datatables-length">
       <select id="lengthSelect" class="form-select-sm">
@@ -26,9 +37,10 @@
       <input type="text" id="searchInput" placeholder="Buscar usuarios..." />
     </div>
   </div>
-  
+
   <div class="modern-table-wrapper table-responsive">
-    <table class="modern-table table-hover js-datatable" id="tablaUsuarios" data-has-actions="true" data-options='{"responsive": false, "dom": "rt"}'>
+    <table class="modern-table table-hover js-datatable" id="tablaUsuarios" data-has-actions="true"
+      data-options='{"responsive": false, "dom": "rt"}'>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -57,7 +69,8 @@
           <td>
             {% for rol in roles%}
             {% if rol.id_rol == usuario.id_rol%}
-            <span class="badge-modern {% if rol.nombre_rol == 'Administrador' %}badge-purple{% else %}badge-gray{% endif %}">
+            <span
+              class="badge-modern {% if rol.nombre_rol == 'Administrador' %}badge-purple{% else %}badge-gray{% endif %}">
               {{ rol.nombre_rol}}
             </span>
             {%endif%}
@@ -67,7 +80,8 @@
             <a href="/mi-perfil/{{usuario.id_usuario}}" class="btn-action btn-edit" title="Editar">
               <i class="bi bi-pencil"></i>
             </a>
-            <a onclick="eliminarUsuario('{{ usuario.id_usuario }}');" class="btn-action btn-delete" style="cursor: pointer;" title="Eliminar">
+            <a onclick="eliminarUsuario('{{ usuario.id_usuario }}');" class="btn-action btn-delete"
+              style="cursor: pointer;" title="Eliminar">
               <i class="bi bi-trash3"></i>
             </a>
           </td>
@@ -76,7 +90,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <div class="datatables-controls">
     <div id="tableInfo" class="dataTables_info"></div>
     <div id="tablePagination" class="dataTables_paginate"></div>
@@ -89,72 +103,422 @@
       <i class="bi bi-people"></i>
     </div>
     <p class="empty-state-text">No hay usuarios registrados</p>
-    <p style="color: var(--color-text-muted); margin-top: 0.5rem;">Comienza agregando tu primer usuario</p>
-    <a href="./register-user" class="btn-primary-modern" style="margin-top: 1.5rem;">
-      <i class="bi bi-plus-lg"></i>
-      Agregar Usuario
-    </a>
+    <p style="color: var(--color-text-muted); margin-top: 0.5rem;">Usa el botón "Nuevo Usuario" para agregar el primero
+    </p>
   </div>
 </div>
 {% endif %}
+
+<!-- ========================================
+     SLIDE OVER PANEL - Nuevo Usuario
+======================================== -->
+<div class="slide-over-overlay" id="slideOverOverlay"></div>
+
+<div class="slide-over-panel" id="slideOverPanel">
+  <div class="slide-over-header">
+    <h2 class="slide-over-title">
+      <i class="bi bi-person-plus"></i>
+      Registrar Usuario
+    </h2>
+    <button type="button" class="slide-over-close" id="closePanel" aria-label="Cerrar">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div class="slide-over-body">
+    <form id="registerUserForm" action="{{ url_for('cpanelRegisterUserBD') }}" method="POST">
+      <!-- Cédula -->
+      <div class="form-group mb-3">
+        <label for="cedula" class="form-label">CÉDULA</label>
+        <input type="text" class="form-control" name="cedula" id="cedula" placeholder="Ingrese número de cédula"
+          required autofocus />
+      </div>
+
+      <!-- Nombre y Apellido -->
+      <div class="form-group mb-3">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="name" class="form-label">NOMBRE</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Nombre del usuario" required />
+          </div>
+          <div class="col-md-6">
+            <label for="surname" class="form-label">APELLIDO</label>
+            <input type="text" class="form-control" name="surname" id="surname" placeholder="Apellido del usuario"
+              required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Área y Rol -->
+      <div class="form-group mb-3">
+        <div class="row">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <label for="selectArea" class="form-label">ÁREA</label>
+            <select class="form-select" name="selectArea" id="selectArea" {% if dataLogin.rol==2 %} disabled {% endif
+              %}>
+              {% for area in areas %}
+              <option value="{{ area.id_area }}">{{ area.nombre_area }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="selectRol" class="form-label">ROL</label>
+            <select class="form-select" name="selectRol" id="selectRol" {% if dataLogin.rol==2 %} disabled {% endif %}>
+              {% for rol in roles %}
+              <option value="{{ rol.id_rol }}">{{ rol.nombre_rol }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group mb-3">
+        <label for="pass_user" class="form-label">CLAVE</label>
+        <div class="input-group">
+          <input type="password" class="form-control" name="pass_user" id="pass_user"
+            placeholder="Contraseña del usuario" required />
+          <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+        <div id="passwordHelp" class="form-text text-danger d-none"></div>
+      </div>
+
+      <!-- RFID Section -->
+      <div class="form-group rfid-section">
+        <div class="rfid-header">
+          <div>
+            <h3 class="section-title mb-1">Tarjeta RFID</h3>
+            <p class="section-subtitle mb-0">Asociar tarjeta de acceso al usuario</p>
+          </div>
+          <div class="rfid-status" id="rfidStatus">
+            <i class="bi bi-wifi-off status-disconnected"></i>
+            <span class="status-disconnected">Lector Desconectado</span>
+          </div>
+        </div>
+
+        <div class="rfid-scanner">
+          <div class="scanner-card ready" id="scannerCard">
+            <div class="scanner-icon" id="scannerIcon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <div class="scanner-title" id="scannerTitle">Listo para escanear</div>
+            <div class="scanner-subtitle" id="scannerSubtitle">Haga clic en el botón para iniciar el escaneo</div>
+            <div id="rfidCode" class="rfid-code d-none"></div>
+            <button type="button" class="btn btn-outline-secondary mt-2 d-none" id="rescanBtn">Escanear otra
+              tarjeta</button>
+          </div>
+
+          <div class="rfid-info">
+            <h4 class="section-title mb-3">Información de la Tarjeta</h4>
+            <div class="info-row">
+              <span class="info-label">Estado:</span>
+              <span class="info-value" id="cardStatus">Sin asociar</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Código RFID:</span>
+              <span class="info-value" id="cardCode">No detectado</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Lector:</span>
+              <span class="info-value status-disconnected" id="readerStatus">Desconectado</span>
+            </div>
+            <div class="success-message d-none" id="successMessage">
+              <i class="bi bi-check-circle"></i>
+              <span><strong>Tarjeta lista:</strong> La tarjeta RFID se asociará automáticamente al usuario cuando se
+                cree la cuenta.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button" class="btn btn-scan" id="scanBtn">
+            <i class="bi bi-upc-scan me-2"></i>
+            Escanear Tarjeta RFID
+          </button>
+        </div>
+      </div>
+
+      <input type="hidden" name="codigo_rfid" id="codigo_rfid_real" />
+    </form>
+  </div>
+
+  <div class="slide-over-footer">
+    <button type="button" class="btn-cancel" id="cancelBtn">
+      <i class="bi bi-x"></i>
+      Cancelar
+    </button>
+    <button type="submit" form="registerUserForm" class="btn-submit">
+      Crear cuenta
+      <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block customJS %}
 <script>
+  // ========================================
+  // SLIDE OVER PANEL - Animation Controller
+  // ========================================
+  const slideOverOverlay = document.getElementById('slideOverOverlay');
+  const slideOverPanel = document.getElementById('slideOverPanel');
+  const openPanelBtn = document.getElementById('openNewUserPanel');
+  const openPanelBtnEmpty = document.getElementById('openNewUserPanelEmpty');
+  const closeBtn = document.getElementById('closePanel');
+  const cancelBtn = document.getElementById('cancelBtn');
+
+  function openSlideOver() {
+    // Calcular ancho del scrollbar para compensar y evitar layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+
+    document.body.classList.add('slide-over-open');
+    slideOverOverlay.classList.add('active');
+    slideOverPanel.classList.add('active');
+
+    // Focus first input after animation
+    setTimeout(() => {
+      document.getElementById('cedula').focus();
+    }, 400);
+  }
+
+  function closeSlideOver() {
+    slideOverPanel.classList.remove('active');
+    slideOverOverlay.classList.remove('active');
+
+    setTimeout(() => {
+      document.body.classList.remove('slide-over-open');
+      // Remover compensación del scrollbar
+      document.documentElement.style.removeProperty('--scrollbar-width');
+      // Reset form
+      document.getElementById('registerUserForm').reset();
+      resetScanner();
+    }, 400);
+  }
+
+  // Event listeners
+  if (openPanelBtn) openPanelBtn.addEventListener('click', openSlideOver);
+  if (openPanelBtnEmpty) openPanelBtnEmpty.addEventListener('click', openSlideOver);
+  closeBtn.addEventListener('click', closeSlideOver);
+  cancelBtn.addEventListener('click', closeSlideOver);
+  slideOverOverlay.addEventListener('click', closeSlideOver);
+
+  // Close with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && slideOverPanel.classList.contains('active')) {
+      closeSlideOver();
+    }
+  });
+
+  // Prevent panel close when clicking inside panel
+  slideOverPanel.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  // ========================================
+  // DELETE USER FUNCTION
+  // ========================================
   function eliminarUsuario(id) {
     if (confirm("¿Estás seguro que deseas eliminar este usuario? Esta acción no se puede deshacer.")) {
       window.location.href = `/borrar-usuario/${id}`;
     }
   }
-  
-  $(document).ready(function() {
+
+  // ========================================
+  // DATATABLE INITIALIZATION
+  // ========================================
+  $(document).ready(function () {
     var table = $('#tablaUsuarios').DataTable();
-    
+
     $('#tablaUsuarios').addClass('dt-ready');
-    
-    $('#searchInput').on('keyup', function() {
+
+    $('#searchInput').on('keyup', function () {
       table.search(this.value).draw();
     });
-    
-    $('#lengthSelect').on('change', function() {
+
+    $('#lengthSelect').on('change', function () {
       table.page.len(this.value).draw();
     });
-      
-      table.on('draw', function() {
-        var info = table.page.info();
-        $('#tableInfo').html('Mostrando ' + (info.start + 1) + ' a ' + info.end + ' de ' + info.recordsTotal + ' usuarios');
-        
-        var html = '';
-        var currentPage = info.page;
-        var pages = info.pages;
-        
-        html += '<button class="paginate_button ' + (currentPage === 0 ? 'disabled' : '') + '" data-page="prev">Anterior</button>';
-        
-        for (var i = 0; i < pages; i++) {
-          if (i === 0 || i === pages - 1 || (i >= currentPage - 1 && i <= currentPage + 1)) {
-            html += '<button class="paginate_button ' + (i === currentPage ? 'current' : '') + '" data-page="' + i + '">' + (i + 1) + '</button>';
-          } else if (i === currentPage - 2 || i === currentPage + 2) {
-            html += '<span class="ellipsis">...</span>';
-          }
+
+    table.on('draw', function () {
+      var info = table.page.info();
+      $('#tableInfo').html('Mostrando ' + (info.start + 1) + ' a ' + info.end + ' de ' + info.recordsTotal + ' usuarios');
+
+      var html = '';
+      var currentPage = info.page;
+      var pages = info.pages;
+
+      html += '<button class="paginate_button ' + (currentPage === 0 ? 'disabled' : '') + '" data-page="prev">Anterior</button>';
+
+      for (var i = 0; i < pages; i++) {
+        if (i === 0 || i === pages - 1 || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          html += '<button class="paginate_button ' + (i === currentPage ? 'current' : '') + '" data-page="' + i + '">' + (i + 1) + '</button>';
+        } else if (i === currentPage - 2 || i === currentPage + 2) {
+          html += '<span class="ellipsis">...</span>';
         }
-        
-        html += '<button class="paginate_button ' + (currentPage === pages - 1 ? 'disabled' : '') + '" data-page="next">Siguiente</button>';
-        
-        $('#tablePagination').html(html);
-      });
-      
-      $('#tablePagination').on('click', '.paginate_button:not(.disabled)', function() {
-        var page = $(this).data('page');
-        if (page === 'prev') {
-          table.page('previous').draw('page');
-        } else if (page === 'next') {
-          table.page('next').draw('page');
-        } else {
-          table.page(page).draw('page');
-        }
-      });
-    
+      }
+
+      html += '<button class="paginate_button ' + (currentPage === pages - 1 ? 'disabled' : '') + '" data-page="next">Siguiente</button>';
+
+      $('#tablePagination').html(html);
+    });
+
+    $('#tablePagination').on('click', '.paginate_button:not(.disabled)', function () {
+      var page = $(this).data('page');
+      if (page === 'prev') {
+        table.page('previous').draw('page');
+      } else if (page === 'next') {
+        table.page('next').draw('page');
+      } else {
+        table.page(page).draw('page');
+      }
+    });
+
     table.draw();
+  });
+
+  // ========================================
+  // PASSWORD TOGGLE
+  // ========================================
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('pass_user');
+
+  togglePassword.addEventListener('click', function () {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.innerHTML = type === 'password'
+      ? '<i class="bi bi-eye"></i>'
+      : '<i class="bi bi-eye-slash"></i>';
+  });
+
+  // ========================================
+  // RFID SCANNER
+  // ========================================
+  let isScanning = false;
+  let rfidDetected = false;
+  let detectedCode = '';
+
+  const scanBtn = document.getElementById('scanBtn');
+  const scannerCard = document.getElementById('scannerCard');
+  const scannerIcon = document.getElementById('scannerIcon');
+  const scannerTitle = document.getElementById('scannerTitle');
+  const scannerSubtitle = document.getElementById('scannerSubtitle');
+  const rfidCode = document.getElementById('rfidCode');
+  const rescanBtn = document.getElementById('rescanBtn');
+  const cardStatus = document.getElementById('cardStatus');
+  const cardCode = document.getElementById('cardCode');
+  const readerStatus = document.getElementById('readerStatus');
+  const rfidStatus = document.getElementById('rfidStatus');
+  const successMessage = document.getElementById('successMessage');
+
+  function simulateReaderConnection() {
+    setTimeout(() => {
+      rfidStatus.innerHTML = '<i class="bi bi-wifi status-connected"></i><span class="status-connected">Lector Conectado</span>';
+      readerStatus.textContent = 'Conectado';
+      readerStatus.className = 'info-value success';
+    }, 1000);
+  }
+
+  function startRFIDScan() {
+    if (isScanning) return;
+    isScanning = true;
+    scanBtn.disabled = true;
+    scanBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Escaneando...';
+    scanBtn.classList.add('scanning');
+
+    scannerCard.className = 'scanner-card scanning';
+    scannerIcon.className = 'scanner-icon scanning';
+    scannerIcon.innerHTML = '<i class="bi bi-credit-card"></i>';
+    scannerTitle.textContent = 'Escaneando tarjeta...';
+    scannerSubtitle.textContent = 'Acerque la tarjeta RFID al lector';
+    scannerSubtitle.className = 'scanner-subtitle scanning-subtitle';
+
+    setTimeout(() => {
+      const simulatedCode = 'RFID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+      detectedCode = simulatedCode;
+      rfidDetected = true;
+
+      scannerCard.className = 'scanner-card detected';
+      scannerIcon.className = 'scanner-icon detected';
+      scannerIcon.innerHTML = '<i class="bi bi-check-circle"></i>';
+      scannerTitle.textContent = 'Tarjeta detectada';
+      scannerSubtitle.textContent = 'RFID asociado correctamente';
+      scannerSubtitle.className = 'scanner-subtitle detected-subtitle';
+
+      rfidCode.textContent = simulatedCode;
+      rfidCode.classList.remove('d-none');
+      rescanBtn.classList.remove('d-none');
+
+      cardStatus.textContent = 'Asociada';
+      cardStatus.className = 'info-value success';
+      cardCode.textContent = simulatedCode;
+      document.getElementById('codigo_rfid_real').value = simulatedCode;
+
+      successMessage.classList.remove('d-none');
+
+      scanBtn.disabled = false;
+      scanBtn.innerHTML = '<i class="bi bi-upc-scan me-2"></i>Escanear Tarjeta RFID';
+      scanBtn.classList.remove('scanning');
+      isScanning = false;
+    }, 3000);
+  }
+
+  function resetScanner() {
+    rfidDetected = false;
+    detectedCode = '';
+    document.getElementById('codigo_rfid_real').value = '';
+
+    scannerCard.className = 'scanner-card ready';
+    scannerIcon.className = 'scanner-icon';
+    scannerIcon.innerHTML = '<i class="bi bi-credit-card"></i>';
+    scannerTitle.textContent = 'Listo para escanear';
+    scannerSubtitle.textContent = 'Haga clic en el botón para iniciar el escaneo';
+    scannerSubtitle.className = 'scanner-subtitle';
+
+    rfidCode.classList.add('d-none');
+    rescanBtn.classList.add('d-none');
+    cardStatus.textContent = 'Sin asociar';
+    cardStatus.className = 'info-value';
+    cardCode.textContent = 'No detectado';
+    successMessage.classList.add('d-none');
+
+    // Reset reader status
+    rfidStatus.innerHTML = '<i class="bi bi-wifi-off status-disconnected"></i><span class="status-disconnected">Lector Desconectado</span>';
+    readerStatus.textContent = 'Desconectado';
+    readerStatus.className = 'info-value status-disconnected';
+
+    // Simulate connection again
+    simulateReaderConnection();
+  }
+
+  scanBtn.addEventListener('click', startRFIDScan);
+  rescanBtn.addEventListener('click', resetScanner);
+
+  // ========================================
+  // FORM VALIDATION
+  // ========================================
+  document.getElementById('registerUserForm').addEventListener('submit', function (e) {
+    const password = passwordInput.value;
+    const help = document.getElementById('passwordHelp');
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!regex.test(password)) {
+      help.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.';
+      help.classList.remove('d-none');
+      e.preventDefault();
+    } else {
+      help.classList.add('d-none');
+    }
+  });
+
+  // Initialize reader connection simulation when panel opens
+  slideOverPanel.addEventListener('transitionend', function (e) {
+    if (e.propertyName === 'transform' && slideOverPanel.classList.contains('active')) {
+      simulateReaderConnection();
+    }
   });
 </script>
 {% endblock %}

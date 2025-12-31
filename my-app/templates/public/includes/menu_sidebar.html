@@ -77,6 +77,7 @@
     <span class="nav-section-title">Administración</span>
   </div>
 
+  <!--
   <a href="/lista-de-areas" class="nav-item {% if request.path == '/lista-de-areas' %}active{% endif %}">
     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
       stroke="currentColor">
@@ -85,6 +86,7 @@
     </svg>
     <span class="nav-text">Lista de Áreas</span>
   </a>
+  -->
 
   <a href="/lista-de-usuarios" class="nav-item {% if request.path == '/lista-de-usuarios' %}active{% endif %}">
     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -95,6 +97,7 @@
     <span class="nav-text">Lista de Usuarios</span>
   </a>
 
+  <!--
   <a href="/lista-de-graficas" class="nav-item {% if request.path == '/lista-de-graficas' %}active{% endif %}">
     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
       stroke="currentColor">
@@ -103,6 +106,7 @@
     </svg>
     <span class="nav-text">Gráficas</span>
   </a>
+  -->
   {% endif %}
 
   <!-- User Section -->
@@ -119,6 +123,7 @@
     <span class="nav-text">Mi Perfil</span>
   </a>
 
+  <!--
   <a href="{{ url_for('cerraSesion') }}" class="nav-item">
     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
       stroke="currentColor">
@@ -127,6 +132,7 @@
     </svg>
     <span class="nav-text">Cerrar Sesión</span>
   </a>
+  -->
 </nav>
 <script>document.write('</aside>');</script>
 <noscript></aside></noscript>
